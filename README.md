@@ -117,6 +117,21 @@ il giallo acceso che sarebbe stato naturale si fermava a 3,46, e quelle etichett
 7px. Resta comunque un giallo limone e non ambra: l'ambra marca "in evidenza" e l'oro il
 tripla A, e tre gialli adiacenti nella stessa pagina non si distinguono più.
 
+**Le due classifiche condividono `.ritem`.** "Migliori del periodo" e "I 50 di sempre"
+usano la stessa classe, quindi crescono insieme ed è giusto che restino identiche fra
+loro: sono la stessa cosa su periodi diversi. Copertina a 76px (60px su mobile), servita
+in `t_cover_big` — a quella misura una `t_cover_small`, che ha il lato lungo di 90px, si
+sgrana sugli schermi a densità doppia. Le date da definire crescono in proporzione, a
+44px.
+
+**Su mobile la barra è rimpicciolita di un gradino, non sfoltita.** Nessun comando
+scompare: si riducono padding, corpi e icone, e si nascondono le due etichette
+decorative. "Badge" via del tutto, perché il gruppo ha già il suo `aria-label`; "Genere"
+è un `<label for>` e resta leggibile dagli screen reader pur uscendo dalla vista —
+togliere l'etichetta a una select è un'altra cosa che rimpicciolire una barra. Stimata a
+390px di larghezza: da ~142px a ~102px di altezza, più ~15px recuperati fra padding
+della pagina e intestazione del mese.
+
 **Lo spazio in pagina è la gerarchia.** Nel pannello del giorno le card hanno tre
 taglie secondo l'attesa: sopra 90 la copertina è a 140px, sopra 75 a 104px, sotto a
 72px. Se il titolo più atteso dell'anno occupa quanto un indie sconosciuto, la pagina
