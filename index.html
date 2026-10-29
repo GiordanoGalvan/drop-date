@@ -282,13 +282,9 @@ a.lk{color:var(--ink2)}
 .rank{font-family:var(--f-px);font-size:8px;color:var(--ink3);background:var(--surf3);padding:2px 4px;
   align-self:flex-start}
 .collect{border:3px dashed var(--line2);background:var(--surf2);padding:22px 16px;text-align:center}
-.collect .ic{width:38px;height:38px;margin:0 auto 10px;display:block}
-.collect h3{font-family:var(--f-px);font-size:11px;margin:0 0 8px}
-.collect p{font-family:var(--f-nar);font-size:13.5px;color:var(--ink2);margin:0 auto;max-width:48ch}
-.collect .bars{display:flex;gap:3px;justify-content:center;margin-top:14px}
-.collect .bars i{width:7px;height:7px;background:var(--line2);display:block;animation:blink 1.2s infinite}
-@media (prefers-reduced-motion:reduce){.collect .bars i{animation:none}}
-@keyframes blink{0%,100%{background:var(--line2)}50%{background:var(--amber-sol)}}
+.collect .giorni{font-family:var(--f-px);font-size:clamp(26px,7vw,44px);line-height:1;
+  color:var(--amber);margin:0}
+.collect .giorni small{display:block;font-size:9px;color:var(--ink3);margin-top:10px;letter-spacing:.06em}
 .partial{margin-top:14px;border:2px solid var(--line);background:var(--surf2);padding:10px}
 .partial h4{font-family:var(--f-px);font-size:9px;margin:0 0 8px;color:var(--ink3);text-transform:uppercase}
 .plist{display:flex;flex-wrap:wrap;gap:6px}
@@ -618,8 +614,7 @@ var ICO={
  steam:'<rect x="4" y="1" width="8" height="1" fill="currentColor"/><rect x="2" y="2" width="2" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="8" fill="currentColor"/><rect x="14" y="4" width="1" height="8" fill="currentColor"/><rect x="2" y="13" width="2" height="1" fill="currentColor"/><rect x="12" y="13" width="2" height="1" fill="currentColor"/><rect x="4" y="14" width="8" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="4" fill="currentColor"/><rect x="4" y="10" width="3" height="3" fill="currentColor"/>',
  globe:'<rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="10" fill="currentColor"/><rect x="13" y="3" width="1" height="10" fill="currentColor"/><rect x="3" y="13" width="2" height="1" fill="currentColor"/><rect x="11" y="13" width="2" height="1" fill="currentColor"/><rect x="5" y="14" width="6" height="1" fill="currentColor"/><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/>',
  bag:'<rect x="5" y="1" width="6" height="2" fill="currentColor"/><rect x="5" y="3" width="2" height="2" fill="currentColor"/><rect x="9" y="3" width="2" height="2" fill="currentColor"/><rect x="2" y="5" width="12" height="2" fill="currentColor"/><rect x="3" y="7" width="10" height="8" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="var(--surf)"/>',
- xbox:'<rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="10" fill="currentColor"/><rect x="13" y="3" width="1" height="10" fill="currentColor"/><rect x="3" y="13" width="2" height="1" fill="currentColor"/><rect x="11" y="13" width="2" height="1" fill="currentColor"/><rect x="5" y="14" width="6" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="2" fill="var(--surf)"/><rect x="6" y="6" width="2" height="2" fill="var(--surf)"/><rect x="8" y="8" width="2" height="2" fill="var(--surf)"/><rect x="10" y="10" width="2" height="2" fill="var(--surf)"/><rect x="10" y="4" width="2" height="2" fill="var(--surf)"/><rect x="8" y="6" width="2" height="2" fill="var(--surf)"/><rect x="6" y="8" width="2" height="2" fill="var(--surf)"/><rect x="4" y="10" width="2" height="2" fill="var(--surf)"/>',
- wifi:'<rect x="6" y="12" width="4" height="3" fill="currentColor"/><rect x="4" y="8" width="8" height="2" fill="currentColor"/><rect x="2" y="4" width="12" height="2" fill="currentColor"/><rect x="0" y="0" width="16" height="2" fill="currentColor"/>'
+ xbox:'<rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="10" fill="currentColor"/><rect x="13" y="3" width="1" height="10" fill="currentColor"/><rect x="3" y="13" width="2" height="1" fill="currentColor"/><rect x="11" y="13" width="2" height="1" fill="currentColor"/><rect x="5" y="14" width="6" height="1" fill="currentColor"/><rect x="4" y="4" width="2" height="2" fill="var(--surf)"/><rect x="6" y="6" width="2" height="2" fill="var(--surf)"/><rect x="8" y="8" width="2" height="2" fill="var(--surf)"/><rect x="10" y="10" width="2" height="2" fill="var(--surf)"/><rect x="10" y="4" width="2" height="2" fill="var(--surf)"/><rect x="8" y="6" width="2" height="2" fill="var(--surf)"/><rect x="6" y="8" width="2" height="2" fill="var(--surf)"/><rect x="4" y="10" width="2" height="2" fill="var(--surf)"/>'
 };
 function svg(k,cls){return '<svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'>'+ICO[k]+'</svg>';}
 
@@ -1197,11 +1192,15 @@ function renderGrowth(){
   var top=ready.slice(0,9);
   var h="";
   if(!top.length){
+    /* Il primo dato arriva quando una serie copre la finestra scelta: quel che
+       manca e' la finestra meno lo storico piu' lungo gia' raccolto. Un giro di
+       cron al giorno, quindi i giri mancanti sono giorni. */
+    var piuLungo=0;
+    cands.forEach(function(g){var s=histSpan(g.hist);if(s>piuLungo)piuLungo=s;});
+    var restano=Math.max(0,W-piuLungo);
     h+='<div class="collect notch">'+
-      '<svg class="ic" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true" style="color:var(--line2)">'+ICO.wifi+'</svg>'+
-      '<h3>RACCOLTA DATI IN CORSO</h3>'+
-      '<p>Nessuno storico ancora registrato per i titoli usciti: la serie si costruisce un giorno alla volta, col cron notturno su IGDB. Servono circa due settimane prima che la crescita a '+W+' giorni sia affidabile. È fisiologico, non un errore.</p>'+
-      '<div class="bars"><i></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.45s"></i><i style="animation-delay:.6s"></i></div></div>';
+      '<p class="giorni">'+restano+(restano===1?' GIORNO':' GIORNI')+
+      '<small>AL PRIMO DATO</small></p></div>';
   }else{
     h+='<div class="gcards">'+top.map(function(o,i){
       var g=o.g,r=o.r;
@@ -1215,7 +1214,9 @@ function renderGrowth(){
         '</div></article>';
     }).join("")+'</div>';
   }
-  if(partial.length){
+  /* A sezione vuota non si aggiunge niente sotto: il riquadro dice quanto manca,
+     e un secondo elenco di attesa accanto al primo e' solo rumore. */
+  if(top.length&&partial.length){
     h+='<div class="partial notch"><h4>● Raccolta dati in corso — '+partial.length+' titoli con storico sotto i '+W+' giorni</h4><div class="plist">'+
       partial.slice(0,14).map(function(g){
         return'<span class="pitem notch-s"><span>'+esc(g.t)+'</span><em>'+histSpan(g.hist)+' GG</em></span>';
