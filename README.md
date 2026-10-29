@@ -115,10 +115,18 @@ lo dichiara con l'etichetta `UTENTI` invece del numero di recensioni.
 **"I 50 di sempre" ignora il filtro piattaforme.** La classifica storica si calcola su
 qualsiasi console: restringerla a PC, Switch 2 e PS5 taglierebbe metà dei classici, e un
 Ocarina of Time assente da una classifica di sempre è un errore, non una scelta di campo.
-Il filtro generi invece si applica. Nello snapshot la lista viene dalle classifiche
-Metacritic storiche pubbliche; dal primo giro la ricalcola IGDB con `game_type = 0`
-e almeno 40 recensioni, così DLC, espansioni e riedizioni non occupano la classifica
-con doppioni dello stesso gioco.
+Il filtro generi invece si applica. La lista la costruisce IGDB con `game_type = 0`,
+che tiene fuori DLC, espansioni, port e riedizioni — altrimenti la classifica si
+riempie di doppioni dello stesso gioco. Senza `data.json` la sezione resta vuota e lo
+dichiara: non esiste una classifica di scorta incorporata nella pagina.
+
+**La soglia di recensioni era irrealistica, e la classifica usciva vuota.**
+`aggregated_rating_count >= 40` corrisponde a **un solo gioco in tutto IGDB**. A 10 i
+candidati sono circa 740. Ma a quel punto l'ordine per media premierebbe chi ha pochi
+voti fortunati, così si ordina per **media bayesiana**: la media del titolo tirata
+verso quella generale con un peso pari a 25 recensioni. Chi ne ha dieci deve stare
+molto sopra la media per salire; chi ne ha ottanta resta dov'è. Il voto mostrato resta
+quello vero — la correzione serve a ordinare, non a essere letta.
 
 **I generi arrivano da IGDB, tradotti.** Nello snapshot ne sono compilati circa 135 su 330,
 quelli riconoscibili a mano; col primo giro del cron li hanno tutti. Un titolo senza genere

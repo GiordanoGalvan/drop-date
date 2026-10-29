@@ -1138,7 +1138,10 @@ function renderAllTime(){
     return !state.genre||(g.genres&&g.genres.indexOf(state.genre)>=0);
   });
   if(!lista.length){
-    body.innerHTML='<div class="empty">Nessun titolo di genere “'+state.genre+'” in questa classifica.</div>';
+    /* Due vuoti diversi: nessun dato affatto, o un genere che non ha titoli in lista. */
+    body.innerHTML='<div class="empty">'+(state.genre
+      ?'Nessun titolo di genere “'+state.genre+'” in questa classifica.'
+      :'Classifica non disponibile: il primo giro del cron non è ancora passato.')+'</div>';
     btn.hidden=true;return;
   }
   btn.hidden=lista.length<=12;

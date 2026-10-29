@@ -305,23 +305,47 @@ async function main() {
 
   /* ---------- i 50 di sempre, su qualsiasi console ----------
      Nessun filtro di piattaforma: restringerla alle tre del sito taglierebbe
-     metà dei classici. game_type = 0 tiene fuori DLC, espansioni e riedizioni, che altrimenti
-     occupano la classifica con doppioni dello stesso gioco. Era `category`,
-     campo che IGDB ha dismesso: non da' errore, restituisce zero righe. */
-  const diSempre = await igdb(tok, "games",
-    `fields name,aggregated_rating,aggregated_rating_count,first_release_date,genres.name,platforms.name,cover.image_id;
-     where aggregated_rating_count >= 40 & aggregated_rating != null & game_type = 0 & version_parent = null;
-     sort aggregated_rating desc; limit 50;`);
+     meta' dei classici. game_type = 0 tiene fuori DLC, espansioni, port e
+     riedizioni, che altrimenti occupano la classifica con doppioni dello stesso
+     gioco. Era `category`, campo che IGDB ha dismesso: non da' errore,
+     restituisce zero righe.
+
+     La soglia di recensioni era a 40, e corrisponde a un solo gioco in tutto
+     IGDB: la classifica usciva vuota. A 10 i candidati sono circa 740, un bacino
+     vero. Ma a quel punto ordinare per media premierebbe chi ha pochi voti
+     fortunati, cosi' l'ordine usa una media bayesiana: la media del titolo
+     tirata verso quella generale con un peso pari a PRIOR recensioni. Chi ne ha
+     poche deve essere molto piu' alto della media per salire, chi ne ha tante
+     resta dov'e'. Il voto mostrato resta quello vero, non il corretto: serve a
+     ordinare, non a essere letto. */
+  const CAND_MIN = 10;
+  const PRIOR = 25;
+  const candidati = [];
+  for (let offset = 0; offset < 2000; offset += 500) {
+    const page = await igdb(tok, "games",
+      `fields name,aggregated_rating,aggregated_rating_count,first_release_date,genres.name,platforms.name,cover.image_id;
+       where aggregated_rating_count >= ${CAND_MIN} & aggregated_rating != null & game_type = 0 & version_parent = null;
+       sort aggregated_rating desc; limit 500; offset ${offset};`);
+    candidati.push(...page);
+    if (page.length < 500) break;
+  }
+  const mediaGen = candidati.reduce((a, g) => a + g.aggregated_rating, 0) / (candidati.length || 1);
+  const bayes = (g) => {
+    const n = g.aggregated_rating_count;
+    return (n * g.aggregated_rating + PRIOR * mediaGen) / (n + PRIOR);
+  };
+  const diSempre = [...candidati].sort((a, b) => bayes(b) - bayes(a)).slice(0, 50);
   const allTime = diSempre.map((g) => ({
     t: g.name,
     cov: g.cover?.image_id || null,
     score: Math.round(g.aggregated_rating),
     scoreN: g.aggregated_rating_count,
-    platName: (g.platforms || []).slice(0, 2).map((p) => p.name).join(" · ") || "—",
+    platName: (g.platforms || []).slice(0, 2).map((p) => p.name).join(" \u00b7 ") || "\u2014",
     year: g.first_release_date ? new Date(g.first_release_date * 1000).getUTCFullYear() : null,
     genres: (g.genres || []).map((x) => GENERE_IT[x.name] || x.name),
   }));
-  console.log(`di sempre: ${allTime.length} titoli, da ${allTime[0]?.score} a ${allTime.at(-1)?.score}`);
+  console.log(`di sempre: ${allTime.length} titoli su ${candidati.length} candidati, ` +
+              `da ${allTime[0]?.score} a ${allTime.at(-1)?.score}, media generale ${mediaGen.toFixed(1)}`);
 
   /* ------- storico: si legge, si accoda, non si riscrive mai da capo ------- */
   let storico = {};
@@ -348,7 +372,7 @@ async function main() {
     generated: OGGI,
     source: "IGDB",
     allTime,
-    allTimeSource: "IGDB, media stampa, minimo 40 recensioni",
+    allTimeSource: "IGDB, media stampa, minimo 10 recensioni, ordine a media bayesiana",
     games: giochi.map((g) => {
       const o = { igdb: g.igdb, t: g.t, plat: g.plat, hype: g.hype, links: g.links };
       if (g.cov) o.cov = g.cov;
