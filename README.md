@@ -7,7 +7,7 @@ Un file HTML autosufficiente più due file di dati. Nessun framework, nessuna bu
 nessuna dipendenza da installare.
 
 ```
-index.html      la pagina: calendario, pannello giorno, classifiche, i 50 di sempre,
+index.html      la pagina: calendario, pannello giorno, classifiche, top 50 ever,
                 crescita, date da definire
 data.json       uscite correnti — riscritto a ogni giro del cron
 history.json    serie storica della popolarità — solo accodato, mai riscritto
@@ -117,7 +117,7 @@ il giallo acceso che sarebbe stato naturale si fermava a 3,46, e quelle etichett
 7px. Resta comunque un giallo limone e non ambra: l'ambra marca "in evidenza" e l'oro il
 tripla A, e tre gialli adiacenti nella stessa pagina non si distinguono più.
 
-**Le due classifiche condividono `.ritem`.** "Migliori del periodo" e "I 50 di sempre"
+**Le due classifiche condividono `.ritem`.** "Migliori del periodo" e "Top 50 ever"
 usano la stessa classe, quindi crescono insieme ed è giusto che restino identiche fra
 loro: sono la stessa cosa su periodi diversi. Copertina a 76px (60px su mobile), servita
 in `t_cover_big` — a quella misura una `t_cover_small`, che ha il lato lungo di 90px, si
@@ -236,7 +236,7 @@ Sotto le quattro recensioni il valore è rumore e il titolo resta fuori dalla cl
 se mancano i voti stampa ma ci sono almeno venti voti utenti si usa quello, e la pagina
 lo dichiara con l'etichetta `UTENTI` invece del numero di recensioni.
 
-**"I 50 di sempre" ignora il filtro piattaforme.** La classifica storica si calcola su
+**"Top 50 ever" ignora il filtro piattaforme.** La classifica storica si calcola su
 qualsiasi console: restringerla alle quattro piattaforme del sito taglierebbe metà dei classici, e un
 Ocarina of Time assente da una classifica di sempre è un errore, non una scelta di campo.
 Il filtro generi invece si applica. La lista la costruisce IGDB con `game_type = 0`,
