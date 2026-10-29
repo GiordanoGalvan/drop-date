@@ -312,6 +312,23 @@ function punteggia(gruppo) {
   }
 }
 
+/* Quale numero si segue nel tempo per un dato gioco, nei "Segnalati". Per un
+   titolo non ancora uscito l'unica cosa misurabile e' l'attesa; per uno uscito
+   conta quanta gente ci sta giocando davvero. Sono grandezze diverse, quindi il
+   punto storico porta con se' l'id della metrica: senza quello, il giorno
+   dell'uscita il confronto passerebbe da "quanti lo vogliono" a "quanti ci
+   giocano" e produrrebbe un'impennata inventata. Chi confronta usa solo punti
+   con la stessa metrica.
+     Qui "Visits" resta ammesso: in questa sezione si misura il movimento di
+   attenzione, non il livello di attesa, e per un titolo appena uscito e' spesso
+   l'unico segnale che si muove. */
+function metrica(g, uscito) {
+  const p = g._pop || {};
+  const scelte = uscito ? [3, 5, 1] : [2, 1];
+  for (const m of scelte) if (p[m]) return { m, v: p[m] };
+  return { m: 0, v: g.hypes || 0 };
+}
+
 /* Il punteggio si calcola separatamente fra non-usciti e usciti: una scala
    costruita su tutto il catalogo mescolerebbe l'attesa per cio' che deve arrivare
    con il residuo di cio' che e' gia' uscito. */
