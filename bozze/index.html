@@ -63,79 +63,92 @@ h1{font:800 30px/1.1 Archivo,sans-serif;margin:0 0 6px;letter-spacing:-.02em}
 .dir-a .sc{font:400 17px Silkscreen,monospace;background:var(--amber-sol);color:#5e3a00;padding:5px 7px}
 
 /* ===================== B — EDITORIALE ================================= */
+.edit .demo{background:var(--paper);color:var(--ink);font-family:Archivo,sans-serif}
 .dir-b .demo{--paper:#fbf9f4;--ink:#1b1a17;--ink2:#56534c;--ink3:#8d887e;--rule:#ddd8cc;
-  --accent:#9c2b1f;--accent2:#1f4f4a;
-  background:var(--paper);color:var(--ink);font-family:Archivo,sans-serif}
-.dir-b .bar{display:flex;align-items:baseline;gap:14px;padding:4px 0 14px;border-bottom:2px solid var(--ink);
+  --accent:#9c2b1f;--accent2:#1f4f4a;--oggi:#fff5ef}
+/* Notturna: non e' la chiara con i colori invertiti. Su fondo scuro un rosso cupo
+   sparisce, quindi gli accenti salgono di luminosita' — corallo e verde acqua — e
+   il fondo resta caldo, altrimenti l'impianto da carta diventa un'altra cosa. */
+.dir-bn .demo{--paper:#17161b;--ink:#f1ede5;--ink2:#b6afa3;--ink3:#8b8478;--rule:#3a3640;
+  --accent:#ff8574;--accent2:#63d3bd;--oggi:#241b1c}
+.edit .bar{display:flex;align-items:baseline;gap:14px;padding:4px 0 14px;border-bottom:2px solid var(--ink);
   margin-bottom:18px;flex-wrap:wrap}
-.dir-b .brand{font:800 26px/1 Fraunces,Georgia,serif;letter-spacing:-.02em}
-.dir-b .brand em{font:400 12px Archivo,sans-serif;font-style:normal;color:var(--ink3);margin-left:10px;
+.edit .brand{font:800 26px/1 Fraunces,Georgia,serif;letter-spacing:-.02em}
+.edit .brand em{font:400 12px Archivo,sans-serif;font-style:normal;color:var(--ink3);margin-left:10px;
   letter-spacing:.14em;text-transform:uppercase}
-.dir-b .chipf{font:600 11px Archivo,sans-serif;color:var(--ink3);text-transform:uppercase;
+.edit .chipf{font:600 11px Archivo,sans-serif;color:var(--ink3);text-transform:uppercase;
   letter-spacing:.08em;padding:3px 0;border-bottom:2px solid transparent}
-.dir-b .chipf.on{color:var(--ink);border-bottom-color:var(--accent)}
-.dir-b .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-top:1px solid var(--rule)}
-.dir-b .cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-height:118px;
+.edit .chipf.on{color:var(--ink);border-bottom-color:var(--accent)}
+.edit .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-top:1px solid var(--rule)}
+.edit .cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-height:118px;
   padding:9px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
-.dir-b .cell:last-child{border-right:0}
-.dir-b .cell.today{background:#fff5ef;box-shadow:inset 0 3px 0 var(--accent)}
-.dir-b .dnum{font:600 13px Archivo,sans-serif;color:var(--ink3)}
-.dir-b .cell.today .dnum{color:var(--accent)}
-.dir-b .g{font:500 12.5px/1.3 Archivo,sans-serif;color:var(--ink2);overflow:hidden;white-space:nowrap;
+.edit .cell:last-child{border-right:0}
+.edit .cell.today{background:var(--oggi);box-shadow:inset 0 3px 0 var(--accent)}
+.edit .dnum{font:600 13px Archivo,sans-serif;color:var(--ink3)}
+.edit .cell.today .dnum{color:var(--accent)}
+.edit .g{font:500 12.5px/1.3 Archivo,sans-serif;color:var(--ink2);overflow:hidden;white-space:nowrap;
   text-overflow:ellipsis;padding-left:9px;position:relative}
-.dir-b .g::before{content:"";position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;
+.edit .g::before{content:"";position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;
   background:var(--rule)}
-.dir-b .g.hot{color:var(--ink);font-weight:600}
-.dir-b .g.hot::before{background:var(--accent2)}
-.dir-b .g.aaa{color:var(--ink);font-weight:700}
-.dir-b .g.aaa::before{background:var(--accent)}
-.dir-b .card{display:grid;grid-template-columns:132px minmax(0,1fr);gap:16px;padding:16px 0;
+.edit .g.hot{color:var(--ink);font-weight:600}
+.edit .g.hot::before{background:var(--accent2)}
+.edit .g.aaa{color:var(--ink);font-weight:700}
+.edit .g.aaa::before{background:var(--accent)}
+.edit .card{display:grid;grid-template-columns:132px minmax(0,1fr);gap:16px;padding:16px 0;
   border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
-.dir-b .card img{width:132px;aspect-ratio:3/4;object-fit:cover;display:block}
-.dir-b .card h4{margin:0 0 8px;font:600 26px/1.08 Fraunces,Georgia,serif;letter-spacing:-.015em}
-.dir-b .meta{font:500 11px Archivo,sans-serif;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
-.dir-b .rk{display:grid;grid-template-columns:30px 64px minmax(0,1fr) auto;gap:14px;align-items:center;
+.edit .card img{width:132px;aspect-ratio:3/4;object-fit:cover;display:block}
+.edit .card h4{margin:0 0 8px;font:600 26px/1.08 Fraunces,Georgia,serif;letter-spacing:-.015em}
+.edit .meta{font:500 11px Archivo,sans-serif;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
+.edit .rk{display:grid;grid-template-columns:30px 64px minmax(0,1fr) auto;gap:14px;align-items:center;
   padding:11px 0;border-bottom:1px solid var(--rule)}
-.dir-b .rk img{width:64px;aspect-ratio:3/4;object-fit:cover;display:block}
-.dir-b .rk .pos{font:600 20px Fraunces,Georgia,serif;color:var(--ink3);text-align:right}
-.dir-b .rk b{font:600 16px Archivo,sans-serif}
-.dir-b .sc{font:800 22px Fraunces,Georgia,serif;color:var(--accent)}
+.edit .rk img{width:64px;aspect-ratio:3/4;object-fit:cover;display:block}
+.edit .rk .pos{font:600 20px Fraunces,Georgia,serif;color:var(--ink3);text-align:right}
+.edit .rk b{font:600 16px Archivo,sans-serif}
+.edit .sc{font:800 22px Fraunces,Georgia,serif;color:var(--accent)}
 
 /* ===================== C — TERMINALE ================================== */
-.dir-c .demo{--bg:#0b0f0d;--surf:#101614;--surf2:#141c19;--ink:#d6f5e3;--ink2:#7fae95;--ink3:#4d7461;
-  --line:#1e2b26;--line2:#2b3f37;--acc:#39d98a;--acc2:#ffd166;--acc3:#ff7b72;
-  background:var(--bg);color:var(--ink);font-family:JetBrains Mono,ui-monospace,monospace;font-size:13px}
-.dir-c .bar{display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px solid var(--line2);
+.cterm .demo{background:var(--bg);color:var(--ink);
+  font-family:JetBrains Mono,ui-monospace,monospace;font-size:13px}
+/* Tre tinte dello stesso impianto. Il secondo accento resta ambra in tutte: serve a
+   marcare "oggi" e il tripla A, e deve restare distinguibile dal colore di base
+   anche per chi non separa bene le tinte vicine. */
+.dir-c .demo{--bg:#0b0f0d;--surf:#101614;--surf2:#141c19;--ink:#d6f5e3;--ink2:#7fae95;--ink3:#5f9079;
+  --line:#1e2b26;--line2:#2b3f37;--acc:#39d98a;--acc2:#ffd166;--acc3:#ff7b72}
+.dir-cc .demo{--bg:#080d13;--surf:#0e151e;--surf2:#121c28;--ink:#dcefff;--ink2:#8ab6d6;--ink3:#6b92ad;
+  --line:#192636;--line2:#26394f;--acc:#55cfff;--acc2:#ffd166;--acc3:#ff8a80}
+.dir-cv .demo{--bg:#0b0912;--surf:#13101f;--surf2:#191529;--ink:#ece4ff;--ink2:#b4a2dd;--ink3:#8d7fb8;
+  --line:#221c36;--line2:#332a4d;--acc:#b98cff;--acc2:#ffd166;--acc3:#ff8ab0}
+.cterm .bar{display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px solid var(--line2);
   background:var(--surf);margin-bottom:14px;flex-wrap:wrap}
-.dir-c .brand{font-weight:700;letter-spacing:.06em}
-.dir-c .brand em{font-style:normal;color:var(--ink3);margin-left:8px;font-size:11px}
-.dir-c .chipf{font-size:11px;padding:3px 7px;border:1px solid var(--line2);color:var(--ink3);background:transparent}
-.dir-c .chipf.on{color:var(--acc);border-color:var(--acc)}
-.dir-c .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line2)}
-.dir-c .cell{background:var(--surf);min-height:112px;padding:6px;display:flex;flex-direction:column;gap:2px;overflow:hidden}
-.dir-c .cell.today{background:var(--surf2);box-shadow:inset 0 0 0 1px var(--acc2)}
-.dir-c .dnum{color:var(--ink3);font-size:11px}
-.dir-c .cell.today .dnum{color:var(--acc2);font-weight:700}
-.dir-c .g{font-size:11px;line-height:1.35;color:var(--ink2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.dir-c .g::before{content:"· ";color:var(--ink3)}
-.dir-c .g.hot{color:var(--ink)}
-.dir-c .g.hot::before{content:"> ";color:var(--acc)}
-.dir-c .g.aaa{color:var(--acc2)}
-.dir-c .g.aaa::before{content:"* ";color:var(--acc2)}
-.dir-c .card{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;background:var(--surf);
+.cterm .brand{font-weight:700;letter-spacing:.06em}
+.cterm .brand em{font-style:normal;color:var(--ink3);margin-left:8px;font-size:11px}
+.cterm .chipf{font-size:11px;padding:3px 7px;border:1px solid var(--line2);color:var(--ink3);background:transparent}
+.cterm .chipf.on{color:var(--acc);border-color:var(--acc)}
+.cterm .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line2)}
+.cterm .cell{background:var(--surf);min-height:112px;padding:6px;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.cterm .cell.today{background:var(--surf2);box-shadow:inset 0 0 0 1px var(--acc2)}
+.cterm .dnum{color:var(--ink3);font-size:11px}
+.cterm .cell.today .dnum{color:var(--acc2);font-weight:700}
+.cterm .g{font-size:11px;line-height:1.35;color:var(--ink2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cterm .g::before{content:"· ";color:var(--ink3)}
+.cterm .g.hot{color:var(--ink)}
+.cterm .g.hot::before{content:"> ";color:var(--acc)}
+.cterm .g.aaa{color:var(--acc2)}
+.cterm .g.aaa::before{content:"* ";color:var(--acc2)}
+.cterm .card{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;background:var(--surf);
   border:1px solid var(--line2);padding:12px}
-.dir-c .card img{width:112px;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--line2)}
-.dir-c .card h4{margin:0 0 8px;font:700 18px/1.2 JetBrains Mono,monospace;color:var(--ink)}
-.dir-c .meta{font-size:11px;color:var(--ink3)}
-.dir-c .bar-m{height:6px;background:var(--line);display:flex;margin:8px 0 4px}
-.dir-c .bar-m i{background:var(--acc);display:block}
-.dir-c .rk{display:grid;grid-template-columns:34px 56px minmax(0,1fr) auto;gap:10px;align-items:center;
+.cterm .card img{width:112px;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--line2)}
+.cterm .card h4{margin:0 0 8px;font:700 18px/1.2 JetBrains Mono,monospace;color:var(--ink)}
+.cterm .meta{font-size:11px;color:var(--ink3)}
+.cterm .bar-m{height:6px;background:var(--line);display:flex;margin:8px 0 4px}
+.cterm .bar-m i{background:var(--acc);display:block}
+.cterm .rk{display:grid;grid-template-columns:34px 56px minmax(0,1fr) auto;gap:10px;align-items:center;
   background:var(--surf);border:1px solid var(--line2);border-top:0;padding:7px 9px}
-.dir-c .rk:first-of-type{border-top:1px solid var(--line2)}
-.dir-c .rk img{width:56px;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--line2)}
-.dir-c .rk .pos{color:var(--ink3)}
-.dir-c .rk b{font-weight:700;font-size:13px}
-.dir-c .sc{color:var(--acc);font-weight:700;font-size:16px}
+.cterm .rk:first-of-type{border-top:1px solid var(--line2)}
+.cterm .rk img{width:56px;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--line2)}
+.cterm .rk .pos{color:var(--ink3)}
+.cterm .rk b{font-weight:700;font-size:13px}
+.cterm .sc{color:var(--acc);font-weight:700;font-size:16px}
 
 /* ===================== D — VETRINA ==================================== */
 .dir-d .demo{--bg:#0d0b14;--surf:#181327;--ink:#f2eefc;--ink2:#b3a8cf;--ink3:#7d719c;
@@ -204,14 +217,20 @@ function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function cov(g,size){return g.cov?IMG+size+"/"+g.cov+".jpg":"";}
 
 var DIR=[
- {k:"a",nome:"Pixel",tag:"l'attuale",
+ {k:"a",stile:"a",nome:"Pixel",tag:"l'attuale",
   nota:"Font a pixel, bordi spessi, ombra dura. Ha un carattere forte e un costo: a corpo 7-8 il testo a pixel si legge male, e l'ombra piena occupa spazio su schermo stretto. È il riferimento per giudicare le altre."},
- {k:"b",nome:"Editoriale",tag:"carta",
+ {k:"b",stile:"b",fam:"edit",nome:"Editoriale",tag:"carta chiara",
   nota:"Titoli in serif, griglia a filetti sottili, fondo caldo. Il colore diventa raro e quindi significativo: rosso per oggi e per il tripla A, verde per i rilevanti. Più righe leggibili nella stessa altezza, meno personaggio."},
- {k:"c",nome:"Terminale",tag:"denso",
+ {k:"c",stile:"c",fam:"cterm",nome:"Terminale verde",tag:"denso",
   nota:"Monospaziato, scuro, densità alta e marcatori testuali al posto delle fasce colorate. Ci stanno più titoli per cella e la lettura è a scansione. Fa molto strumento e poco rivista."},
- {k:"d",nome:"Vetrina",tag:"copertine",
-  nota:"La copertina diventa protagonista: sfondo sfocato dall'artwork, angoli morbidi, accenti in gradiente. Il più attraente a colpo d'occhio, il più lento da leggere quando i titoli sono quaranta in un giorno."}
+ {k:"d",stile:"d",nome:"Vetrina",tag:"copertine",
+  nota:"La copertina diventa protagonista: sfondo sfocato dall'artwork, angoli morbidi, accenti in gradiente. Il più attraente a colpo d'occhio, il più lento da leggere quando i titoli sono quaranta in un giorno."},
+ {k:"bn",stile:"b",fam:"edit",nome:"Editoriale notturno",tag:"carta scura",
+  nota:"Lo stesso impianto di B su fondo scuro. Non è la versione chiara coi colori invertiti: su scuro un rosso cupo sparisce, quindi gli accenti salgono di luminosità — corallo per oggi e per il tripla A, verde acqua per i rilevanti — e il fondo resta caldo, altrimenti l'impianto da carta diventa un'altra cosa."},
+ {k:"cc",stile:"c",fam:"cterm",nome:"Terminale celeste",tag:"denso",
+  nota:"Lo stesso impianto di C con il blu al posto del verde. Il celeste su fondo bluastro è meno aggressivo del verde fosforescente e si allontana dal cliché del terminale anni Ottanta. L'ambra di oggi e del tripla A resta, perché deve staccare dal colore di base."},
+ {k:"cv",stile:"c",fam:"cterm",nome:"Terminale viola",tag:"denso",
+  nota:"Stessa cosa in viola. È la tinta più vicina a quella che il sito usa già per i bordi del calendario, quindi è la variante che cambierebbe meno la riconoscibilità della pagina. Il viola scurisce più del celeste: regge bene sui titoli, meno sui testi secondari."}
 ];
 
 function barra(k){
@@ -284,15 +303,15 @@ fetch("../data.json",{cache:"no-store"}).then(function(r){
   var top=(d.allTime||[]).filter(function(g){return g.cov;}).slice(0,2);
 
   document.getElementById("out").innerHTML=DIR.map(function(D){
-    return '<section class="dir dir-'+D.k+'">'+
+    return '<section class="dir dir-'+D.k+(D.fam?" "+D.fam:"")+'">'+
       '<div class="dir-h"><b>'+D.nome+'</b><span class="tag">'+D.tag+'</span><p>'+D.nota+'</p></div>'+
-      '<div class="demo">'+barra(D.k)+
+      '<div class="demo">'+barra(D.stile)+
         '<p class="lab" style="color:inherit;opacity:.55">calendario · sette giorni da oggi</p>'+
-        '<div class="cal">'+giorni.map(function(x){return cella(D.k,x.ds,x.lista,oggi);}).join("")+'</div>'+
+        '<div class="cal">'+giorni.map(function(x){return cella(D.stile,x.ds,x.lista,oggi);}).join("")+'</div>'+
         '<div class="row2" style="margin-top:18px">'+
-          '<div><p class="lab" style="color:inherit;opacity:.55">in evidenza</p>'+(star?scheda(D.k,star):"")+'</div>'+
+          '<div><p class="lab" style="color:inherit;opacity:.55">in evidenza</p>'+(star?scheda(D.stile,star):"")+'</div>'+
           '<div><p class="lab" style="color:inherit;opacity:.55">top 50 ever</p>'+
-            top.map(function(g,i){return riga(D.k,g,i);}).join("")+'</div>'+
+            top.map(function(g,i){return riga(D.stile,g,i);}).join("")+'</div>'+
         '</div>'+
       '</div></section>';
   }).join("");
