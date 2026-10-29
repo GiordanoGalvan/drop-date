@@ -102,6 +102,38 @@ sta affermando che valgono uguale.
 non hanno copertina, e si riconosce a vista: un segnaposto inventato spacciato per
 copertina reale è fuorviante.
 
+**"Segnalati" guarda i titoli usciti, non quelli attesi.** La sezione elenca giochi
+usciti negli ultimi quattro mesi che stanno impennando: è il posto dove un titolo
+sconosciuto si fa notare dopo l'uscita. Prima seguiva i non-usciti, cioè accumulo di
+attesa, che è un'altra cosa e la sezione *In evidenza* già la copre.
+
+Il numero seguito cambia col gioco: per un titolo non ancora uscito l'unica cosa
+misurabile è l'attesa (*Want to Play*), per uno uscito conta quanta gente ci sta
+giocando (*Playing*, poi *24hr Peak Players*, poi *Visits*). Sono grandezze diverse,
+quindi **ogni punto storico porta con sé l'id della metrica** e il confronto usa solo
+punti omogenei: senza quello, il giorno dell'uscita il paragone passerebbe da "quanti
+lo vogliono" a "quanti ci giocano" e inventerebbe un'impennata esattamente lì — l'errore
+più visibile che questa sezione possa fare.
+
+**"Date da definire" parte chiusa.** Sono migliaia di titoli e la sezione li stampava
+tutti: una pagina che non finisce mai, e qualche migliaio di nodi ricostruiti a ogni
+cambio di filtro. Ora l'intestazione porta il conteggio, si apre con un clic e mostra i
+primi 48; il resto solo su richiesta esplicita. L'ordine è dal più chiacchierato al meno,
+per attesa decrescente.
+
+**La ricerca tollera gli errori di battitura, e lo dichiara.** Prima la corrispondenza
+esatta per sottostringa; solo se trova meno di cinque risultati parte la passata
+tollerante, sotto un'intestazione separata *"forse cercavi"* — un risultato approssimato
+presentato come esatto fa credere che il titolo si chiami così. La distanza di edit ha un
+tetto (1 errore fino a 4 caratteri, 2 fino a 8, poi 3) e si interrompe appena lo supera.
+
+Il prefiltro è a pezzi di tre lettere: un errore rovina il pezzo che lo contiene ma
+lascia intatti quelli accanto, quindi il titolo giusto passa comunque e la distanza si
+calcola su poche decine di candidati invece che su 28.717 titoli a ogni tasto premuto —
+misurato, 7-14 ms per ricerca. Ogni errore costa 25 punti di attesa: un titolo molto
+atteso con una lettera sbagliata resta davanti a uno ignoto scritto giusto, ma non di
+fronte a due errori.
+
 **La crescita si calcola sulle date, non sulle posizioni.** Se una notte il cron salta,
 la finestra a 7 giorni resta di 7 giorni veri invece di diventare di 8. Un giro mancato
 degrada il dato, non lo falsa.

@@ -219,7 +219,7 @@ function votoDi(gioco) {
    Si fondono per rango, non per valore: ogni segnale diventa un percentile fra i
    giochi che quel segnale copre, e si tiene il piu' alto. Cosi' scale incompatibili
    non si sommano a vanvera, e un titolo coperto da una sola fonte non viene punito. */
-const POP_TIPI = { 2: "Want to Play", 1: "Visits" };
+const POP_TIPI = { 2: "Want to Play", 1: "Visits", 3: "Playing", 5: "24hr Peak Players" };
 
 async function popolarita(tok) {
   const out = new Map();
@@ -243,6 +243,8 @@ async function popolarita(tok) {
 /* Percentile dentro un gruppo. A parita' di valore, stesso punteggio: senza questo
    un pareggio verrebbe spezzato dall'ordine di arrivo, cioe' dal nulla. */
 function percentili(gruppo) {
+  /* Solo segnali di anticipazione: "Playing" misura quanto un gioco e' vivo
+     adesso, non quanto e' atteso, e nel percentile dell'attesa non ci entra. */
   const segnali = [(g) => g._pop?.[2] || 0, (g) => g._pop?.[1] || 0, (g) => g.hypes || 0];
   for (const leggi of segnali) {
     const con = gruppo.filter((g) => leggi(g) > 0).sort((a, b) => leggi(a) - leggi(b));
@@ -256,6 +258,20 @@ function percentili(gruppo) {
       i = j + 1;
     }
   }
+}
+
+/* Quale numero si segue nel tempo per un dato gioco. Per un titolo non ancora
+   uscito l'unica cosa misurabile e' l'attesa; per uno uscito conta quanta gente
+   ci sta giocando davvero. Sono grandezze diverse, quindi il punto storico porta
+   con se' l'id della metrica: senza quello, il giorno dell'uscita il confronto
+   passerebbe da "quanti lo vogliono" a "quanti ci giocano" e produrrebbe
+   un'impennata inventata, cioe' l'errore piu' visibile che questa sezione possa
+   fare. Chi confronta, poi, usa solo punti con la stessa metrica. */
+function metrica(g, uscito) {
+  const p = g._pop || {};
+  const scelte = uscito ? [3, 5, 1] : [2, 1];
+  for (const m of scelte) if (p[m]) return { m, v: p[m] };
+  return { m: 0, v: g.hypes || 0 };
 }
 
 /* Il percentile si calcola separatamente fra non-usciti e usciti: un valore assoluto
@@ -342,9 +358,6 @@ async function main() {
     g.genres = (g._gioco?.genres || []).map((x) => GENERE_IT[x.name] || x.name).filter(Boolean);
     Object.assign(g, votoDi(g._gioco));
     g._pop = pop.get(g.igdb);
-    /* Il numero che finisce nello storico: un solo valore per gioco, il piu'
-       informativo fra quelli disponibili. La crescita si misura su questo. */
-    g.pop = g._pop?.[2] || g._pop?.[1] || g.hypes || 0;
   }
   assegnaAttesa(giochi);
 
@@ -399,17 +412,26 @@ async function main() {
     catch (e) { throw new Error(`history.json illeggibile, mi fermo per non perderlo: ${e.message}`); }
   }
   const limite = iso(addDays(oggi, -STORICO_GIORNI));
+  /* Un titolo resta seguito per questi giorni dopo l'uscita: e' la finestra in cui
+     un gioco sconosciuto puo' impennarsi e la sezione "Segnalati" ha senso. Oltre,
+     non e' piu' una novita' e la serie viene potata. */
+  const DOPO_USCITA = 120;
+  const sogliaUscita = iso(addDays(oggi, -DOPO_USCITA));
+  const seguito = (g) => !g.date || g.date >= sogliaUscita;
   let nuovi = 0;
   for (const g of giochi) {
-    if (g.date && g.date < OGGI) continue;        // già uscito: la crescita non interessa più
+    if (!seguito(g)) continue;
+    const uscito = !!(g.date && g.date < OGGI);
+    const { m, v } = metrica(g, uscito);
     const k = String(g.igdb);
     const serie = storico[k] || (storico[k] = []);
-    if (serie.length && serie[serie.length - 1].d === OGGI) serie[serie.length - 1].f = g.pop;
-    else { serie.push({ d: OGGI, f: g.pop }); nuovi++; }
+    const ultimo = serie[serie.length - 1];
+    if (ultimo && ultimo.d === OGGI) { ultimo.f = v; ultimo.m = m; }
+    else { serie.push({ d: OGGI, f: v, m }); nuovi++; }
     while (serie.length && serie[0].d < limite) serie.shift();
   }
-  /* Potatura: via le serie di giochi ormai usciti o spariti dal listino. */
-  const vivi = new Set(giochi.filter((g) => !g.date || g.date >= OGGI).map((g) => String(g.igdb)));
+  /* Potatura: via le serie dei titoli spariti dal listino o usciti da troppo. */
+  const vivi = new Set(giochi.filter(seguito).map((g) => String(g.igdb)));
   for (const k of Object.keys(storico)) if (!vivi.has(k)) delete storico[k];
 
   /* --------- data.json: solo i campi che servono alla pagina --------- */
