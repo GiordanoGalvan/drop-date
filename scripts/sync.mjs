@@ -225,7 +225,11 @@ async function popolarita(tok) {
   const out = new Map();
   for (const tipo of Object.keys(POP_TIPI)) {
     let n = 0;
-    for (let offset = 0; offset < 10000; offset += 500) {
+    /* Il tetto era a 10.000 e veniva raggiunto esatto da tutti e quattro i tipi:
+       era il tetto a decidere, non i dati. Fuori restavano i titoli sconosciuti,
+       cioe' proprio quelli che la sezione "Segnalati" esiste per scovare, che
+       ripiegavano su `hypes` — un contatore di attesa, fermo dopo l'uscita. */
+    for (let offset = 0; offset < 60000; offset += 500) {
       const page = await igdb(tok, "popularity_primitives",
         `fields game_id,value; where popularity_type = ${tipo}; sort value desc; limit 500; offset ${offset};`);
       for (const r of page) {
