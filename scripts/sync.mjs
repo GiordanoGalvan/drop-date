@@ -221,26 +221,37 @@ function votoDi(gioco) {
    non si sommano a vanvera, e un titolo coperto da una sola fonte non viene punito. */
 const POP_TIPI = { 2: "Want to Play", 1: "Visits", 3: "Playing", 5: "24hr Peak Players" };
 
-async function popolarita(tok) {
+/* La popolarita' si chiede per i titoli che servono, non si scarica a classifica
+   globale. Scaricarla a classifica voleva dire fissare un tetto e sperare che i
+   propri titoli ci stessero dentro: a 10.000 tutti e quattro i tipi lo toccavano
+   esatto, alzato a 60.000 tre su quattro lo toccavano ancora. Era il tetto a
+   decidere la copertura, e fuori restavano i titoli sconosciuti — cioe' proprio
+   quelli che "Segnalati" esiste per scovare. Chiesti per id, i quattro tipi
+   arrivano in una sola passata e la copertura e' esatta per costruzione.
+   Cento id per richiesta: quattro tipi fanno al massimo 400 righe, sotto il
+   limite di 500 per pagina, quindi nessuna risposta puo' restare tagliata. */
+const POP_LOTTO = 100;
+
+async function popolarita(tok, ids) {
+  const tipi = Object.keys(POP_TIPI).join(",");
   const out = new Map();
-  for (const tipo of Object.keys(POP_TIPI)) {
-    let n = 0;
-    /* Il tetto era a 10.000 e veniva raggiunto esatto da tutti e quattro i tipi:
-       era il tetto a decidere, non i dati. Fuori restavano i titoli sconosciuti,
-       cioe' proprio quelli che la sezione "Segnalati" esiste per scovare, che
-       ripiegavano su `hypes` — un contatore di attesa, fermo dopo l'uscita. */
-    for (let offset = 0; offset < 60000; offset += 500) {
-      const page = await igdb(tok, "popularity_primitives",
-        `fields game_id,value; where popularity_type = ${tipo}; sort value desc; limit 500; offset ${offset};`);
-      for (const r of page) {
-        if (!out.has(r.game_id)) out.set(r.game_id, {});
-        out.get(r.game_id)[tipo] = r.value;
-      }
-      n += page.length;
-      if (page.length < 500) break;
+  const conta = {};
+  for (let i = 0; i < ids.length; i += POP_LOTTO) {
+    const lotto = ids.slice(i, i + POP_LOTTO);
+    const page = await igdb(tok, "popularity_primitives",
+      `fields game_id,value,popularity_type;
+       where popularity_type = (${tipi}) & game_id = (${lotto.join(",")});
+       limit 500;`);
+    if (page.length >= 500)
+      console.warn(`ATTENZIONE: lotto di popolarita' pieno a 500 righe, qualcosa e' stato tagliato.`);
+    for (const r of page) {
+      if (!out.has(r.game_id)) out.set(r.game_id, {});
+      out.get(r.game_id)[r.popularity_type] = r.value;
+      conta[r.popularity_type] = (conta[r.popularity_type] || 0) + 1;
     }
-    console.log(`popolarita "${POP_TIPI[tipo]}": ${n} titoli`);
   }
+  for (const [t, n] of Object.entries(conta))
+    console.log(`popolarita "${POP_TIPI[t]}": ${n} titoli su ${ids.length} richiesti`);
   return out;
 }
 
@@ -291,7 +302,6 @@ function assegnaAttesa(giochi) {
 async function main() {
   const tok = await token();
   const tipoSito = await idSiti(tok);
-  const pop = await popolarita(tok);
   const plat = await idPiattaforme(tok);
   const idToKey = Object.fromEntries(Object.entries(plat).map(([k, v]) => [v, k]));
   const ids = Object.values(plat).join(",");
@@ -354,6 +364,7 @@ async function main() {
   }
 
   const giochi = [...perGioco.values()];
+  const pop = await popolarita(tok, giochi.map((g) => g.igdb));
   for (const g of giochi) {
     g.plat.sort((a, b) => ["pc", "switch2", "ps5"].indexOf(a) - ["pc", "switch2", "ps5"].indexOf(b));
     if (g._cat === 0 && g._d) g.date = iso(g._d);
