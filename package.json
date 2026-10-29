@@ -1,0 +1,14 @@
+{
+  "name": "radar-uscite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Calendario delle uscite videogiochi per PC, Switch 2 e PS5, con tracciamento slittamenti e crescita follower.",
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "serve": "node --run-serve 2>/dev/null || python3 -m http.server 8080"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

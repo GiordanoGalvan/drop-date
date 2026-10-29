@@ -1,0 +1,116 @@
+# Radar Uscite
+
+Calendario delle uscite videogiochi per **PC, Switch 2 e PS5**, con vista giornaliera,
+tracciamento degli slittamenti e classifica dei titoli in crescita.
+
+Un file HTML autosufficiente più due file di dati. Nessun framework, nessuna build,
+nessuna dipendenza da installare.
+
+```
+index.html      la pagina: calendario, pannello giorno, classifiche, i 50 di sempre,
+                crescita, date da definire
+data.json       uscite correnti — riscritto a ogni giro del cron
+history.json    serie storica dei follower — solo accodato, mai riscritto
+scripts/sync.mjs            scarica da IGDB e aggiorna i due JSON
+.github/workflows/sync.yml  cron notturno che esegue il sync e committa
+```
+
+La pagina carica `data.json` a runtime. Se non lo trova — aperta da sola, senza rete,
+in anteprima — ripiega su uno snapshot incorporato del 29 ottobre 2026 e lo dichiara nel
+piè di pagina. Non si rompe mai, al massimo mostra dati vecchi dicendolo.
+
+## Attivazione
+
+### 1. Credenziali IGDB
+
+IGDB appartiene a Twitch, quindi le credenziali si prendono da lì. È gratuito.
+
+1. Su `dev.twitch.tv/console/apps` registra una nuova applicazione.
+   Come OAuth Redirect URL va bene `http://localhost` — non viene usato.
+   Categoria: *Application Integration*.
+2. Prendi il **Client ID** e genera il **Client Secret**. Il secret si vede una volta sola.
+
+### 2. Secret su GitHub
+
+Nel repository, *Settings → Secrets and variables → Actions → New repository secret*:
+
+| Nome | Valore |
+|---|---|
+| `TWITCH_CLIENT_ID` | il Client ID |
+| `TWITCH_CLIENT_SECRET` | il Client Secret |
+
+### 3. Primo giro
+
+*Actions → Sync IGDB → Run workflow*. Da lì in poi parte da solo ogni notte alle 04:23 UTC.
+
+Il primo giro riempie `data.json` con i dati veri e crea `history.json` con un solo punto
+per titolo. La sezione "In crescita" resta vuota per circa due settimane: serve lo storico,
+e lo storico si accumula un giorno alla volta. È previsto, non è un guasto.
+
+### 4. Pubblicazione
+
+Qualsiasi hosting statico va bene, basta che serva la cartella così com'è.
+Su Netlify: collega il repository, lascia vuoto il comando di build, directory di
+pubblicazione `.` — stessa configurazione di Galleria Aste. GitHub Pages funziona uguale.
+
+Il deploy si riattiva da sé a ogni commit del bot, quindi il sito segue il cron
+senza altri passaggi.
+
+## Prova in locale
+
+```bash
+TWITCH_CLIENT_ID=xxx TWITCH_CLIENT_SECRET=yyy npm run sync
+python3 -m http.server 8080      # poi apri http://localhost:8080
+```
+
+Aprire `index.html` con doppio clic non basta: `fetch` sui file locali viene bloccato
+dal browser e la pagina ripiega sullo snapshot. Serve un server, anche banale.
+
+## Scelte da sapere
+
+**L'attesa è un percentile, non un numero assoluto.** Ogni titolo non ancora uscito riceve
+un punteggio 0-100 in base al suo rango di follower fra gli altri titoli non ancora usciti.
+Un valore assoluto non si confronta fra novembre, pieno di uscite, e febbraio che è deserto:
+il percentile si auto-regola. La soglia dei "rilevanti" in calendario è a 50 e si cambia
+da una riga sola in `index.html` (`var REL=50`).
+
+**La crescita si calcola sulle date, non sulle posizioni.** Se una notte il cron salta,
+la finestra a 7 giorni resta di 7 giorni veri invece di diventare di 8. Un giro mancato
+degrada il dato, non lo falsa.
+
+**Gli slittamenti escono dal confronto fra giri.** `sync.mjs` legge il `data.json` del
+giorno prima e, se una data è cambiata, scrive la precedente nel campo `was`. È l'unico
+momento in cui quel dato esiste: IGDB espone la data corrente, non la storia delle date.
+Per questo il `data.json` va committato e non rigenerato da zero.
+
+**I voti vengono da IGDB, non da Metacritic.** IGDB espone `aggregated_rating`, la media
+delle testate, nella stessa chiamata del resto: nessuna seconda API, nessuna credenziale
+in più. Metacritic non ha API pubblica e OpenCritic ne richiederebbe una a parte.
+Sotto le quattro recensioni il valore è rumore e il titolo resta fuori dalla classifica;
+se mancano i voti stampa ma ci sono almeno venti voti utenti si usa quello, e la pagina
+lo dichiara con l'etichetta `UTENTI` invece del numero di recensioni.
+
+**"I 50 di sempre" ignora il filtro piattaforme.** La classifica storica si calcola su
+qualsiasi console: restringerla a PC, Switch 2 e PS5 taglierebbe metà dei classici, e un
+Ocarina of Time assente da una classifica di sempre è un errore, non una scelta di campo.
+Il filtro generi invece si applica. Nello snapshot la lista viene dalle classifiche
+Metacritic storiche pubbliche; dal primo giro la ricalcola IGDB con `category = 0`
+e almeno 40 recensioni, così DLC, espansioni e riedizioni non occupano la classifica
+con doppioni dello stesso gioco.
+
+**I generi arrivano da IGDB, tradotti.** Nello snapshot ne sono compilati circa 135 su 330,
+quelli riconoscibili a mano; col primo giro del cron li hanno tutti. Un titolo senza genere
+sparisce quando il filtro è attivo — è il comportamento giusto, ma spiega perché oggi
+filtrando si vede meno del previsto.
+
+**`history.json` non è ricostruibile.** Le date di uscita si riallineano quando si vuole,
+i follower di ieri no. Lo script lo legge, accoda e pota a 120 giorni; se il file risulta
+illeggibile si ferma invece di sovrascriverlo.
+
+## Da fare
+
+- Cover reali: IGDB restituisce `cover.image_id`, oggi la pagina disegna segnaposto
+  procedurali. Sostituibile senza toccare altro.
+- Soglia dei rilevanti da ritarare quando si vedono i volumi veri di IGDB.
+- Se i voti IGDB risultassero troppo radi, OpenCritic ha un'API vera via RapidAPI:
+  si aggancia come seconda fonte di `score` senza toccare il resto della pipeline.

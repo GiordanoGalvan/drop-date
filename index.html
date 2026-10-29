@@ -1,0 +1,1212 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Radar Uscite Videogiochi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&display=swap">
+<style>
+/* Layout: banda pixel sticky in alto; desktop = griglia mese fluida + pannello giorno 380px affiancato; "In crescita" sotto; mobile = colonna singola, pannello giorno come bottom sheet a tutto schermo. */
+:root{
+  --bg:#eceef6; --bg2:#dfe2ee; --surf:#ffffff; --surf2:#f4f5fb; --surf3:#e7e9f4;
+  --ink:#191b28; --ink2:#474d66; --ink3:#777d99;
+  --line:#c2c7dd; --line2:#9aa1bd; --line3:#6b7292;
+  --amber:#b56f00; --amber-sol:#f0a823; --amber-ink:#5e3a00;
+  --violet:#7b3fd4; --violet-sol:#a36bf0;
+  --pc:#1f6f8c; --sw:#c2342a; --ps:#2250c8;
+  --ok:#2c7d4e; --warnc:#9a6a07;
+  --shadow:rgba(25,27,40,.16);
+  --f-px:"Silkscreen","Courier New",monospace;
+  --f-body:"Archivo",system-ui,-apple-system,sans-serif;
+  --f-nar:"Archivo Narrow","Archivo",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1020; --bg2:#080a16; --surf:#191c33; --surf2:#20244000; --surf2:#202440; --surf3:#2a2f52;
+  --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
+  --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
+  --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
+  --violet:#b388f5; --violet-sol:#a36bf0;
+  --pc:#5fc2e0; --sw:#ff6a5e; --ps:#6b95ff;
+  --ok:#5fd396; --warnc:#e0b347;
+  --shadow:rgba(0,0,0,.5);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1020; --bg2:#080a16; --surf:#191c33; --surf2:#202440; --surf3:#2a2f52;
+  --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
+  --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
+  --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
+  --violet:#b388f5; --violet-sol:#a36bf0;
+  --pc:#5fc2e0; --sw:#ff6a5e; --ps:#6b95ff;
+  --ok:#5fd396; --warnc:#e0b347;
+  --shadow:rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;
+  background-image:linear-gradient(var(--bg2),var(--bg) 320px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surf)}
+img,canvas{max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:var(--violet)}
+a.lk,a.ocard,a.tbai{text-decoration:none;color:inherit}
+a.lk{color:var(--ink2)}
+:focus-visible{outline:3px solid var(--amber-sol);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+
+/* ---- primitive pixel ---- */
+.px{font-family:var(--f-px);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.notch{clip-path:polygon(4px 0,calc(100% - 4px) 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px)}
+.notch-s{clip-path:polygon(3px 0,calc(100% - 3px) 0,100% 3px,100% calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,0 calc(100% - 3px),0 3px)}
+.frame{background:var(--surf);border:2px solid var(--line2);box-shadow:4px 4px 0 var(--shadow)}
+
+/* ---- toolbar ---- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surf);
+  border-bottom:3px solid var(--line3);box-shadow:0 4px 0 var(--shadow)}
+.bar-in{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.brand-mark{width:26px;height:26px;flex:none}
+.brand-txt{font-family:var(--f-px);font-size:13px;line-height:1.1;letter-spacing:.02em}
+.brand-txt em{display:block;font-style:normal;font-size:8px;color:var(--ink3);margin-top:3px}
+.bar-sp{flex:1 1 auto}
+.pf{display:flex;gap:6px;flex-wrap:wrap}
+.pf-b{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;font-family:var(--f-px);font-size:9px;
+  background:var(--surf2);border:2px solid var(--line);color:var(--ink3);text-transform:uppercase}
+.pf-b svg{width:14px;height:14px;flex:none}
+.pf-b[aria-pressed="true"]{color:var(--ink);background:var(--surf);border-color:currentColor}
+.pf-b[data-p="pc"][aria-pressed="true"]{color:var(--pc)}
+.pf-b[data-p="switch2"][aria-pressed="true"]{color:var(--sw)}
+.pf-b[data-p="ps5"][aria-pressed="true"]{color:var(--ps)}
+.seg{display:flex;border:2px solid var(--line);background:var(--surf2)}
+.seg button{padding:6px 8px;font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase}
+.seg button[aria-pressed="true"]{background:var(--amber-sol);color:var(--amber-ink)}
+.lab{font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+
+/* ---- intestazione mese ---- */
+.wrap{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+.mhead{display:flex;align-items:flex-end;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.mnav{display:flex;gap:6px}
+.mnav button{width:34px;height:34px;display:grid;place-items:center;background:var(--surf);
+  border:2px solid var(--line2);box-shadow:3px 3px 0 var(--shadow);color:var(--ink2)}
+.mnav button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.mnav svg{width:12px;height:12px}
+.mtitle{font-family:var(--f-px);font-size:clamp(17px,4.4vw,26px);line-height:1;margin:0}
+.mtitle span{color:var(--amber)}
+.mmeta{font-family:var(--f-px);font-size:9px;color:var(--ink3);margin-left:auto;text-align:right;line-height:1.7}
+.mmeta b{color:var(--ink2);font-weight:400}
+
+/* ---- griglia ---- */
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+@media (min-width:1000px){.main.open{grid-template-columns:minmax(0,1fr) 382px}}
+.calcol{min-width:0}
+.flipwrap{perspective:1600px}
+.dows{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:6px}
+.dow{font-family:var(--f-px);font-size:9px;color:var(--ink3);text-align:center;padding:4px 0;
+  background:var(--surf3);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;transform-origin:left center}
+.grid.anim-out{animation:pgOut .17s ease-in forwards}
+.grid.anim-in{animation:pgIn .22s ease-out backwards}
+.grid.rev{transform-origin:right center}
+@keyframes pgOut{from{transform:rotateY(0deg);opacity:1}to{transform:rotateY(-24deg) scale(.97);opacity:0}}
+@keyframes pgIn{from{transform:rotateY(24deg) scale(.97);opacity:0}to{transform:rotateY(0deg) scale(1);opacity:1}}
+.grid.rev.anim-out{animation-name:pgOutR}
+.grid.rev.anim-in{animation-name:pgInR}
+@keyframes pgOutR{from{transform:rotateY(0deg);opacity:1}to{transform:rotateY(24deg) scale(.97);opacity:0}}
+@keyframes pgInR{from{transform:rotateY(-24deg) scale(.97);opacity:0}to{transform:rotateY(0deg) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.grid.anim-out,.grid.anim-in{animation-duration:.01s}}
+
+.cell{position:relative;min-height:116px;background:var(--surf);border:2px solid var(--line);
+  padding:4px;display:flex;flex-direction:column;gap:3px;text-align:left;overflow:hidden}
+.cell:hover{border-color:var(--line3);z-index:2}
+.cell.out{background:var(--surf2);opacity:.5}
+.cell.wknd{background:var(--surf2)}
+.cell.sel{border-color:var(--amber-sol);box-shadow:inset 0 0 0 2px var(--amber-sol)}
+.cell.today .dnum{background:var(--amber-sol);color:var(--amber-ink)}
+.dnum{font-family:var(--f-px);font-size:11px;color:var(--ink2);padding:2px 4px;align-self:flex-start;
+  background:var(--surf3);min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-direction:column;gap:2px;min-width:0}
+.chip{display:flex;align-items:center;gap:4px;min-width:0;background:var(--surf2);
+  border-left:3px solid var(--line2);padding:2px 3px}
+.chip i{width:5px;height:5px;flex:none;display:block}
+.chip span{font-family:var(--f-nar);font-weight:600;font-size:11.5px;line-height:1.2;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.chip.hot{border-left-color:var(--amber-sol);background:color-mix(in srgb,var(--amber-sol) 13%,var(--surf))}
+.badge{position:absolute;right:3px;bottom:3px;font-family:var(--f-px);font-size:8px;
+  background:var(--line3);color:var(--surf);padding:3px 5px;letter-spacing:0;white-space:nowrap}
+.badge.two{background:var(--surf3);color:var(--ink2);border:1px solid var(--line2)}
+.badge.two b{color:var(--amber);font-weight:400}
+.cell .shift{position:absolute;right:3px;top:3px;font-family:var(--f-px);font-size:8px;color:var(--violet)}
+@media (max-width:720px){
+  .grid,.dows{gap:2px}
+  .cell{min-height:74px;padding:2px;gap:2px}
+  .dnum{font-size:9px;padding:1px 3px;min-width:16px}
+  .chip i{display:none}
+  .chip span{font-size:9.5px;line-height:1.15;white-space:normal;display:-webkit-box;
+    -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .chip{gap:0;padding:1px 2px 2px 3px;border-left-width:3px;align-items:flex-start}
+  .badge{font-size:7px;padding:2px 3px;right:2px;bottom:2px}
+  .dow{font-size:7px}
+}
+
+/* ---- pannello giorno ---- */
+.panel{min-width:0}
+@media (min-width:1000px){
+  .panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);max-height:calc(100vh - 110px);
+    display:flex;flex-direction:column;background:var(--surf);border:2px solid var(--line2);
+    box-shadow:4px 4px 0 var(--shadow)}
+}
+@media (max-width:999px){
+  .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--surf);
+    display:flex;flex-direction:column;transform:translateY(0);animation:sheet .22s ease-out}
+  @keyframes sheet{from{transform:translateY(14%);opacity:.4}to{transform:translateY(0);opacity:1}}
+  .panel-head{padding-top:calc(10px + env(safe-area-inset-top,0px))}
+}
+.panel[hidden]{display:none!important}
+.panel-head{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:3px solid var(--line3);
+  background:var(--surf2);position:sticky;top:0;z-index:2}
+.panel-head h2{font-family:var(--f-px);font-size:12px;margin:0;line-height:1.5}
+.panel-head p{margin:4px 0 0;font-family:var(--f-px);font-size:8px;color:var(--ink3)}
+.panel-x{width:30px;height:30px;flex:none;margin-left:auto;display:grid;place-items:center;
+  background:var(--surf3);border:2px solid var(--line2);font-family:var(--f-px);font-size:11px;color:var(--ink2)}
+.panel-body{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:16px;flex:1;
+  padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.blk-h{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.blk-h h3{font-family:var(--f-px);font-size:10px;margin:0;text-transform:uppercase;letter-spacing:.04em}
+.blk-h .n{font-family:var(--f-px);font-size:8px;background:var(--surf3);color:var(--ink3);padding:3px 5px}
+.blk-h .rule{flex:1;height:0;border-top:2px dotted var(--line2)}
+
+/* card in evidenza */
+.feat{display:flex;flex-direction:column;gap:10px}
+.fcard{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;background:var(--surf2);
+  border:2px solid var(--line);padding:8px}
+.cov{width:100%;aspect-ratio:3/4;image-rendering:pixelated;display:block;border:2px solid var(--line3);
+  background:var(--surf3);max-width:100%}
+.fcard .cov{width:72px}
+.fc-b{min-width:0;display:flex;flex-direction:column;gap:6px}
+.gt{font-family:var(--f-body);font-weight:700;font-size:15px;line-height:1.2;margin:0;letter-spacing:-.01em;
+  text-wrap:balance}
+.gsub{font-family:var(--f-nar);font-size:12px;color:var(--ink3);margin:0}
+.rowx{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pchip{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-px);font-size:7px;
+  padding:3px 4px;border:1px solid currentColor;text-transform:uppercase}
+.pchip svg{width:10px;height:10px}
+.pchip.pc{color:var(--pc)}.pchip.switch2{color:var(--sw)}.pchip.ps5{color:var(--ps)}
+.price{font-family:var(--f-px);font-size:9px;color:var(--ink);background:var(--surf3);padding:3px 5px}
+.price.free{color:var(--ok)}
+.links{display:flex;gap:5px;margin-left:auto}
+.lk{width:26px;height:26px;display:grid;place-items:center;background:var(--surf);border:2px solid var(--line2);
+  color:var(--ink2)}
+.lk:hover{color:var(--ink);border-color:var(--line3);background:var(--surf3)}
+.lk svg{width:14px;height:14px}
+.hypebar{display:flex;align-items:center;gap:6px}
+.hypebar .track{flex:1;height:8px;background:var(--surf3);border:1px solid var(--line2);display:flex;gap:1px;padding:1px}
+.hypebar .track i{flex:1;background:var(--line);display:block}
+.hypebar .track i.on{background:var(--amber-sol)}
+.hypebar b{font-family:var(--f-px);font-size:8px;color:var(--ink3);font-weight:400}
+.shiftnote{font-family:var(--f-px);font-size:8px;color:var(--violet);display:flex;align-items:center;gap:4px}
+.shiftnote s{color:var(--ink3)}
+
+/* lista compatta altre uscite */
+.oth{display:flex;flex-direction:column;gap:1px;border:2px solid var(--line);background:var(--line)}
+.ocard{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;
+  background:var(--surf);padding:5px 7px;text-align:left;width:100%}
+.ocard:hover{background:var(--surf2)}
+.ocard .cov{width:26px;border-width:1px}
+.ot{font-family:var(--f-nar);font-weight:600;font-size:13px;line-height:1.25;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.ometa{font-family:var(--f-px);font-size:7px;color:var(--ink3);display:flex;gap:5px;align-items:center;margin-top:2px}
+.odots{display:flex;gap:2px}
+.odots i{width:5px;height:5px;display:block}
+.oprice{font-family:var(--f-px);font-size:8px;color:var(--ink2);white-space:nowrap}
+.showmore{font-family:var(--f-px);font-size:8px;color:var(--violet);padding:7px;background:var(--surf2);
+  text-transform:uppercase;width:100%}
+.empty{font-family:var(--f-nar);font-size:13px;color:var(--ink3);padding:14px;text-align:center;
+  border:2px dashed var(--line2);background:var(--surf2)}
+
+/* ---- sezioni sotto ---- */
+.sec{margin-top:34px}
+.sech{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.sech h2{font-family:var(--f-px);font-size:14px;margin:0}
+.sech .tag{font-family:var(--f-px);font-size:8px;padding:3px 6px;background:var(--violet);color:#fff;
+  text-transform:uppercase}
+.secp{font-family:var(--f-nar);font-size:14px;color:var(--ink2);margin:0 0 14px;max-width:62ch}
+.gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:12px}
+.gcard{background:var(--surf);border:2px solid var(--line2);box-shadow:4px 4px 0 var(--shadow);padding:10px;
+  display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;align-items:start}
+.gcard .cov{width:54px}
+.gr{display:flex;align-items:baseline;gap:5px}
+.gr .pc-up{font-family:var(--f-px);font-size:15px;color:var(--ok)}
+.gr .pc-lab{font-family:var(--f-px);font-size:7px;color:var(--ink3);text-transform:uppercase}
+.spark{display:flex;align-items:flex-end;gap:1px;height:26px;margin-top:6px}
+.spark i{flex:1;background:var(--violet-sol);display:block;min-height:1px}
+.spark i.last{background:var(--amber-sol)}
+.folw{font-family:var(--f-px);font-size:7px;color:var(--ink3);margin-top:4px;display:flex;
+  justify-content:space-between;gap:6px}
+.rank{font-family:var(--f-px);font-size:8px;color:var(--ink3);background:var(--surf3);padding:2px 4px;
+  align-self:flex-start}
+.collect{border:3px dashed var(--line2);background:var(--surf2);padding:22px 16px;text-align:center}
+.collect .ic{width:38px;height:38px;margin:0 auto 10px;display:block}
+.collect h3{font-family:var(--f-px);font-size:11px;margin:0 0 8px}
+.collect p{font-family:var(--f-nar);font-size:13.5px;color:var(--ink2);margin:0 auto;max-width:48ch}
+.collect .bars{display:flex;gap:3px;justify-content:center;margin-top:14px}
+.collect .bars i{width:7px;height:7px;background:var(--line2);display:block;animation:blink 1.2s infinite}
+@media (prefers-reduced-motion:reduce){.collect .bars i{animation:none}}
+@keyframes blink{0%,100%{background:var(--line2)}50%{background:var(--amber-sol)}}
+.partial{margin-top:14px;border:2px solid var(--line);background:var(--surf2);padding:10px}
+.partial h4{font-family:var(--f-px);font-size:9px;margin:0 0 8px;color:var(--ink3);text-transform:uppercase}
+.plist{display:flex;flex-wrap:wrap;gap:6px}
+.pitem{display:inline-flex;align-items:center;gap:6px;background:var(--surf);border:2px solid var(--line);
+  padding:4px 7px}
+.pitem span{font-family:var(--f-nar);font-size:12.5px;font-weight:600}
+.pitem em{font-family:var(--f-px);font-size:7px;color:var(--warnc);font-style:normal}
+
+/* ---- classifiche migliori ---- */
+.gsel{font-family:var(--f-px);font-size:9px;padding:6px 8px;background:var(--surf2);
+  border:2px solid var(--line);color:var(--ink);text-transform:uppercase;max-width:170px}
+.rank-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1px;
+  background:var(--line);border:2px solid var(--line2)}
+.ritem{display:grid;grid-template-columns:30px 40px minmax(0,1fr) auto;gap:10px;align-items:center;
+  background:var(--surf);padding:8px 10px;text-decoration:none;color:inherit}
+.ritem:hover{background:var(--surf2)}
+.ritem .pos{font-family:var(--f-px);font-size:13px;color:var(--ink3);text-align:center}
+.ritem.top1 .pos,.ritem.top2 .pos,.ritem.top3 .pos{color:var(--amber)}
+.ritem .cov{width:40px}
+.rtx{min-width:0}
+.rtx b{display:block;font-family:var(--f-body);font-weight:700;font-size:14px;line-height:1.2;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rmeta{font-family:var(--f-px);font-size:7px;color:var(--ink3);margin-top:3px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbox{text-align:center;flex:none}
+.sbox i{display:block;font-family:var(--f-px);font-size:17px;font-style:normal;line-height:1;
+  padding:5px 6px;color:var(--amber-ink);background:var(--amber-sol)}
+.sbox.mid i{background:var(--surf3);color:var(--ink)}
+.sbox.low i{background:var(--line2);color:var(--surf)}
+.sbox em{display:block;font-family:var(--f-px);font-size:6px;color:var(--ink3);
+  font-style:normal;margin-top:3px}
+.genres{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.gtag{font-family:var(--f-px);font-size:6.5px;padding:2px 4px;background:var(--surf3);
+  color:var(--ink3);text-transform:uppercase}
+@media (max-width:720px){
+  .rank-list{grid-template-columns:minmax(0,1fr)}
+  .ritem{grid-template-columns:24px 32px minmax(0,1fr) auto;gap:7px;padding:6px 7px}
+  .ritem .cov{width:32px}
+  .sbox i{font-size:14px}
+}
+
+/* tba */
+.tba{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--line);
+  border:2px solid var(--line2)}
+.tbai{background:var(--surf);padding:8px 10px;display:flex;gap:8px;align-items:center;text-align:left;width:100%}
+.tbai:hover{background:var(--surf2)}
+.tbai .cov{width:24px;border-width:1px}
+.tbad{font-family:var(--f-px);font-size:8px;color:var(--amber);background:var(--surf3);padding:2px 4px;
+  margin-left:auto;white-space:nowrap}
+.foot{margin-top:40px;border-top:3px dotted var(--line2);padding-top:14px;display:flex;gap:16px;
+  flex-wrap:wrap;align-items:center}
+.foot p{font-family:var(--f-px);font-size:8px;color:var(--ink3);margin:0;line-height:1.8}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+.lgi{display:flex;align-items:center;gap:5px;font-family:var(--f-px);font-size:7px;color:var(--ink3)}
+.lgi i{width:8px;height:8px;display:block}
+.sweep{position:fixed;inset:0;pointer-events:none;z-index:60;background:
+  repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,0,0,.025) 3px 4px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sweep{background:
+  repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,0,0,.12) 3px 4px)}}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="1" y="2" width="14" height="13" fill="var(--line3)"/>
+        <rect x="2" y="4" width="12" height="10" fill="var(--surf)"/>
+        <rect x="3" y="1" width="2" height="3" fill="var(--line3)"/><rect x="11" y="1" width="2" height="3" fill="var(--line3)"/>
+        <rect x="4" y="6" width="3" height="2" fill="var(--amber-sol)"/><rect x="9" y="6" width="3" height="2" fill="var(--violet-sol)"/>
+        <rect x="4" y="10" width="2" height="2" fill="var(--line2)"/><rect x="7" y="10" width="2" height="2" fill="var(--line2)"/>
+        <rect x="10" y="10" width="2" height="2" fill="var(--line2)"/>
+      </svg>
+      <span class="brand-txt">RADAR USCITE<em>pc · switch 2 · ps5</em></span>
+    </div>
+    <div class="bar-sp"></div>
+    <div class="pf" id="pf" role="group" aria-label="Filtro piattaforme"></div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <label class="lab" for="gsel">Genere</label>
+      <select class="gsel notch-s" id="gsel"><option value="">tutti</option></select>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="lab">Badge</span>
+      <div class="seg" id="badgeseg" role="group" aria-label="Stile badge">
+        <button type="button" data-m="compact" aria-pressed="true">+37</button>
+        <button type="button" data-m="two" aria-pressed="false">3 · 37</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="mhead">
+    <div class="mnav">
+      <button type="button" id="prev" aria-label="Mese precedente">
+        <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="2" height="8" fill="currentColor"/><rect x="3" y="1" width="2" height="6" fill="currentColor"/><rect x="1" y="3" width="2" height="2" fill="currentColor"/></svg>
+      </button>
+      <button type="button" id="next" aria-label="Mese successivo">
+        <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="0" width="2" height="8" fill="currentColor"/><rect x="3" y="1" width="2" height="6" fill="currentColor"/><rect x="5" y="3" width="2" height="2" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <h1 class="mtitle" id="mtitle">—</h1>
+    <div class="mmeta" id="mmeta"></div>
+  </div>
+
+  <div class="main" id="main">
+    <div class="calcol">
+      <div class="dows" id="dows"></div>
+      <div class="flipwrap"><div class="grid" id="grid"></div></div>
+    </div>
+    <aside class="panel" id="panel" hidden aria-label="Uscite del giorno">
+      <div class="panel-head">
+        <div><h2 id="ptitle">—</h2><p id="psub"></p></div>
+        <button type="button" class="panel-x" id="pclose" aria-label="Chiudi pannello">X</button>
+      </div>
+      <div class="panel-body" id="pbody"></div>
+    </aside>
+  </div>
+
+  <section class="sec" id="best">
+    <div class="sech">
+      <h2>I MIGLIORI</h2>
+      <span class="tag" style="background:var(--amber-sol);color:var(--amber-ink)">usciti</span>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
+        <span class="lab">Periodo</span>
+        <div class="seg" id="bestseg" role="group" aria-label="Periodo classifica">
+          <button type="button" data-p="7" aria-pressed="false">Settimana</button>
+          <button type="button" data-p="30" aria-pressed="true">Mese</button>
+          <button type="button" data-p="365" aria-pressed="false">Anno</button>
+        </div>
+      </div>
+    </div>
+    <p class="secp">Titoli gi&agrave; usciti nel periodo, ordinati per <b>voto della stampa</b>.
+      Un voto costruito su poche recensioni non &egrave; un voto: sotto le quattro testate il titolo
+      resta fuori dalla classifica.</p>
+    <div id="bestbody"></div>
+  </section>
+
+  <section class="sec" id="alltime">
+    <div class="sech">
+      <h2>I 50 DI SEMPRE</h2>
+      <span class="tag" style="background:var(--ink2)">ogni console</span>
+      <div style="margin-left:auto">
+        <button type="button" class="pf-b" id="allbtn" style="text-transform:uppercase">Mostra tutti e 50</button>
+      </div>
+    </div>
+    <p class="secp">I titoli col voto stampa pi&ugrave; alto di sempre, su qualsiasi console.
+      Non risente del filtro piattaforme &mdash; restringerlo a PC, Switch&nbsp;2 e PS5 taglierebbe
+      met&agrave; dei classici &mdash; ma risponde al filtro generi.</p>
+    <div id="allbody"></div>
+  </section>
+
+  <section class="sec" id="growth">
+    <div class="sech">
+      <h2>IN CRESCITA</h2>
+      <span class="tag">extra-calendario</span>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
+        <span class="lab">Finestra</span>
+        <div class="seg" id="winseg" role="group" aria-label="Finestra di crescita">
+          <button type="button" data-w="7" aria-pressed="true">7 gg</button>
+          <button type="button" data-w="14" aria-pressed="false">14 gg</button>
+        </div>
+      </div>
+    </div>
+    <p class="secp">Giochi non ancora usciti, ordinati per <b>crescita percentuale dei follower</b> nella finestra scelta &mdash; non per hype assoluto. Un titolo da 500 follower che ne guadagna 300 in una settimana sta sopra a uno fermo da mesi a 50.000. Serve lo storico: parte col primo giro del cron notturno.</p>
+    <div id="growthbody"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sech"><h2>DATE DA DEFINIRE</h2></div>
+    <p class="secp">Titoli con finestra vaga. Restano fuori dalla griglia finch&eacute; la fonte non espone un giorno preciso.</p>
+    <div class="tba" id="tbalist"></div>
+  </section>
+
+  <div class="foot">
+    <p>Dati: <span id="datasrc">—</span><br>I link aprono la ricerca sullo store della piattaforma. Finché la fonte è lo snapshot, "Attesa" è una stima redazionale; col cron IGDB diventa il conteggio follower reale.<br>Cover generate proceduralmente, nessuna immagine esterna.</p>
+    <div class="legend">
+      <span class="lgi"><i style="background:var(--amber-sol)"></i>in evidenza</span>
+      <span class="lgi"><i style="background:var(--pc)"></i>pc</span>
+      <span class="lgi"><i style="background:var(--sw)"></i>switch 2</span>
+      <span class="lgi"><i style="background:var(--ps)"></i>ps5</span>
+      <span class="lgi"><i style="background:var(--violet)"></i>data spostata</span>
+    </div>
+  </div>
+</div>
+<div class="sweep" aria-hidden="true"></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------------- util ---------------- */
+function h32(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function mul(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function pdate(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+function addD(s,n){var d=pdate(s);d.setDate(d.getDate()+n);return iso(d);}
+var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+var GIORNI=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+var DOWS=["LUN","MAR","MER","GIO","VEN","SAB","DOM"];
+var TODAY="2026-10-29";
+var PLAT={pc:"PC",switch2:"SWITCH 2",ps5:"PS5"};
+var REL=50; /* soglia attesa per "atteso dalla comunità" */
+function eur(n){return n===0?"Gratis":n.toFixed(2).replace(".",",")+" €";}
+
+/* ---------------- cover procedurali (canvas, pixel) ---------------- */
+var covCache={};
+function cover(seed){
+  if(covCache[seed])return covCache[seed];
+  var r=mul(h32(seed)),W=24,H=32;
+  var c=document.createElement("canvas");c.width=W;c.height=H;
+  var g=c.getContext("2d");
+  var hue=Math.floor(r()*360),kind=Math.floor(r()*4),sat=38+Math.floor(r()*34);
+  var hsl=function(h,s,l){return"hsl("+((h%360+360)%360)+","+s+"%,"+l+"%)";};
+  var deep=hsl(hue,sat,10),mid=hsl(hue,sat,22),sky=hsl(hue+18,sat+14,44),glow=hsl(hue+48,86,64),lite=hsl(hue+62,88,82);
+  for(var y=0;y<H;y++){var t=y/(H-1);g.fillStyle=hsl(hue+14*(1-t),sat+8,8+36*(1-t)*(1-t)+6);g.fillRect(0,y,W,1);}
+  function disc(cx,cy,rad,col){g.fillStyle=col;for(var y=-rad;y<=rad;y++)for(var x=-rad;x<=rad;x++)if(x*x+y*y<=rad*rad)g.fillRect(cx+x,cy+y,1,1);}
+  if(kind===0){ /* spazio */
+    for(var i=0;i<26;i++){g.fillStyle=r()>.5?lite:sky;g.fillRect(Math.floor(r()*W),Math.floor(r()*20),1,1);}
+    disc(7+Math.floor(r()*10),9,4+Math.floor(r()*2),glow);
+    g.fillStyle=mid;g.fillRect(0,22,W,10);
+    for(var x=0;x<W;x++){g.fillStyle=deep;g.fillRect(x,22+Math.floor(r()*2),1,10);}
+  }else if(kind===1){ /* crinale */
+    disc(5+Math.floor(r()*14),7,3,glow);
+    var hh=[];for(var x=0;x<W;x++)hh.push(14+Math.floor(Math.sin(x/3.1+r())*3+r()*3));
+    for(var x=0;x<W;x++){g.fillStyle=mid;g.fillRect(x,hh[x],1,H-hh[x]);}
+    for(var x=0;x<W;x++){var y2=20+Math.floor(Math.cos(x/2.3)*2+r()*2);g.fillStyle=deep;g.fillRect(x,y2,1,H-y2);}
+    for(var i=0;i<14;i++){g.fillStyle=lite;g.fillRect(Math.floor(r()*W),Math.floor(r()*10),1,1);}
+  }else if(kind===2){ /* portale */
+    g.fillStyle=deep;g.fillRect(0,20,W,12);
+    var cx=12;
+    for(var y=0;y<18;y++){var w=Math.max(0,8-Math.floor(Math.pow((y-16)/9,2)*7));g.fillStyle=glow;g.fillRect(cx-w,y+4,w*2,1);}
+    for(var y=0;y<18;y++){var w=Math.max(0,5-Math.floor(Math.pow((y-16)/9,2)*5));g.fillStyle=lite;g.fillRect(cx-w,y+6,w*2,1);}
+    g.fillStyle=mid;g.fillRect(2,18,3,14);g.fillRect(19,18,3,14);
+    for(var i=0;i<10;i++){g.fillStyle=lite;g.fillRect(Math.floor(r()*W),Math.floor(r()*6),1,1);}
+  }else{ /* città */
+    for(var i=0;i<18;i++){g.fillStyle=lite;g.fillRect(Math.floor(r()*W),Math.floor(r()*11),1,1);}
+    var x=0;
+    while(x<W){var w=2+Math.floor(r()*4),ht=8+Math.floor(r()*14);
+      g.fillStyle=r()>.5?mid:deep;g.fillRect(x,H-ht,Math.min(w,W-x),ht);
+      for(var wy=H-ht+2;wy<H-2;wy+=3)for(var wx=x+1;wx<x+w-1;wx+=2)if(r()>.42){g.fillStyle=glow;g.fillRect(wx,wy,1,1);}
+      x+=w;}
+    g.fillStyle=deep;g.fillRect(0,H-3,W,3);
+  }
+  g.fillStyle=deep;g.fillRect(0,0,W,1);g.fillRect(0,H-1,W,1);g.fillRect(0,0,1,H);g.fillRect(W-1,0,1,H);
+  covCache[seed]=c.toDataURL();
+  return covCache[seed];
+}
+
+/* ---------------- icone pixel ---------------- */
+var ICO={
+ pc:'<rect x="1" y="3" width="14" height="9" fill="currentColor"/><rect x="3" y="5" width="10" height="5" fill="var(--surf)"/><rect x="6" y="12" width="4" height="2" fill="currentColor"/><rect x="4" y="14" width="8" height="1" fill="currentColor"/>',
+ switch2:'<rect x="1" y="2" width="5" height="12" fill="currentColor"/><rect x="10" y="2" width="5" height="12" fill="currentColor"/><rect x="7" y="4" width="2" height="8" fill="currentColor"/><rect x="3" y="5" width="1" height="1" fill="var(--surf)"/><rect x="12" y="9" width="1" height="1" fill="var(--surf)"/>',
+ ps5:'<rect x="2" y="1" width="4" height="14" fill="currentColor"/><rect x="10" y="1" width="4" height="14" fill="currentColor"/><rect x="6" y="6" width="4" height="2" fill="currentColor"/><rect x="3" y="3" width="2" height="4" fill="var(--surf)"/>',
+ steam:'<rect x="4" y="1" width="8" height="1" fill="currentColor"/><rect x="2" y="2" width="2" height="1" fill="currentColor"/><rect x="12" y="2" width="2" height="1" fill="currentColor"/><rect x="1" y="4" width="1" height="8" fill="currentColor"/><rect x="14" y="4" width="1" height="8" fill="currentColor"/><rect x="2" y="13" width="2" height="1" fill="currentColor"/><rect x="12" y="13" width="2" height="1" fill="currentColor"/><rect x="4" y="14" width="8" height="1" fill="currentColor"/><rect x="6" y="5" width="4" height="4" fill="currentColor"/><rect x="4" y="10" width="3" height="3" fill="currentColor"/>',
+ globe:'<rect x="5" y="1" width="6" height="1" fill="currentColor"/><rect x="3" y="2" width="2" height="1" fill="currentColor"/><rect x="11" y="2" width="2" height="1" fill="currentColor"/><rect x="2" y="3" width="1" height="10" fill="currentColor"/><rect x="13" y="3" width="1" height="10" fill="currentColor"/><rect x="3" y="13" width="2" height="1" fill="currentColor"/><rect x="11" y="13" width="2" height="1" fill="currentColor"/><rect x="5" y="14" width="6" height="1" fill="currentColor"/><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/>',
+ bag:'<rect x="5" y="1" width="6" height="2" fill="currentColor"/><rect x="5" y="3" width="2" height="2" fill="currentColor"/><rect x="9" y="3" width="2" height="2" fill="currentColor"/><rect x="2" y="5" width="12" height="2" fill="currentColor"/><rect x="3" y="7" width="10" height="8" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="var(--surf)"/>',
+ wifi:'<rect x="6" y="12" width="4" height="3" fill="currentColor"/><rect x="4" y="8" width="8" height="2" fill="currentColor"/><rect x="2" y="4" width="12" height="2" fill="currentColor"/><rect x="0" y="0" width="16" height="2" fill="currentColor"/>'
+};
+function svg(k,cls){return '<svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'>'+ICO[k]+'</svg>';}
+
+/* ---------------- dati reali — istantanea 29 ottobre 2026 ----------------
+   Fonti: GamesRadar+ e Video Games Chronicle (calendari uscite).
+   Formato: [titolo, data ISO, piattaforme (C=PC N=Switch2 P=PS5), attesa 0-100, data precedente].
+   "Attesa" è una stima redazionale, non un dato di follower: in fase 2 la sostituisce l'hype IGDB. */
+var DATED=[
+ ["Gears of War: E-Day","2026-10-01","C",82],["End of Abyss","2026-10-01","CP",55],["Dynasty Warriors 3: Complete Edition Remastered","2026-10-01","CNP",50],["Monsters & Memories","2026-10-01","C",38],["Retrospace","2026-10-01","CNP",33],["Ghost of Yotei: Complete Edition","2026-10-01","P",76],["Octopath Traveler","2026-10-01","N",52],["Octopath Traveler II","2026-10-01","N",54],["Moros Protocol","2026-10-01","NP",30],
+ ["Ace Combat 8: Wings of Theve","2026-10-02","CP",74],["Ace Combat Zero: The Belkan War","2026-10-02","CP",48],
+ ["Aion 2","2026-10-05","C",57],
+ ["Star Wars: Galactic Racer","2026-10-06","CP",61],["Epic Mickey: Rebrushed","2026-10-06","N",45],
+ ["Spam","2026-10-07","C",22],["Deep Rock Galactic: Survivor","2026-10-07","NP",49],
+ ["Clive Barker's Hellraiser: Revival","2026-10-08","CNP",56],["Silver Pines","2026-10-08","CNP",34],["Order of the Sinking Star","2026-10-08","CNP",31],["Forever Ago","2026-10-08","CNP",32],["Echo Weaver","2026-10-08","CNP",29],["Afterbeat","2026-10-08","C",24],["Neon Abyss 2","2026-10-08","CP",47],["Mafia III","2026-10-08","P",42],["Kingdom Hearts III","2026-10-08","NP",63],["Hell is Us","2026-10-08","N",51],["The Crew: Motorfest","2026-10-08","N",44],["Once Upon a Katamari","2026-10-08","N",46],["Deck of Haunts","2026-10-08","NP",28],
+ ["Permafrost","2026-10-09","C",26],["Paperhead","2026-10-09","CP",27],["Dragon's Dogma II","2026-10-09","N",66],
+ ["Colorbound","2026-10-12","CNP",25],["Battleplan","2026-10-12","C",21],
+ ["Valor Mortis","2026-10-13","CP",58],["Planet Zoo 2","2026-10-13","CP",64],
+ ["Warhammer 40,000: Boltgun 2","2026-10-14","CP",53],["The Witch's Bakery","2026-10-14","CNP",30],["Among the Trolls","2026-10-14","C",35],
+ ["Castlevania: Belmont's Curse","2026-10-15","CP",69],["Enshrouded","2026-10-15","CP",59],["Ratatan","2026-10-15","CNP",50],["Toy Story 3: Complete Edition","2026-10-15","CNP",40],["It Takes Two","2026-10-15","N",55],["Tormented Souls II","2026-10-15","N",36],["House Flipper 2","2026-10-15","N",38],["Chained Beasts","2026-10-15","CP",23],
+ ["Call of Duty: Modern Warfare 4","2026-10-16","CNP",90],["Tenebris Somnia","2026-10-16","CNP",37],["Tales of Eternia: Remastered","2026-10-16","CNP",43],["Resident Evil 2","2026-10-16","N",62],["Resident Evil 3","2026-10-16","N",57],["Resident Evil 4","2026-10-16","N",68],["LEGO Harry Potter Collection","2026-10-16","N",41],
+ ["BeamNG.drive","2026-10-19","P",60],
+ ["We Were Here Tomorrow","2026-10-20","CP",39],["Mycopunk","2026-10-20","CP",42],["I Am Your Beast","2026-10-20","N",33],
+ ["Stupid Never Dies","2026-10-21","CP",31],["The Killing Stone","2026-10-21","CP",28],
+ ["Final Fantasy Resonance","2026-10-22","CNP",79],["Nintendo Switch Sports Resort","2026-10-22","N",58],["Hitman: Absolution","2026-10-22","N",35],["Cult of the Lamb","2026-10-22","N",54],["Peak","2026-10-22","NP",52],["Darkest Dungeon II","2026-10-22","N",44],["Fatal Fury: City of the Wolves","2026-10-22","N",48],["Back to the Dawn","2026-10-22","P",34],
+ ["Tape to Tape","2026-10-23","CP",26],["One Piece: Grand Gourmet","2026-10-23","CN",51],
+ ["Reka","2026-10-26","C",29],["Hunter's Moon","2026-10-26","P",24],
+ ["Remothered: Red Nun's Legacy","2026-10-27","CP",36],["Northgard Battlegrounds","2026-10-27","C",32],["The Séance of Blake Manor","2026-10-27","NP",30],
+ ["Sulfur","2026-10-28","CNP",45],["Anomalith","2026-10-28","CNP",27],
+ ["Phantom Blade Zero","2026-10-29","CP",83],["The Wolf Among Us Remastered","2026-10-29","CP",49],["Terrible Lizards","2026-10-29","CP",25],["Curse of Resthaven","2026-10-29","CP",23],["Metro 2033 Redux","2026-10-29","P",40],["Metro: Last Light Redux","2026-10-29","P",39],["Sword of the Sea","2026-10-29","N",46],["Steins;Gate Re:Boot","2026-10-29","N",43],["Demon Slayer: The Hinokami Chronicles 2","2026-10-29","N",56],
+ ["Queen's Domain","2026-10-30","CNP",28],["Look Outside","2026-10-30","NP",26],
+ ["Baptiste","2026-10-31","CNP",22],
+
+ ["Gimbap Heaven","2026-11-01","C",20],
+ ["Gravhounds","2026-11-02","C",45],
+ ["Loftia","2026-11-03","C",42],["Wilderdark","2026-11-03","C",28],["Godzilla: Destroy All Monsters Melee Remastered","2026-11-03","CNP",54],["Kick","2026-11-03","C",19],["Zero Parades: Director's Cut","2026-11-03","NP",52],["Death at Fleming Manor","2026-11-03","C",25],
+ ["Lost Host","2026-11-04","CP",27],["Cat Secretary","2026-11-04","C",18],["Cozy Game Restoration","2026-11-04","C",24],["Theos: Cities of Myth","2026-11-04","C",31],["Hull Rupture","2026-11-04","C",26],["Void/Breaker","2026-11-04","CP",38],["Worship","2026-11-04","CP",36],["Crymelight","2026-11-04","CNP",48],["World of Warcraft: Forever","2026-11-04","C",80],
+ ["The Legend of Zelda: Ocarina of Time","2026-11-05","N",96],["Airframe Ultra","2026-11-05","C",33],["Escape Academy 2: Back 2 School","2026-11-05","CP",47],["Wielders of the Essence","2026-11-05","C",35],["Chivalware","2026-11-05","CN",29],["Underkeep","2026-11-05","C",23],["Where the Seeds Fall","2026-11-05","CP",25],["Emery Hearts","2026-11-05","C",22],["In Full Bloom","2026-11-05","C",21],["Marvel's Guardians of the Galaxy","2026-11-05","N",58],["Stellar Blade","2026-11-05","N",78],["Yomawari: Night Alone","2026-11-05","P",30],["Yomawari: Midnight Shadows","2026-11-05","P",29],["The Slormancer","2026-11-05","P",37],["Kingdom of Night","2026-11-05","P",26],
+ ["Hasbro Games Junior Collection","2026-11-06","CP",20],
+ ["Company Tycoon","2026-11-08","C",19],
+ ["Casualties: Unknown","2026-11-09","C",24],["Neo Junk City","2026-11-09","C",27],["Cinema Theater Tycoon","2026-11-09","C",22],
+ ["Tanuki: Pon's Summer","2026-11-10","CNP",46],["Warhammer Survivors","2026-11-10","CNP",44],["Nocturnal II","2026-11-10","C",34],["Shrek 2 Remastered","2026-11-10","CP",60],["Ashes of the Singularity II","2026-11-10","C",41],["Hillthorn","2026-11-10","C",33],["The Devil's Due","2026-11-10","C",23],["Football Manager 27","2026-11-10","CP",72],["Football Manager 27 Console","2026-11-10","CP",50],
+ ["Prinny Party: Going Overboard!","2026-11-11","CNP",43],["Thronefall","2026-11-11","P",45],["Monomoon","2026-11-11","C",20],["Bottled by Bears","2026-11-11","C",21],
+ ["Pikmin 4: Nintendo Switch 2 Edition","2026-11-12","N",66],["Sonic Pico Park","2026-11-12","CNP",55],["Moomin: Midsummer Madness","2026-11-12","CN",38],["Metaphor: ReFantazio","2026-11-12","N",74],["Ball x Pit: Risen Ballbylon","2026-11-12","CNP",40],["Hazard Levels","2026-11-12","CP",25],["Portabellows","2026-11-12","C",18],
+ ["Derelikt","2026-11-13","CP",24],["Bombanana!","2026-11-13","P",19],
+ ["Trees Hate You","2026-11-16","C",30],["Spirit Crossing","2026-11-16","CN",42],
+ ["Milki Delivery","2026-11-17","C",20],["Ranger's Path: National Park Simulator","2026-11-17","CP",32],["Unicorn Academy: Island of Magic","2026-11-17","CP",23],["Night Train Simulator: Blackout","2026-11-17","C",21],
+ ["Disney Dreamlight Valley: The Keepsake Sea","2026-11-18","CP",44],["Vice: Magic City Mayhem","2026-11-18","CP",39],["Dark Rail","2026-11-18","CP",28],
+ ["Grand Theft Auto VI","2026-11-19","P",100,"2026-05-26"],["The House of Tesla: Definitive Edition","2026-11-19","P",26],
+ ["Zombie Police: Midsummer Unhappy New Year","2026-11-22","C",17],
+ ["Stellaris: Willpower","2026-11-23","C",51],
+ ["Gothic 3 Classic","2026-11-24","P",35],
+ ["Marupoyo: The Round Chick's Adventure","2026-11-26","CP",19],["Appulse","2026-11-26","C",20],["Reshine","2026-11-26","CP",23],
+ ["Am I Nima","2026-11-27","C",25],["Our Life: Now & Forever","2026-11-27","C",31],
+
+ ["Hela: Of Mice & Magic","2026-12-01","CNP",50],
+ ["Night Machine","2026-12-02","C",24],["The Ascent Ultimate Edition","2026-12-02","N",40],["Blind Descent","2026-12-02","C",32],
+ ["Rayman Legends Retold","2026-12-03","CNP",64],["Warhammer 40,000: Dawn of War IV","2026-12-03","C",76],["Edge of Memories","2026-12-03","CP",63],["The Road of Dust and Sorrow","2026-12-03","CNP",41],["Rayman Origins: Enhanced Edition","2026-12-03","CNP",52],["Dragon Quest Monsters: The Withered World","2026-12-03","CNP",70],["Aeterna Lucis","2026-12-03","CP",45],["Waltz and Jam","2026-12-03","CNP",26],["Xenoblade Chronicles 3: Nintendo Switch 2 Edition","2026-12-03","N",68],["Sombras: Negative Frames","2026-12-03","CNP",28],["Dumpster Gang","2026-12-03","C",25],["Eriksholm: The Stolen Dream","2026-12-03","N",44],["Remothered: Red Nun's Legacy — Switch 2","2026-12-03","N",33],["Fall Up","2026-12-03","CNP",22],["Apple Crumble","2026-12-03","C",22],
+ ["Acts of Blood","2026-12-04","C",36],["Monster Hunter Wilds","2026-12-04","N",72],
+ ["Stronghold 4","2026-12-07","C",52],["Muri: Wildwoods","2026-12-07","C",20],["Mik","2026-12-07","C",18],
+ ["Guns of Eschaton","2026-12-08","CP",38],["Drunken Goddess Reflux","2026-12-08","C",19],["Ancestors: The Humankind Odyssey","2026-12-08","NP",37],
+ ["Professor Layton and the New World of Steam","2026-12-10","CNP",61],["Stage Tour","2026-12-10","CNP",34],["Attack on Titan 3","2026-12-10","CNP",69],["4:AM","2026-12-10","C",26],
+ ["Path of Exile 2","2026-12-11","CP",85],
+ ["Rest Stop","2026-12-28","C",17],
+ ["Foxy Dumplings","2026-12-31","CNP",16],
+
+ ["Armatus","2027-01-07","CNP",40],["Emberville","2027-01-07","C",28],
+ ["Danganronpa 2x2","2027-01-14","CNP",67],
+ ["Stranger than Heaven","2027-01-15","CP",73],["TankRat","2027-01-15","CP",28],["Ananta","2027-01-15","CP",71],
+ ["Usual June","2027-01-20","C",43],
+ ["Arizona Sunshine","2027-01-21","CNP",30],
+ ["Forza Horizon 6","2027-01-26","P",82],["Everything is Crab","2027-01-26","N",35],
+ ["Prison of Husks","2027-01-27","CP",33],
+ ["Witchbrook","2027-01-28","CNP",70],["Metroid Ravenous","2027-01-28","N",84],["Until Dawn 2","2027-01-28","P",66],["Tropico 7","2027-01-28","CNP",58],
+ ["Elta: Defy The Gods","2027-02-02","CP",31],
+ ["Metro 2039","2027-02-04","CP",79],["Muramasa: Revenant Blades","2027-02-04","CNP",57],["He-Man: Dragon Pearl of Destruction","2027-02-04","CNP",34],
+ ["Outward 2","2027-02-08","C",47],
+ ["Tomb Raider: Legacy of Atlantis","2027-02-12","CNP",75],
+ ["God of War Laufey","2027-02-16","P",93],["Yu-Gi-Oh! Tag Force GX","2027-02-16","N",39],["Romancing SaGa 3: Destinies United","2027-02-16","N",42],
+ ["Among Us Story: On Guard","2027-02-17","C",47],
+ ["Persona 4 Revival","2027-02-18","CP",88],["Fable","2027-02-18","CP",86],
+ ["Hyrule Warriors: Age of Calamity Definitive Edition","2027-02-25","N",54],
+ ["Eternal Anima","2027-03-04","CNP",36],["Wo Long 2: Wings of Ember","2027-03-04","CNP",68],["Trine 6: Together in Time","2027-03-04","CNP",55],
+ ["Gundam Rogue Orbit","2027-03-05","CP",49],
+ ["Petal Runner","2027-03-08","CN",37],
+ ["Grave Seasons","2027-03-09","CNP",45],
+ ["Shadow of the Road","2027-03-10","C",48],
+ ["Road Kings","2027-03-11","CP",32],["Phase Zero","2027-03-11","C",29],["My Arms are Longer Now","2027-03-11","CNP",29],
+ ["007 First Light","2027-03-18","N",63],["The Apothecary Diaries: The False Imperial Brother","2027-03-18","CNP",44],
+ ["Super Battle Golf","2027-03-25","N",27],["ReVamp","2027-03-25","C",26],
+ ["Exodus","2027-04-07","CP",81],
+ ["Final Fantasy VII: Revelation","2027-04-08","CNP",95],
+ ["Mariachi Legends","2027-04-27","CNP",40],["Pony Island 2: Panda Circus","2027-04-27","C",56],
+ ["Persona 4 Revival — Switch 2","2027-05-20","N",70]
+];
+var VAGUE=[
+ ["Pokémon Winds","2027","N",94],["Pokémon Waves","2027","N",94],
+ ["The Elder Scrolls VI","TBA","C",92],
+ ["The Witcher 4","2028","CP",90],
+ ["Kingdom Hearts IV","Q4 2027","CNP",90],
+ ["Persona 6","TBA","CP",89],
+ ["Intergalactic: The Heretic Prophet","2027","P",87],
+ ["Resident Evil Veronica","2027","CNP",85],
+ ["Black Myth: Zhong Kui","TBA","CP",83],
+ ["The Duskbloods","2026","N",83],
+ ["Squadron 42","Q2 2027","C",82],
+ ["Xenoblade Genesis","2027","N",80],
+ ["Alien: Isolation 2","TBA","CNP",79],
+ ["Haunted Chocolatier","TBA","C",78],
+ ["Kirby and the World Beyond","Q2 2027","N",77],
+ ["Light No Fire","TBA","C",76],
+ ["Marvel 1943: Rise of Hydra","2027","CP",74],["Max Payne remake","TBA","CP",74],
+ ["Monster Hunter Wilds: Ascendance","2027","CP",73],
+ ["The Wolf Among Us 2","2027","CNP",72],["Total War: Warhammer 40,000","TBA","CP",72],
+ ["ILL","2027","CP",71],
+ ["Fallout 5","TBA","C",70],
+ ["Lords of the Fallen II","Q1 2027","CNP",69],
+ ["Judas","TBA","C",68],
+ ["Star Wars: Fate of the Old Republic","TBA","CP",67],
+ ["Turok: Origins","Q2 2027","CNP",66],
+ ["Dragon Ball Xenoverse 3","2027","CP",65],
+ ["Clockwork Revolution","2027","C",64],["Jurassic Park: Survival","TBA","CP",64],
+ ["Crazy Taxi: World Tour","2027","CNP",63],["Mega Man: Dual Override","Q2 2027","CNP",63],
+ ["Guild Wars 3","Q4 2027","CP",62],["Spyro: A Realm Beyond","Q2 2027","CNP",62],
+ ["Chrono Odyssey","TBA","CP",61],
+ ["State of Decay 3","2027","CP",60],["Light of Motiram","Q4 2027","C",60],
+ ["The Talos Principle III","2027","CP",59],
+ ["The Expanse: Osiris Reborn","Q2 2027","CP",58],["Warhammer 40,000: Space Marine 2","2026","N",58],
+ ["Kemuri","2027","CP",57],
+ ["Game of Thrones: War for Westeros","Q1 2027","C",56],
+ ["Tomb Raider: Catalyst","2027","CP",55],["Senua","2027","CP",55],
+ ["Blackfrost: The Long Dark 2","2027","C",53],
+ ["The Eternal Life of Goldman","2026","CP",52],["Nirvana Noir","TBA","C",52],["Spine","Q3 2027","CP",52],
+ ["Out of Words","Q1 2027","CNP",51],
+ ["Threads of Time","2027","CN",50],["My Time at Evershine","2027","C",50],
+ ["Holstin","2027","CNP",49],["Bloodstained: The Scarlet Engagement","2027","CP",49],
+ ["Slime Rancher 2","2027","N",48],["LEGO Skylines","31/12/2027","N",48],
+ ["Terminator: Survivors","TBA","CP",47],["Crescent County","Q3 2027","CP",47],
+ ["Cassette Beasts 2002","2027","CN",46],["Virtua Fighter Crossroads","2027","CP",46],
+ ["Mudang: Two Hearts","2026","CP",45],["The Lost Wild","2027","P",45],
+ ["Kena: Scars of Kosmora","2027","CP",44],["Ballad of Antara","2026","P",44],["Becrowned","Q1 2027","CNP",44],
+ ["Clutch","Q1 2027","CP",43],["Alien Deathstorm","Q2 2027","CP",43],
+ ["Hunter: The Reckoning — Deathwish","Q3 2027","CP",42],
+ ["SlashZero","Q1 2027","CP",41],["Chronoscript: The Endless End","Q3 2027","CP",41],
+ ["Perceptum","Q1 2027","CP",40],["The God Slayer","Q4 2027","P",40],
+ ["Glaciered","2026","CN",38],["Canyons","11/2027","CP",38],
+ ["Petit Planet","2026","C",35]
+];
+var _unused=[
+ {t:"Ashen Covenant II",d:"2026-11-06",p:["pc","ps5"],hype:97,pub:"Meridian Interactive",pr:{pc:69.99,ps5:79.99},st:1,off:1,store:1},
+ {t:"Meadowkeep",d:"2026-11-12",p:["pc","switch2"],hype:73,pub:"Mellowcat",pr:{pc:24.99,switch2:26.99},st:1,off:1,store:1},
+ {t:"Static Chapel",d:"2026-11-12",p:["pc","ps5"],hype:68,pub:"Grey Lantern",pr:{pc:19.99,ps5:21.99},st:1,off:1,store:1},
+ {t:"Copper Verge",d:"2026-11-12",p:["pc"],hype:66,pub:"Pillar Games",pr:{pc:14.99},st:1,off:1,was:"2026-10-08"},
+ {t:"Amber Relay",d:"2026-11-12",p:["switch2"],hype:64,pub:"K\u014den Soft",pr:{switch2:29.99},off:1,store:1},
+ {t:"Silkbound",d:"2026-11-13",p:["pc","switch2","ps5"],hype:88,pub:"Okaze",pr:{pc:49.99,switch2:59.99,ps5:59.99},st:1,off:1,store:1},
+ {t:"Verdance",d:"2026-11-19",p:["pc","switch2"],hype:91,pub:"Kestrel Studios",pr:{pc:39.99,switch2:44.99},st:1,off:1,store:1,was:"2026-09-24"},
+ {t:"Harrowgate: Deep Shift",d:"2026-11-19",p:["pc","ps5"],hype:84,pub:"Vanta Works",pr:{pc:59.99,ps5:69.99},st:1,off:1,store:1},
+ {t:"Orbital Mechanic",d:"2026-11-19",p:["pc"],hype:76,pub:"Driftline",pr:{pc:24.99},st:1,off:1},
+ {t:"Kingdom of Salt",d:"2026-11-20",p:["pc","switch2","ps5"],hype:93,pub:"Brightfall",pr:{pc:59.99,switch2:59.99,ps5:69.99},st:1,off:1,store:1},
+ {t:"Night Carriage",d:"2026-11-26",p:["pc","ps5"],hype:81,pub:"Hallowmark",pr:{pc:34.99,ps5:39.99},st:1,off:1,store:1,was:"2026-10-15"},
+ {t:"Pocket Dynasty",d:"2026-11-27",p:["switch2"],hype:79,pub:"Okaze",pr:{switch2:49.99},off:1,store:1},
+ {t:"Rust & Rapture",d:"2026-12-03",p:["pc","ps5"],hype:86,pub:"Sunder Games",pr:{pc:44.99,ps5:49.99},st:1,off:1,store:1},
+ {t:"Lanternfall",d:"2026-12-04",p:["pc","switch2"],hype:74,pub:"Mellowcat",pr:{pc:19.99,switch2:21.99},st:1,off:1,store:1},
+ {t:"Grand Meridian 7",d:"2026-12-10",p:["pc","ps5"],hype:95,pub:"Meridian Interactive",pr:{pc:69.99,ps5:79.99},st:1,off:1,store:1},
+ {t:"Tidewright",d:"2026-12-11",p:["pc","switch2","ps5"],hype:72,pub:"Pelagic",pr:{pc:29.99,switch2:29.99,ps5:34.99},st:1,off:1,store:1},
+ {t:"Hollow Parade",d:"2026-12-17",p:["pc"],hype:77,pub:"Grey Lantern",pr:{pc:17.99},st:1,off:1},
+ {t:"Starbound Ledger",d:"2027-01-15",p:["pc","ps5"],hype:83,pub:"Vanta Works",pr:{pc:49.99,ps5:59.99},st:1,off:1,store:1,was:"2026-11-12"},
+ {t:"Umbra Engine",d:"2027-01-22",p:["pc","switch2","ps5"],hype:90,pub:"Kestrel Studios",pr:{pc:59.99,switch2:59.99,ps5:69.99},st:1,off:1,store:1},
+ {t:"Frostmarch Chronicle",d:"2027-01-29",p:["pc","ps5"],hype:75,pub:"Northbit",pr:{pc:34.99,ps5:39.99},st:1,off:1,store:1},
+ {t:"Bramblewick",d:"2027-02-05",p:["switch2","pc"],hype:80,pub:"Mellowcat",pr:{pc:24.99,switch2:27.99},st:1,off:1,store:1},
+ {t:"Iron Orchard",d:"2027-02-12",p:["pc","ps5"],hype:87,pub:"Ardent",pr:{pc:54.99,ps5:64.99},st:1,off:1,store:1},
+ {t:"Solaria Drift",d:"2027-02-19",p:["pc","switch2","ps5"],hype:92,pub:"Brightfall",pr:{pc:59.99,switch2:59.99,ps5:69.99},st:1,off:1,store:1},
+ {t:"Quietwater",d:"2027-03-05",p:["pc"],hype:73,pub:"Autopubblicato",pr:{pc:14.99},st:1,off:1},
+ {t:"Hex Foundry",d:"2027-03-12",p:["pc","switch2"],hype:78,pub:"Tinybit",pr:{pc:19.99,switch2:22.99},st:1,off:1,store:1},
+ {t:"Cradle of Static",d:"2026-10-22",p:["pc","ps5"],hype:85,pub:"Hallowmark",pr:{pc:39.99,ps5:44.99},st:1,off:1,store:1},
+ {t:"Paleblood Harbor",d:"2026-10-29",p:["pc","switch2","ps5"],hype:89,pub:"Sunder Games",pr:{pc:49.99,switch2:49.99,ps5:59.99},st:1,off:1,store:1},
+ {t:"Clover Protocol",d:"2026-10-30",p:["pc"],hype:71,pub:"Pillar Games",pr:{pc:12.99},st:1,off:1},
+ {t:"Vault of Bells",d:"2026-11-05",p:["switch2","ps5"],hype:82,pub:"Kōen Soft",pr:{switch2:39.99,ps5:44.99},off:1,store:1,was:"2026-08-27"},
+ {t:"Driftmoor",d:"2026-12-18",p:["pc","ps5"],hype:70,pub:"Pelagic",pr:{pc:27.99,ps5:29.99},st:1,off:1,store:1}
+];
+var _unused2=[
+ {t:"Monument of Ash",v:"Q2 2027",p:["pc","ps5"],hype:94,pub:"Meridian Interactive",st:1,off:1},
+ {t:"The Long Thaw",v:"2027",p:["pc","switch2","ps5"],hype:88,pub:"Okaze",st:1,off:1,store:1},
+ {t:"Beacon Nine",v:"TBA",p:["pc"],hype:81,pub:"Grey Lantern",st:1,off:1},
+ {t:"Saltwind Atlas",v:"Q4 2027",p:["pc","ps5"],hype:76,pub:"Pelagic",st:1,off:1,was:"2026-12-03"},
+ {t:"Thicket",v:"TBA",p:["pc","switch2"],hype:68,pub:"Autopubblicato",st:1},
+ {t:"Grimward: Reprise",v:"2028",p:["pc","ps5"],hype:72,pub:"Ardent",st:1,off:1},
+ {t:"Lumen Burrow",v:"Q3 2027",p:["switch2","pc"],hype:64,pub:"Tinybit",st:1,store:1}
+];
+var WA=["Hollow","Neon","Ashen","Iron","Pale","Lunar","Drift","Rust","Static","Quiet","Crimson","Hidden","Broken","Solar","Umbra","Tiny","Deep","Glass","Echo","Dusk","Salt","Frost","Clover","Hex","Vault","Grim","Amber","Velvet","Wither","Copper","Slate","Nimbus"];
+var WB=["Tide","Covenant","Circuit","Garden","Harbor","Engine","Spire","Protocol","Bloom","Drifter","Signal","Foundry","Requiem","Orchard","Ledger","Machine","Cradle","Verge","Lantern","Current","Thicket","Beacon","Parade","Atlas","Burrow","Relay","Quarry","Chapel","Vector","Hollow"];
+var WS=["","","","","",": Reprise"," II"," DX",": Director's Cut"," Remastered",": Prologue"," Redux"];
+var PUBS=["Autopubblicato","Tinybit","Pillar Games","Kōen Soft","Ardent","Mellowcat","Grey Lantern","Northbit","Driftline","Lowtide Coop"];
+var PRICES=[0,2.99,4.99,6.99,8.99,9.99,12.99,14.99,16.99,19.99,24.99];
+
+/* piattaforme: C=PC, N=Switch 2, P=PS5 */
+var PMAP={C:"pc",N:"switch2",P:"ps5"};
+function platsOf(s){return s.split("").map(function(c){return PMAP[c];});}
+/* link reali: ricerca sullo store della piattaforma + scheda enciclopedica */
+function q(t){return encodeURIComponent(t.replace(/—/g,"-"));}
+function linksFor(t,plat){
+  var L=[];
+  if(plat.indexOf("pc")>=0)L.push({k:"steam",u:"https://store.steampowered.com/search/?term="+q(t),n:"Cerca su Steam"});
+  if(plat.indexOf("ps5")>=0)L.push({k:"bag",u:"https://store.playstation.com/it-it/search/"+q(t),n:"Cerca su PlayStation Store"});
+  if(plat.indexOf("switch2")>=0)L.push({k:"bag",u:"https://www.nintendo.com/search/?q="+q(t),n:"Cerca su Nintendo"});
+  L.push({k:"globe",u:"https://en.wikipedia.org/w/index.php?search="+q(t+" video game"),n:"Scheda informativa"});
+  return L;
+}
+var GAMES=[],DATA_SRC="snapshot incorporato";
+/* snapshot di riserva: usato solo se data.json non è raggiungibile */
+function fallbackRows(){
+  var r=[];
+  DATED.forEach(function(a){r.push({t:a[0],date:a[1],plat:platsOf(a[2]),hype:a[3],was:a[4]||null});});
+  VAGUE.forEach(function(a){r.push({t:a[0],vague:a[1],plat:platsOf(a[2]),hype:a[3],was:null});});
+  return r;
+}
+function buildGames(rows,hist){
+  GAMES=rows.map(function(o,i){
+    var pl=o.plat||[];
+    var key=o.igdb!=null?String(o.igdb):o.t;
+    var h=hist&&hist[key]?hist[key]:null;
+    return{id:"g"+i,igdb:o.igdb||null,t:o.t,date:o.date||null,vague:o.vague||null,plat:pl,
+      hype:o.hype||0,was:o.was||null,links:o.links&&o.links.length?o.links:linksFor(o.t,pl),
+      genres:o.genres||null,score:o.score||null,scoreN:o.scoreN||0,scoreKind:o.scoreKind||"stampa",
+      aaa:(o.hype||0)>=80,hist:h&&h.length?h:null};
+  });
+}
+
+/* filler mock disabilitato: ora i dati sono reali */
+if(0)(function(){
+  var r=mul(991117),n=0;
+  var start=pdate("2026-10-01"),end=pdate("2027-03-31");
+  var used={};
+  function title(){
+    for(var k=0;k<40;k++){
+      var t=WA[Math.floor(r()*WA.length)]+" "+WB[Math.floor(r()*WB.length)]+WS[Math.floor(r()*WS.length)];
+      if(!used[t]){used[t]=1;return t;}
+    }
+    return "Untitled "+(n++);
+  }
+  function mk(ds,forceLow){
+    var pl=[],pick=r();
+    if(pick<.56)pl=["pc"];
+    else if(pick<.7)pl=["pc","switch2"];
+    else if(pick<.82)pl=["pc","ps5"];
+    else if(pick<.9)pl=["pc","switch2","ps5"];
+    else if(pick<.95)pl=["switch2"];
+    else pl=["ps5"];
+    var hy=forceLow?Math.floor(r()*40)+3:Math.floor(r()*58)+3;
+    if(!forceLow&&r()<.17)hy=62+Math.floor(r()*22);
+    var p=PRICES[Math.floor(r()*PRICES.length)],pr={};
+    pl.forEach(function(x){pr[x]=p===0?0:+(p+(x==="pc"?0:1)).toFixed(2);});
+    var g={id:"f"+(n++),t:title(),date:ds,plat:pl,hype:hy,pub:PUBS[Math.floor(r()*PUBS.length)],
+      pr:pr,st:pl.indexOf("pc")>=0,off:r()>.55,store:pl.length>1||pl.indexOf("pc")<0,was:null,aaa:false};
+    if(r()>.93)g.was=addD(ds,-(14+Math.floor(r()*120)));
+    GAMES.push(g);
+  }
+  for(var d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
+    var ds=iso(d),dw=d.getDay(),c;
+    if(ds==="2026-11-19"){for(var i=0;i<38;i++)mk(ds,true);continue;}
+    if(dw===4)c=3+Math.floor(r()*4);
+    else if(dw===2||dw===3)c=2+Math.floor(r()*3);
+    else if(dw===5)c=1+Math.floor(r()*3);
+    else c=Math.floor(r()*2);
+    for(var i=0;i<c;i++)mk(ds,false);
+  }
+})();
+
+/* storico simulato disabilitato: la raccolta vera parte col primo cron */
+if(0)(function(){
+  var r=mul(20261029);
+  GAMES.forEach(function(g){
+    var future=!g.date||g.date>TODAY;
+    if(!future){g.hist=null;return;}
+    var roll=r();
+    var len=roll<.1?2+Math.floor(r()*4):(roll<.2?6+Math.floor(r()*5):22+Math.floor(r()*14));
+    var f=Math.round((g.aaa?9000:300)+r()*(g.aaa?48000:5200));
+    var base=0.004+r()*0.012;
+    var spike=r()<.3?(1.6+r()*5.5):0;
+    var spikeAt=len-1-Math.floor(r()*7);
+    var h=[];
+    for(var i=0;i<len;i++){
+      var rate=base+(spike&&i>=spikeAt?base*spike:0)+(r()-.5)*0.006;
+      f=Math.max(40,Math.round(f*(1+rate)));
+      h.push(f);
+    }
+    g.hist=h;
+  });
+})();
+
+var byDay={};
+function indexDays(){
+  byDay={};
+  GAMES.forEach(function(g){if(g.date){(byDay[g.date]=byDay[g.date]||[]).push(g);}});
+  Object.keys(byDay).forEach(function(k){byDay[k].sort(function(a,b){return b.hype-a.hype;});});
+}
+
+/* ---------------- stato ---------------- */
+var state={y:2026,m:10,sel:null,filters:{pc:true,switch2:true,ps5:true},badge:"compact",win:7,genre:"",best:30,moreOpen:false};
+var mqM=window.matchMedia("(max-width:720px)");
+function visible(g){
+  if(!g.plat.some(function(p){return state.filters[p];}))return false;
+  if(state.genre&&(!g.genres||g.genres.indexOf(state.genre)<0))return false;
+  return true;
+}
+function dayList(ds){return (byDay[ds]||[]).filter(visible);}
+function maxChips(){
+  if(mqM.matches)return 1;
+  var w=window.innerWidth;
+  if(state.sel&&w<1320)return 3;
+  return w<1180?3:4;
+}
+
+/* ---------------- render: filtri ---------------- */
+var pfEl=document.getElementById("pf");
+function renderFilters(){
+  pfEl.innerHTML=Object.keys(PLAT).map(function(p){
+    return '<button type="button" class="pf-b notch-s" data-p="'+p+'" aria-pressed="'+state.filters[p]+'">'+svg(p)+PLAT[p]+'</button>';
+  }).join("");
+}
+pfEl.addEventListener("click",function(e){
+  var b=e.target.closest(".pf-b");if(!b)return;
+  var p=b.dataset.p;
+  var on=Object.keys(state.filters).filter(function(k){return state.filters[k];});
+  if(on.length===1&&on[0]===p)return;
+  state.filters[p]=!state.filters[p];
+  renderFilters();renderAll();renderBest();renderGrowth();renderTba();
+});
+
+/* ---------------- render: griglia ---------------- */
+var gridEl=document.getElementById("grid"),dowsEl=document.getElementById("dows");
+dowsEl.innerHTML=DOWS.map(function(d){return '<div class="dow">'+d+'</div>';}).join("");
+
+function cellHTML(d,inMonth){
+  var ds=iso(d),list=dayList(ds),tot=list.length;
+  var rel=list.filter(function(g){return g.hype>=REL;});
+  var mc=maxChips(),shown=rel.slice(0,mc);
+  var cls="cell";
+  if(!inMonth)cls+=" out";
+  if(d.getDay()===0||d.getDay()===6)cls+=" wknd";
+  if(ds===TODAY)cls+=" today";
+  if(ds===state.sel)cls+=" sel";
+  var chips=shown.map(function(g){
+    var p=g.plat.filter(function(x){return state.filters[x];})[0]||g.plat[0];
+    return '<span class="chip'+(g.hype>=REL?' hot':'')+'"><i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i><span>'+g.t+'</span></span>';
+  }).join("");
+  var rest=tot-shown.length,badge="";
+  if(tot>0){
+    if(state.badge==="compact"){
+      if(rest>0)badge='<span class="badge px">+'+rest+'</span>';
+    }else{
+      badge='<span class="badge two px">'+(mqM.matches?'<b>'+rel.length+'</b>·'+tot:'<b>'+rel.length+' RIL</b> · '+tot+' TOT')+'</span>';
+    }
+  }
+  var shift=list.some(function(g){return g.was;})?'<span class="shift px" title="Data spostata">↺</span>':"";
+  return '<button type="button" class="'+cls+'" data-d="'+ds+'" aria-label="'+d.getDate()+" "+MESI[d.getMonth()]+", "+tot+' uscite">'+
+    '<span class="dnum">'+d.getDate()+'</span>'+shift+'<span class="chips">'+chips+'</span>'+badge+'</button>';
+}
+function buildGrid(){
+  var first=new Date(state.y,state.m,1);
+  var off=(first.getDay()+6)%7;
+  var start=new Date(state.y,state.m,1-off);
+  var html="";
+  for(var i=0;i<42;i++){
+    var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+    html+=cellHTML(d,d.getMonth()===state.m);
+    if(i>=34&&d.getMonth()!==state.m&&(i%7)===6)break;
+  }
+  gridEl.innerHTML=html;
+}
+function renderMeta(){
+  document.getElementById("mtitle").innerHTML=MESI[state.m].toUpperCase()+' <span>'+state.y+'</span>';
+  var tot=0,rel=0;
+  Object.keys(byDay).forEach(function(ds){
+    var d=pdate(ds);
+    if(d.getFullYear()===state.y&&d.getMonth()===state.m){
+      var l=dayList(ds);tot+=l.length;rel+=l.filter(function(g){return g.hype>=REL;}).length;
+    }
+  });
+  document.getElementById("mmeta").innerHTML='<b>'+rel+'</b> RILEVANTI<br><b>'+tot+'</b> USCITE TOTALI';
+}
+function renderAll(){buildGrid();renderMeta();if(state.sel)renderPanel();}
+
+function flip(dir){
+  var reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if(dir<0)gridEl.classList.add("rev");else gridEl.classList.remove("rev");
+  if(reduce){state.m+=dir;norm();renderAll();return;}
+  gridEl.classList.add("anim-out");
+  var done=function(){
+    gridEl.removeEventListener("animationend",done);
+    gridEl.classList.remove("anim-out");
+    state.m+=dir;norm();renderAll();
+    gridEl.classList.add("anim-in");
+    setTimeout(function(){gridEl.classList.remove("anim-in");},240);
+  };
+  gridEl.addEventListener("animationend",done);
+}
+function norm(){while(state.m<0){state.m+=12;state.y--;}while(state.m>11){state.m-=12;state.y++;}}
+document.getElementById("prev").addEventListener("click",function(){flip(-1);});
+document.getElementById("next").addEventListener("click",function(){flip(1);});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&state.sel){closeDay();return;}
+  if(e.target.closest("input,textarea"))return;
+  if(e.key==="ArrowLeft")flip(-1);
+  if(e.key==="ArrowRight")flip(1);
+});
+
+/* ---------------- pannello giorno ---------------- */
+var panel=document.getElementById("panel"),main=document.getElementById("main");
+gridEl.addEventListener("click",function(e){
+  var c=e.target.closest(".cell");if(!c)return;
+  var ds=c.dataset.d;
+  if(state.sel===ds){closeDay();return;}
+  state.sel=ds;state.moreOpen=false;
+  panel.hidden=false;main.classList.add("open");
+  buildGrid();renderPanel();
+  if(mqM.matches)document.getElementById("pclose").focus();
+});
+document.getElementById("pclose").addEventListener("click",closeDay);
+function closeDay(){state.sel=null;panel.hidden=true;main.classList.remove("open");buildGrid();}
+
+function platChips(g){
+  return g.plat.map(function(p){return '<span class="pchip '+p+' notch-s">'+svg(p)+PLAT[p]+'</span>';}).join("");
+}
+function priceOf(g){
+  return g.vague?'<span class="price px">'+g.vague+'</span>':"";
+}
+function linksOf(g){
+  var out=g.links.map(function(l){
+    return'<a class="lk notch-s" href="'+l.u+'" target="_blank" rel="noopener noreferrer" title="'+l.n+'" aria-label="'+l.n+' — '+g.t+'">'+svg(l.k)+'</a>';
+  });
+  return out.length?'<span class="links">'+out.join("")+'</span>':"";
+}
+function hypeBar(g){
+  var n=10,on=Math.round(g.hype/10),c="";
+  for(var i=0;i<n;i++)c+='<i class="'+(i<on?"on":"")+'"></i>';
+  return'<span class="hypebar"><span class="lab" title="Stima redazionale, non dato IGDB">ATTESA</span><span class="track">'+c+'</span><b>'+g.hype+'</b></span>';
+}
+function shiftNote(g){
+  if(!g.was)return"";
+  var d=pdate(g.was);
+  return'<span class="shiftnote px">↺ SPOSTATO DA <s>'+d.getDate()+" "+MESI[d.getMonth()].slice(0,3)+" "+d.getFullYear()+'</s></span>';
+}
+function renderPanel(){
+  var ds=state.sel,d=pdate(ds),list=dayList(ds);
+  var rel=list.filter(function(g){return g.hype>=REL;});
+  var oth=list.filter(function(g){return g.hype<REL;});
+  document.getElementById("ptitle").textContent=GIORNI[d.getDay()].toUpperCase()+" "+d.getDate()+" "+MESI[d.getMonth()].toUpperCase();
+  document.getElementById("psub").textContent=list.length+" USCITE · "+rel.length+" IN EVIDENZA"+(ds===TODAY?" · OGGI":"");
+  var h="";
+  h+='<div><div class="blk-h"><h3>In evidenza</h3><span class="n px">'+rel.length+'</span><span class="rule"></span></div>';
+  if(!rel.length)h+='<div class="empty">Nessun titolo sopra la soglia di hype in questo giorno.</div>';
+  else h+='<div class="feat">'+rel.map(function(g){
+    return'<article class="fcard"><img class="cov" src="'+cover(g.t)+'" alt="" width="72" height="96">'+
+      '<div class="fc-b"><h4 class="gt">'+g.t+'</h4>'+
+      '<div class="rowx">'+platChips(g)+'</div>'+
+      '<div class="rowx">'+priceOf(g)+linksOf(g)+'</div>'+
+      hypeBar(g)+shiftNote(g)+'</div></article>';
+  }).join("")+'</div></div>';
+
+  h+='<div><div class="blk-h"><h3>Altre uscite</h3><span class="n px">'+oth.length+'</span><span class="rule"></span></div>';
+  if(!oth.length)h+='<div class="empty">Nient’altro in uscita.</div>';
+  else{
+    var lim=state.moreOpen?oth.length:12,shown=oth.slice(0,lim);
+    h+='<div class="oth">'+shown.map(function(g){
+      var dots=g.plat.map(function(p){return'<i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i>';}).join("");
+      return'<a class="ocard" href="'+g.links[0].u+'" target="_blank" rel="noopener noreferrer"><img class="cov" src="'+cover(g.t)+'" alt="" width="26" height="35">'+
+        '<span style="min-width:0"><span class="ot">'+g.t+'</span><span class="ometa"><span class="odots">'+dots+'</span>'+g.plat.map(function(p){return PLAT[p];}).join(" · ")+(g.was?' · ↺':'')+'</span></span>'+
+        priceOf(g)+'</a>';
+    }).join("");
+    if(oth.length>lim)h+='<button type="button" class="showmore px" id="smore">▼ mostra le altre '+(oth.length-lim)+'</button>';
+    h+='</div>';
+  }
+  h+='</div>';
+  var pb=document.getElementById("pbody");
+  pb.innerHTML=h;pb.scrollTop=0;
+  var sm=document.getElementById("smore");
+  if(sm)sm.addEventListener("click",function(){state.moreOpen=true;renderPanel();});
+}
+
+/* ---------------- sezione IN CRESCITA ---------------- */
+/* storico: array di {d:"AAAA-MM-GG", f:follower}, ordinato per data.
+   La finestra si calcola sulle date vere, non sulla posizione: un giorno di cron saltato non falsa il conto. */
+function histSpan(h){
+  if(!h||h.length<2)return 0;
+  return Math.round((pdate(h[h.length-1].d)-pdate(h[0].d))/86400000);
+}
+function growthOf(g,W){
+  var h=g.hist;
+  if(!h||h.length<2)return null;
+  var last=h[h.length-1],cut=addD(last.d,-W),prev=null;
+  for(var i=h.length-2;i>=0;i--){if(h[i].d<=cut){prev=h[i];break;}}
+  if(!prev||!prev.f)return null;
+  return{pct:(last.f-prev.f)/prev.f*100,last:last.f,prev:prev.f};
+}
+function sparkHTML(h,W){
+  var cut=addD(h[h.length-1].d,-W);
+  var seg=h.filter(function(e){return e.d>=cut;});
+  if(seg.length<2)seg=h.slice(-2);
+  var vals=seg.map(function(e){return e.f;});
+  var mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals),span=Math.max(1,mx-mn);
+  return'<span class="spark">'+vals.map(function(v,i){
+    var pc=Math.round(((v-mn)/span)*88)+12;
+    return'<i class="'+(i===vals.length-1?"last":"")+'" style="height:'+pc+'%"></i>';
+  }).join("")+'</span>';
+}
+function fnum(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1).replace(".",",")+"K":String(n);}
+function renderGrowth(){
+  var W=state.win,body=document.getElementById("growthbody");
+  var cands=GAMES.filter(function(g){return g.hist&&g.hist.length>=2&&visible(g);});
+  var ready=cands.map(function(g){var r=growthOf(g,W);return r?{g:g,r:r}:null;}).filter(Boolean);
+  var partial=cands.filter(function(g){return histSpan(g.hist)<W;});
+  ready.sort(function(a,b){return b.r.pct-a.r.pct;});
+  var top=ready.slice(0,9);
+  var h="";
+  if(!top.length){
+    h+='<div class="collect notch">'+
+      '<svg class="ic" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true" style="color:var(--line2)">'+ICO.wifi+'</svg>'+
+      '<h3>RACCOLTA DATI IN CORSO</h3>'+
+      '<p>Nessuno storico follower ancora registrato: la serie si costruisce un giorno alla volta, col cron notturno su IGDB. Servono circa due settimane prima che la crescita a '+W+' giorni sia affidabile. È fisiologico, non un errore.</p>'+
+      '<div class="bars"><i></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.45s"></i><i style="animation-delay:.6s"></i></div></div>';
+  }else{
+    h+='<div class="gcards">'+top.map(function(o,i){
+      var g=o.g,r=o.r;
+      var when=g.date?(pdate(g.date).getDate()+" "+MESI[pdate(g.date).getMonth()].slice(0,3)):g.vague;
+      return'<article class="gcard notch"><img class="cov" src="'+cover(g.t)+'" alt="" width="54" height="72">'+
+        '<div style="min-width:0"><div style="display:flex;gap:6px;align-items:flex-start"><h4 class="gt" style="font-size:14px;flex:1;min-width:0">'+g.t+'</h4><span class="rank px">#'+(i+1)+'</span></div>'+
+        '<div class="gr"><span class="pc-up">+'+r.pct.toFixed(r.pct<10?1:0).replace(".",",")+'%</span><span class="pc-lab">'+W+' gg</span></div>'+
+        sparkHTML(g.hist,W)+
+        '<div class="folw"><span>'+fnum(r.prev)+' → '+fnum(r.last)+' FOLLOWER</span><span>'+when.toUpperCase()+'</span></div>'+
+        '<div class="rowx" style="margin-top:7px">'+g.plat.map(function(p){return'<span class="pchip '+p+' notch-s">'+svg(p)+PLAT[p]+'</span>';}).join("")+'</div>'+
+        '</div></article>';
+    }).join("")+'</div>';
+  }
+  if(partial.length){
+    h+='<div class="partial notch"><h4>● Raccolta dati in corso — '+partial.length+' titoli con storico sotto i '+W+' giorni</h4><div class="plist">'+
+      partial.slice(0,14).map(function(g){
+        return'<span class="pitem notch-s"><span>'+g.t+'</span><em>'+histSpan(g.hist)+' GG</em></span>';
+      }).join("")+
+      (partial.length>14?'<span class="pitem notch-s"><em>+'+(partial.length-14)+' ALTRI</em></span>':"")+
+      '</div></div>';
+  }
+  body.innerHTML=h;
+}
+document.getElementById("winseg").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  state.win=+b.dataset.w;
+  [].forEach.call(this.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(+x.dataset.w===state.win));});
+  renderGrowth();
+});
+document.getElementById("badgeseg").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  state.badge=b.dataset.m;
+  [].forEach.call(this.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(x.dataset.m===state.badge));});
+  buildGrid();
+});
+
+/* ---------------- classifica "I migliori" ---------------- */
+function renderBest(){
+  var P=state.best,da=addD(TODAY,-P),body=document.getElementById("bestbody");
+  var lista=GAMES.filter(function(g){
+    return g.score&&g.date&&g.date<=TODAY&&g.date>da&&visible(g);
+  }).sort(function(a,b){return b.score-a.score||b.scoreN-a.scoreN;});
+  var nome=P===7?"ultimi 7 giorni":P===30?"ultimi 30 giorni":"ultimi 12 mesi";
+  if(!lista.length){
+    body.innerHTML='<div class="empty">Nessun titolo con voto della stampa negli '+nome+
+      (state.genre?' per il genere “'+state.genre+'”':'')+
+      '. I voti arrivano con il giro notturno su IGDB: finché la fonte è lo snapshot, ne sono presenti pochi.</div>';
+    return;
+  }
+  body.innerHTML='<div class="rank-list">'+lista.slice(0,24).map(function(g,i){
+    var d=pdate(g.date);
+    var cls=g.score>=85?"":g.score>=70?"mid":"low";
+    var gen=(g.genres||[]).slice(0,3).map(function(x){return'<span class="gtag">'+x+'</span>';}).join("");
+    return'<a class="ritem'+(i<3?" top"+(i+1):"")+'" href="'+g.links[0].u+'" target="_blank" rel="noopener noreferrer">'+
+      '<span class="pos px">'+(i+1)+'</span>'+
+      '<img class="cov" src="'+cover(g.t)+'" alt="" width="40" height="53">'+
+      '<span class="rtx"><b>'+g.t+'</b>'+
+      '<span class="rmeta">'+d.getDate()+" "+MESI[d.getMonth()].slice(0,3)+" "+d.getFullYear()+
+      ' · '+g.plat.map(function(p){return PLAT[p];}).join(" · ")+'</span>'+
+      (gen?'<span class="genres">'+gen+'</span>':'')+'</span>'+
+      '<span class="sbox '+cls+'"><i>'+g.score+'</i><em>'+(g.scoreKind==="utenti"?"UTENTI":(g.scoreN?g.scoreN+" REC":"STAMPA"))+'</em></span>'+
+      '</a>';
+  }).join("")+'</div>';
+}
+document.getElementById("bestseg").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  state.best=+b.dataset.p;
+  [].forEach.call(this.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(+x.dataset.p===state.best));});
+  renderBest();
+});
+
+/* ---------------- i 50 di sempre ---------------- */
+var ALLTIME=[],allOpen=false;
+function renderAllTime(){
+  var body=document.getElementById("allbody"),btn=document.getElementById("allbtn");
+  var lista=ALLTIME.filter(function(g){
+    return !state.genre||(g.genres&&g.genres.indexOf(state.genre)>=0);
+  });
+  if(!lista.length){
+    body.innerHTML='<div class="empty">Nessun titolo di genere “'+state.genre+'” in questa classifica.</div>';
+    btn.hidden=true;return;
+  }
+  btn.hidden=lista.length<=12;
+  btn.textContent=allOpen?"Mostra solo i primi 12":"Mostra tutti e "+lista.length;
+  var mostra=allOpen?lista:lista.slice(0,12);
+  body.innerHTML='<div class="rank-list">'+mostra.map(function(g,i){
+    var pos=ALLTIME.indexOf(g)+1;
+    var cls=g.score>=97?"":g.score>=95?"mid":"low";
+    var gen=(g.genres||[]).slice(0,2).map(function(x){return'<span class="gtag">'+x+'</span>';}).join("");
+    return'<a class="ritem'+(pos<=3?" top"+pos:"")+'" href="https://en.wikipedia.org/w/index.php?search='+
+      encodeURIComponent(g.t+" video game")+'" target="_blank" rel="noopener noreferrer">'+
+      '<span class="pos px">'+pos+'</span>'+
+      '<img class="cov" src="'+cover(g.t)+'" alt="" width="40" height="53">'+
+      '<span class="rtx"><b>'+g.t+'</b>'+
+      '<span class="rmeta">'+g.year+' · '+g.platName+'</span>'+
+      (gen?'<span class="genres">'+gen+'</span>':'')+'</span>'+
+      '<span class="sbox '+cls+'"><i>'+g.score+'</i><em>STAMPA</em></span>'+
+      '</a>';
+  }).join("")+'</div>';
+}
+document.getElementById("allbtn").addEventListener("click",function(){
+  allOpen=!allOpen;renderAllTime();
+});
+
+/* ---------------- filtro generi ---------------- */
+var gsel=document.getElementById("gsel");
+function popolaGeneri(){
+  var set={};
+  GAMES.forEach(function(g){(g.genres||[]).forEach(function(x){set[x]=(set[x]||0)+1;});});
+  ALLTIME.forEach(function(g){(g.genres||[]).forEach(function(x){set[x]=(set[x]||0)+1;});});
+  var voci=Object.keys(set).sort(function(a,b){return set[b]-set[a]||a.localeCompare(b);});
+  gsel.innerHTML='<option value="">tutti i generi</option>'+voci.map(function(x){
+    return'<option value="'+x+'">'+x+' ('+set[x]+')</option>';
+  }).join("");
+  gsel.value=state.genre;
+  gsel.disabled=!voci.length;
+}
+gsel.addEventListener("change",function(){
+  state.genre=gsel.value;
+  renderAll();renderBest();renderAllTime();renderGrowth();renderTba();
+});
+
+/* ---------------- date da definire ---------------- */
+function renderTba(){
+  var list=GAMES.filter(function(g){return g.vague&&visible(g);}).sort(function(a,b){return b.hype-a.hype;});
+  document.getElementById("tbalist").innerHTML=list.map(function(g){
+    var dots=g.plat.map(function(p){return'<i style="width:5px;height:5px;display:block;background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i>';}).join("");
+    return'<a class="tbai" href="'+g.links[0].u+'" target="_blank" rel="noopener noreferrer"><img class="cov" src="'+cover(g.t)+'" alt="" width="24" height="32">'+
+      '<span style="min-width:0;flex:1"><span class="ot" style="display:block">'+g.t+'</span>'+
+      '<span class="ometa"><span class="odots">'+dots+'</span>'+g.plat.map(function(p){return PLAT[p];}).join(" · ")+'</span></span>'+
+      '<span class="tbad">'+g.vague+'</span></a>';
+  }).join("");
+}
+
+/* ---------------- init ---------------- */
+var lastMC=null,rt=null;
+function onResize(){
+  clearTimeout(rt);
+  rt=setTimeout(function(){
+    var mc=maxChips();
+    if(mc!==lastMC){lastMC=mc;buildGrid();}
+  },120);
+}
+window.addEventListener("resize",onResize);
+
+/* ---------------- avvio ----------------
+   I dati vivono in data.json (riscritto ogni notte dal cron IGDB) e lo storico
+   follower in history.json. Se non sono raggiungibili — pagina aperta da sola,
+   anteprima, rete assente — si ripiega sullo snapshot incorporato. */
+function paint(){
+  indexDays();
+  renderFilters();
+  popolaGeneri();
+  lastMC=maxChips();
+  renderAll();
+  renderBest();
+  renderAllTime();
+  renderGrowth();
+  renderTba();
+  var f=document.getElementById("datasrc");
+  if(f)f.textContent=DATA_SRC;
+}
+function grab(u){
+  return fetch(u,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
+}
+Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
+  var d=res[0],hist=res[1]||null;
+  if(d&&d.games&&d.games.length){
+    buildGames(d.games,hist);
+    ALLTIME=d.allTime||[];
+    DATA_SRC=(d.source||"IGDB")+" · aggiornato "+(d.generated||"—");
+  }else{
+    buildGames(fallbackRows(),hist);
+    DATA_SRC="snapshot incorporato del 29 ottobre 2026 — data.json non raggiungibile";
+  }
+  paint();
+});
+})();
+</script>
+
+</body></html>
