@@ -459,8 +459,8 @@ a.lk{color:var(--ink2)}
       <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
         <span class="lab">Periodo</span>
         <div class="seg" id="bestseg" role="group" aria-label="Periodo classifica">
-          <button type="button" data-p="7" aria-pressed="false">Settimana</button>
-          <button type="button" data-p="30" aria-pressed="true">Mese</button>
+          <button type="button" data-p="7" aria-pressed="true">Settimana</button>
+          <button type="button" data-p="30" aria-pressed="false">Mese</button>
           <button type="button" data-p="365" aria-pressed="false">Anno</button>
         </div>
       </div>
@@ -937,7 +937,7 @@ function indexDays(){
 var _oggi=pdate(TODAY);
 var state={y:_oggi.getFullYear(),m:_oggi.getMonth(),sel:null,
   filters:{pc:true,switch2:true,ps5:true,xbox:true},
-  badge:"compact",win:7,genre:"",best:30,moreOpen:false};
+  badge:"compact",win:7,genre:"",best:7,moreOpen:false};
 var mqM=window.matchMedia("(max-width:720px)");
 function visible(g){
   if(!g.plat.some(function(p){return state.filters[p];}))return false;
