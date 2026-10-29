@@ -1180,7 +1180,12 @@ function renderAllTime(){
   var mostra=allOpen?lista:lista.slice(0,12);
   body.innerHTML='<div class="rank-list">'+mostra.map(function(g,i){
     var pos=ALLTIME.indexOf(g)+1;
-    var cls=g.score>=97?"":g.score>=95?"mid":"low";
+    /* Il colore segue la posizione, non il voto grezzo. Con soglie fisse sul voto
+       contraddiceva l'ordine: la classifica ordina per media bayesiana, quindi un
+       92 su 39 recensioni sta sopra un 97 su 17, e il terzo in lista usciva del
+       colore piu' spento mentre il sesto era dorato. Due scale per la stessa
+       colonna si leggono come un errore, perche' lo sono. */
+    var cls=pos<=10?"":pos<=25?"mid":"low";
     var gen=(g.genres||[]).slice(0,2).map(function(x){return'<span class="gtag">'+x+'</span>';}).join("");
     return'<a class="ritem'+(pos<=3?" top"+pos:"")+'" href="https://en.wikipedia.org/w/index.php?search='+
       encodeURIComponent(g.t+" video game")+'" target="_blank" rel="noopener noreferrer">'+
@@ -1189,7 +1194,7 @@ function renderAllTime(){
       '<span class="rtx"><b>'+g.t+'</b>'+
       '<span class="rmeta">'+g.year+' · '+g.platName+'</span>'+
       (gen?'<span class="genres">'+gen+'</span>':'')+'</span>'+
-      '<span class="sbox '+cls+'"><i>'+g.score+'</i><em>STAMPA</em></span>'+
+      '<span class="sbox '+cls+'"><i>'+g.score+'</i><em>'+(g.scoreN?g.scoreN+" REC":"STAMPA")+'</em></span>'+
       '</a>';
   }).join("")+'</div>';
 }

@@ -132,7 +132,14 @@ candidati sono circa 740. Ma a quel punto l'ordine per media premierebbe chi ha 
 voti fortunati, così si ordina per **media bayesiana**: la media del titolo tirata
 verso quella generale con un peso pari a 25 recensioni. Chi ne ha dieci deve stare
 molto sopra la media per salire; chi ne ha ottanta resta dov'è. Il voto mostrato resta
-quello vero — la correzione serve a ordinare, non a essere letta.
+quello vero — la correzione serve a ordinare, non a essere letta, e accanto compare il
+numero di recensioni: e' il dato che spiega perche' un 92 su 39 recensioni stia sopra un
+97 su 17, e nasconderlo faceva sembrare arbitrario l'ordine.
+
+Per la stessa ragione il colore del riquadro voto segue la **posizione** (primi dieci,
+primi venticinque, resto) e non il voto grezzo: con soglie fisse sul voto contraddiceva
+l'ordinamento bayesiano, e il terzo in classifica usciva nel colore piu' spento mentre
+il sesto era dorato. Due scale nella stessa colonna si leggono come un errore.
 
 **I generi arrivano da IGDB, tradotti.** Nello snapshot ne sono compilati circa 135 su 330,
 quelli riconoscibili a mano; col primo giro del cron li hanno tutti. Un titolo senza genere
