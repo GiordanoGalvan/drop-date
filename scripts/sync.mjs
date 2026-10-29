@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Radar Uscite — sincronizzazione notturna da IGDB.
+ * Drop Date — sincronizzazione notturna da IGDB.
  *
  * Scrive due file nella radice del progetto:
  *   data.json     uscite correnti (riscritto ogni volta)
- *   history.json  serie storica dei follower (solo accodata, mai riscritta da zero)
+ *   history.json  serie storica della popolarità (solo accodata, mai riscritta da zero)
  *
  * history.json è l'unica cosa che non si recupera: se un giorno il cron salta,
  * quel punto manca per sempre. Per questo il file esistente viene letto e unito,
@@ -168,28 +168,67 @@ function votoDi(gioco) {
   return {};
 }
 
-/* "Attesa" 0-100 come rango percentile dei follower fra i titoli non ancora usciti.
-   Un valore assoluto non si confronta fra novembre, pieno di uscite, e febbraio deserto:
-   il percentile si auto-regola. */
-function assegnaAttesa(giochi) {
-  const futuri = giochi.filter((g) => !g.date || g.date >= OGGI);
-  const ordinati = [...futuri].sort((a, b) => (a.follows || 0) - (b.follows || 0));
-  const n = ordinati.length || 1;
-  const rango = new Map();
-  ordinati.forEach((g, i) => rango.set(g, Math.round(((i + 1) / n) * 100)));
-  const maxF = Math.max(1, ...giochi.map((g) => g.follows || 0));
-  for (const g of giochi) {
-    g.hype = rango.has(g)
-      ? rango.get(g)
-      /* Gli usciti non entrano nel percentile dei futuri: scala logaritmica sui follower. */
-      : Math.round((Math.log10((g.follows || 0) + 1) / Math.log10(maxF + 1)) * 100);
+/* Quanta attesa c'e' attorno a un gioco. IGDB ha dismesso `follows`: oggi quel
+   campo arriva vuoto su tutto il catalogo, e un percentile calcolato su una colonna
+   di zeri ordina a caso - era il motivo per cui GTA VI finiva sotto a titoli ignoti.
+   Restano due fonti vive, con scale e coperture diverse:
+     popularity_primitives   "Want to Play" e "Visits": precise, ma solo sui titoli noti
+     games.hypes             quanti utenti IGDB hanno segnato il gioco fra gli attesi
+   Si fondono per rango, non per valore: ogni segnale diventa un percentile fra i
+   giochi che quel segnale copre, e si tiene il piu' alto. Cosi' scale incompatibili
+   non si sommano a vanvera, e un titolo coperto da una sola fonte non viene punito. */
+const POP_TIPI = { 2: "Want to Play", 1: "Visits" };
+
+async function popolarita(tok) {
+  const out = new Map();
+  for (const tipo of Object.keys(POP_TIPI)) {
+    let n = 0;
+    for (let offset = 0; offset < 10000; offset += 500) {
+      const page = await igdb(tok, "popularity_primitives",
+        `fields game_id,value; where popularity_type = ${tipo}; sort value desc; limit 500; offset ${offset};`);
+      for (const r of page) {
+        if (!out.has(r.game_id)) out.set(r.game_id, {});
+        out.get(r.game_id)[tipo] = r.value;
+      }
+      n += page.length;
+      if (page.length < 500) break;
+    }
+    console.log(`popolarita "${POP_TIPI[tipo]}": ${n} titoli`);
   }
+  return out;
+}
+
+/* Percentile dentro un gruppo. A parita' di valore, stesso punteggio: senza questo
+   un pareggio verrebbe spezzato dall'ordine di arrivo, cioe' dal nulla. */
+function percentili(gruppo) {
+  const segnali = [(g) => g._pop?.[2] || 0, (g) => g._pop?.[1] || 0, (g) => g.hypes || 0];
+  for (const leggi of segnali) {
+    const con = gruppo.filter((g) => leggi(g) > 0).sort((a, b) => leggi(a) - leggi(b));
+    if (!con.length) continue;
+    let i = 0;
+    while (i < con.length) {
+      let j = i;
+      while (j + 1 < con.length && leggi(con[j + 1]) === leggi(con[i])) j++;
+      const p = Math.round(((j + 1) / con.length) * 100);
+      for (let k = i; k <= j; k++) if (p > con[k].hype) con[k].hype = p;
+      i = j + 1;
+    }
+  }
+}
+
+/* Il percentile si calcola separatamente fra non-usciti e usciti: un valore assoluto
+   non si confronta fra novembre, pieno di uscite, e febbraio che e' deserto. */
+function assegnaAttesa(giochi) {
+  for (const g of giochi) g.hype = 0;
+  percentili(giochi.filter((g) => !g.date || g.date >= OGGI));
+  percentili(giochi.filter((g) => g.date && g.date < OGGI));
 }
 
 /* ------------------------------------------------------------------ main */
 
 async function main() {
   const tok = await token();
+  const pop = await popolarita(tok);
   const plat = await idPiattaforme(tok);
   const idToKey = Object.fromEntries(Object.entries(plat).map(([k, v]) => [v, k]));
   const ids = Object.values(plat).join(",");
@@ -200,7 +239,7 @@ async function main() {
 
   const campi = [
     "date", "category", "platform",
-    "game.id", "game.name", "game.follows", "game.hypes",
+    "game.id", "game.name", "game.hypes", "game.cover.image_id",
     "game.websites.url", "game.websites.category",
     "game.genres.name",
     /* aggregated_rating = media della stampa raccolta da IGDB, su 100.
@@ -216,8 +255,8 @@ async function main() {
   /* Titoli senza alcuna data annunciata: non compaiono fra le release_dates,
      ma sono proprio quelli della sezione "date da definire". */
   const senzaData = await paginato(tok, "games",
-    "id,name,follows,hypes,websites.url,websites.category,platforms",
-    `platforms = (${ids}) & first_release_date = null & follows > 40`, 3000);
+    "id,name,hypes,cover.image_id,websites.url,websites.category,platforms",
+    `platforms = (${ids}) & first_release_date = null & hypes > 10`, 3000);
   console.log(`titoli senza data: ${senzaData.length}`);
 
   /* Un gioco ha una riga per piattaforma e a volte per regione: si accorpa,
@@ -231,7 +270,8 @@ async function main() {
     const d = r.date ? new Date(r.date * 1000) : null;
     let g = perGioco.get(key);
     if (!g) {
-      g = { igdb: key, t: r.game.name, follows: r.game.follows || 0, plat: [],
+      g = { igdb: key, t: r.game.name, hypes: r.game.hypes || 0, plat: [],
+            cov: r.game.cover?.image_id || null,
             _cat: 99, _d: null, _siti: r.game.websites || [], _gioco: r.game };
       perGioco.set(key, g);
     }
@@ -243,7 +283,8 @@ async function main() {
     if (perGioco.has(s.id)) continue;
     const piatt = (s.platforms || []).map((p) => idToKey[p]).filter(Boolean);
     if (!piatt.length) continue;
-    perGioco.set(s.id, { igdb: s.id, t: s.name, follows: s.follows || 0, plat: piatt,
+    perGioco.set(s.id, { igdb: s.id, t: s.name, hypes: s.hypes || 0, plat: piatt,
+                         cov: s.cover?.image_id || null,
                          _cat: 7, _d: null, _siti: s.websites || [], _gioco: s });
   }
 
@@ -255,19 +296,25 @@ async function main() {
     g.links = linkDi({ name: g.t, websites: g._siti }, g.plat);
     g.genres = (g._gioco?.genres || []).map((x) => GENERE_IT[x.name] || x.name).filter(Boolean);
     Object.assign(g, votoDi(g._gioco));
+    g._pop = pop.get(g.igdb);
+    /* Il numero che finisce nello storico: un solo valore per gioco, il piu'
+       informativo fra quelli disponibili. La crescita si misura su questo. */
+    g.pop = g._pop?.[2] || g._pop?.[1] || g.hypes || 0;
   }
   assegnaAttesa(giochi);
 
   /* ---------- i 50 di sempre, su qualsiasi console ----------
      Nessun filtro di piattaforma: restringerla alle tre del sito taglierebbe
-     metà dei classici. category = 0 tiene fuori DLC, espansioni e riedizioni,
-     che altrimenti occupano la classifica con doppioni dello stesso gioco. */
+     metà dei classici. game_type = 0 tiene fuori DLC, espansioni e riedizioni, che altrimenti
+     occupano la classifica con doppioni dello stesso gioco. Era `category`,
+     campo che IGDB ha dismesso: non da' errore, restituisce zero righe. */
   const diSempre = await igdb(tok, "games",
-    `fields name,aggregated_rating,aggregated_rating_count,first_release_date,genres.name,platforms.name;
-     where aggregated_rating_count >= 40 & aggregated_rating != null & category = 0 & version_parent = null;
+    `fields name,aggregated_rating,aggregated_rating_count,first_release_date,genres.name,platforms.name,cover.image_id;
+     where aggregated_rating_count >= 40 & aggregated_rating != null & game_type = 0 & version_parent = null;
      sort aggregated_rating desc; limit 50;`);
   const allTime = diSempre.map((g) => ({
     t: g.name,
+    cov: g.cover?.image_id || null,
     score: Math.round(g.aggregated_rating),
     scoreN: g.aggregated_rating_count,
     platName: (g.platforms || []).slice(0, 2).map((p) => p.name).join(" · ") || "—",
@@ -288,8 +335,8 @@ async function main() {
     if (g.date && g.date < OGGI) continue;        // già uscito: la crescita non interessa più
     const k = String(g.igdb);
     const serie = storico[k] || (storico[k] = []);
-    if (serie.length && serie[serie.length - 1].d === OGGI) serie[serie.length - 1].f = g.follows;
-    else { serie.push({ d: OGGI, f: g.follows }); nuovi++; }
+    if (serie.length && serie[serie.length - 1].d === OGGI) serie[serie.length - 1].f = g.pop;
+    else { serie.push({ d: OGGI, f: g.pop }); nuovi++; }
     while (serie.length && serie[0].d < limite) serie.shift();
   }
   /* Potatura: via le serie di giochi ormai usciti o spariti dal listino. */
@@ -304,6 +351,7 @@ async function main() {
     allTimeSource: "IGDB, media stampa, minimo 40 recensioni",
     games: giochi.map((g) => {
       const o = { igdb: g.igdb, t: g.t, plat: g.plat, hype: g.hype, links: g.links };
+      if (g.cov) o.cov = g.cov;
       if (g.date) o.date = g.date; else o.vague = g.vague;
       if (g.genres?.length) o.genres = g.genres;
       if (g.score) { o.score = g.score; o.scoreN = g.scoreN; o.scoreKind = g.scoreKind; }

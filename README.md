@@ -1,4 +1,4 @@
-# Radar Uscite
+# Drop Date
 
 Calendario delle uscite videogiochi per **PC, Switch 2 e PS5**, con vista giornaliera,
 tracciamento degli slittamenti e classifica dei titoli in crescita.
@@ -10,7 +10,7 @@ nessuna dipendenza da installare.
 index.html      la pagina: calendario, pannello giorno, classifiche, i 50 di sempre,
                 crescita, date da definire
 data.json       uscite correnti — riscritto a ogni giro del cron
-history.json    serie storica dei follower — solo accodato, mai riscritto
+history.json    serie storica della popolarità — solo accodato, mai riscritto
 scripts/sync.mjs            scarica da IGDB e aggiorna i due JSON
 .github/workflows/sync.yml  cron notturno che esegue il sync e committa
 ```
@@ -49,9 +49,11 @@ e lo storico si accumula un giorno alla volta. È previsto, non è un guasto.
 
 ### 4. Pubblicazione
 
-Qualsiasi hosting statico va bene, basta che serva la cartella così com'è.
-Su Netlify: collega il repository, lascia vuoto il comando di build, directory di
-pubblicazione `.` — stessa configurazione di Galleria Aste. GitHub Pages funziona uguale.
+Attiva: **GitHub Pages**, da `main`, directory `.` — nessun comando di build.
+Il sito sta su `https://<utente>.github.io/<repo>/`.
+
+Qualsiasi altro hosting statico va uguale: Netlify vuole il repository collegato,
+comando di build vuoto, directory di pubblicazione `.`.
 
 Il deploy si riattiva da sé a ogni commit del bot, quindi il sito segue il cron
 senza altri passaggi.
@@ -69,10 +71,30 @@ dal browser e la pagina ripiega sullo snapshot. Serve un server, anche banale.
 ## Scelte da sapere
 
 **L'attesa è un percentile, non un numero assoluto.** Ogni titolo non ancora uscito riceve
-un punteggio 0-100 in base al suo rango di follower fra gli altri titoli non ancora usciti.
+un punteggio 0-100 in base al suo rango di popolarità fra gli altri titoli non ancora usciti.
 Un valore assoluto non si confronta fra novembre, pieno di uscite, e febbraio che è deserto:
 il percentile si auto-regola. La soglia dei "rilevanti" in calendario è a 50 e si cambia
 da una riga sola in `index.html` (`var REL=50`).
+
+**La popolarità non viene da `follows`.** IGDB ha dismesso quel campo: oggi risponde
+vuoto su tutto il catalogo, senza dare errore. Un percentile calcolato su una colonna
+di zeri ordina a caso, ed è il motivo per cui nei primi giri GTA VI finiva sotto a
+titoli ignoti. Al suo posto si usano due fonti ancora vive — l'endpoint
+`popularity_primitives` (*Want to Play* e *Visits*) e il campo `hypes` — fuse **per
+rango e non per valore**: ogni segnale diventa un percentile fra i giochi che copre e
+si tiene il più alto. Scale incompatibili così non si sommano a vanvera, e un titolo
+coperto da una sola fonte non viene punito. A parità di valore il punteggio è lo
+stesso: un pareggio spezzato dall'ordine di arrivo è esattamente il bug di prima.
+
+**Lo spazio in pagina è la gerarchia.** Nel pannello del giorno le card hanno tre
+taglie secondo l'attesa: sopra 90 la copertina è a 140px, sopra 75 a 104px, sotto a
+72px. Se il titolo più atteso dell'anno occupa quanto un indie sconosciuto, la pagina
+sta affermando che valgono uguale.
+
+**Le copertine sono quelle vere.** `cover.image_id` da IGDB, servito da
+`images.igdb.com`. Il disegno procedurale a pixel resta solo per i titoli che su IGDB
+non hanno copertina, e si riconosce a vista: un segnaposto inventato spacciato per
+copertina reale è fuorviante.
 
 **La crescita si calcola sulle date, non sulle posizioni.** Se una notte il cron salta,
 la finestra a 7 giorni resta di 7 giorni veri invece di diventare di 8. Un giro mancato
@@ -94,7 +116,7 @@ lo dichiara con l'etichetta `UTENTI` invece del numero di recensioni.
 qualsiasi console: restringerla a PC, Switch 2 e PS5 taglierebbe metà dei classici, e un
 Ocarina of Time assente da una classifica di sempre è un errore, non una scelta di campo.
 Il filtro generi invece si applica. Nello snapshot la lista viene dalle classifiche
-Metacritic storiche pubbliche; dal primo giro la ricalcola IGDB con `category = 0`
+Metacritic storiche pubbliche; dal primo giro la ricalcola IGDB con `game_type = 0`
 e almeno 40 recensioni, così DLC, espansioni e riedizioni non occupano la classifica
 con doppioni dello stesso gioco.
 
@@ -104,13 +126,11 @@ sparisce quando il filtro è attivo — è il comportamento giusto, ma spiega pe
 filtrando si vede meno del previsto.
 
 **`history.json` non è ricostruibile.** Le date di uscita si riallineano quando si vuole,
-i follower di ieri no. Lo script lo legge, accoda e pota a 120 giorni; se il file risulta
+la popolarità di ieri no. Lo script lo legge, accoda e pota a 120 giorni; se il file risulta
 illeggibile si ferma invece di sovrascriverlo.
 
 ## Da fare
 
-- Cover reali: IGDB restituisce `cover.image_id`, oggi la pagina disegna segnaposto
-  procedurali. Sostituibile senza toccare altro.
 - Soglia dei rilevanti da ritarare quando si vedono i volumi veri di IGDB.
 - Se i voti IGDB risultassero troppo radi, OpenCritic ha un'API vera via RapidAPI:
   si aggancia come seconda fonte di `score` senza toccare il resto della pipeline.
