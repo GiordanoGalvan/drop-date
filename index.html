@@ -489,6 +489,17 @@ var REL=50; /* soglia attesa per "atteso dalla comunità" */
 var AAA=90; /* soglia tripla A: card grande nel pannello, giorno dorato in griglia */
 function eur(n){return n===0?"Gratis":n.toFixed(2).replace(".",",")+" €";}
 
+/* Nessun dato entra in HTML senza passare da qui. I titoli arrivano da IGDB e
+   contengono di tutto: 69 hanno doppi apici, 2 hanno < o >, 466 una &. Un apice
+   dentro un attributo lo chiude in anticipo, il browser legge il resto come
+   spazzatura e l'ancora perde l'href — era il motivo per cui alcune card in
+   evidenza avevano link morti. Concatenare stringhe in HTML e' legittimo, non
+   mettere in sicurezza quello che ci si concatena no. */
+function esc(v){
+  return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
 /* ---------------- cover ----------------
    Quando IGDB da' la copertina vera si usa quella. Il disegno procedurale resta
    solo come ripiego per i titoli che non ne hanno: un segnaposto inventato al
@@ -901,7 +912,7 @@ function cellHTML(d,inMonth){
   if(ds===state.sel)cls+=" sel";
   var chips=shown.map(function(g){
     var p=g.plat.filter(function(x){return state.filters[x];})[0]||g.plat[0];
-    return '<span class="chip'+(g.hype>=AAA?' aaa':g.hype>=REL?' hot':'')+'"><i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i><span>'+g.t+'</span></span>';
+    return '<span class="chip'+(g.hype>=AAA?' aaa':g.hype>=REL?' hot':'')+'"><i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i><span>'+esc(g.t)+'</span></span>';
   }).join("");
   var rest=tot-shown.length,badge="";
   if(tot>0){
@@ -982,11 +993,11 @@ function platChips(g){
   return g.plat.map(function(p){return '<span class="pchip '+p+' notch-s">'+svg(p)+PLAT[p]+'</span>';}).join("");
 }
 function priceOf(g){
-  return g.vague?'<span class="price px">'+g.vague+'</span>':"";
+  return g.vague?'<span class="price px">'+esc(g.vague)+'</span>':"";
 }
 function linksOf(g){
   var out=g.links.map(function(l){
-    return'<a class="lk notch-s" href="'+l.u+'" target="_blank" rel="noopener noreferrer" title="'+l.n+'" aria-label="'+l.n+' — '+g.t+'">'+svg(l.k)+'</a>';
+    return'<a class="lk notch-s" href="'+esc(l.u)+'" target="_blank" rel="noopener noreferrer" title="'+esc(l.n)+'" aria-label="'+esc(l.n+" — "+g.t)+'">'+svg(l.k)+'</a>';
   });
   return out.length?'<span class="links">'+out.join("")+'</span>':"";
 }
@@ -1023,7 +1034,7 @@ function renderPanel(){
   else h+='<div class="feat">'+rel.map(function(g){
     var tr=tierOf(g),cw=tr==="t1"?140:tr==="t2"?104:72;
     return'<article class="fcard '+tr+'">'+covImg(g,cw,Math.round(cw*4/3),"t_cover_big")+
-      '<div class="fc-b"><h4 class="gt">'+g.t+'</h4>'+
+      '<div class="fc-b"><h4 class="gt">'+esc(g.t)+'</h4>'+
       '<div class="rowx">'+platChips(g)+'</div>'+
       '<div class="rowx">'+priceOf(g)+linksOf(g)+'</div>'+
       hypeBar(g)+shiftNote(g)+'</div></article>';
@@ -1035,8 +1046,8 @@ function renderPanel(){
     var lim=state.moreOpen?oth.length:12,shown=oth.slice(0,lim);
     h+='<div class="oth">'+shown.map(function(g){
       var dots=g.plat.map(function(p){return'<i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i>';}).join("");
-      return'<a class="ocard" href="'+g.links[0].u+'" target="_blank" rel="noopener noreferrer">'+covImg(g,26,35,"t_cover_small")+''+
-        '<span style="min-width:0"><span class="ot">'+g.t+'</span><span class="ometa"><span class="odots">'+dots+'</span>'+g.plat.map(function(p){return PLAT[p];}).join(" · ")+(g.was?' · ↺':'')+'</span></span>'+
+      return'<a class="ocard" href="'+esc(g.links[0].u)+'" target="_blank" rel="noopener noreferrer">'+covImg(g,26,35,"t_cover_small")+''+
+        '<span style="min-width:0"><span class="ot">'+esc(g.t)+'</span><span class="ometa"><span class="odots">'+dots+'</span>'+g.plat.map(function(p){return PLAT[p];}).join(" · ")+(g.was?' · ↺':'')+'</span></span>'+
         priceOf(g)+'</a>';
     }).join("");
     if(oth.length>lim)h+='<button type="button" class="showmore px" id="smore">▼ mostra le altre '+(oth.length-lim)+'</button>';
@@ -1095,7 +1106,7 @@ function renderGrowth(){
       var g=o.g,r=o.r;
       var when=g.date?(pdate(g.date).getDate()+" "+MESI[pdate(g.date).getMonth()].slice(0,3)):g.vague;
       return'<article class="gcard notch">'+covImg(g,54,72,"t_cover_small")+''+
-        '<div style="min-width:0"><div style="display:flex;gap:6px;align-items:flex-start"><h4 class="gt" style="font-size:14px;flex:1;min-width:0">'+g.t+'</h4><span class="rank px">#'+(i+1)+'</span></div>'+
+        '<div style="min-width:0"><div style="display:flex;gap:6px;align-items:flex-start"><h4 class="gt" style="font-size:14px;flex:1;min-width:0">'+esc(g.t)+'</h4><span class="rank px">#'+(i+1)+'</span></div>'+
         '<div class="gr"><span class="pc-up">+'+r.pct.toFixed(r.pct<10?1:0).replace(".",",")+'%</span><span class="pc-lab">'+W+' gg</span></div>'+
         sparkHTML(g.hist,W)+
         '<div class="folw"><span>'+fnum(r.prev)+' → '+fnum(r.last)+' FOLLOWER</span><span>'+when.toUpperCase()+'</span></div>'+
@@ -1106,7 +1117,7 @@ function renderGrowth(){
   if(partial.length){
     h+='<div class="partial notch"><h4>● Raccolta dati in corso — '+partial.length+' titoli con storico sotto i '+W+' giorni</h4><div class="plist">'+
       partial.slice(0,14).map(function(g){
-        return'<span class="pitem notch-s"><span>'+g.t+'</span><em>'+histSpan(g.hist)+' GG</em></span>';
+        return'<span class="pitem notch-s"><span>'+esc(g.t)+'</span><em>'+histSpan(g.hist)+' GG</em></span>';
       }).join("")+
       (partial.length>14?'<span class="pitem notch-s"><em>+'+(partial.length-14)+' ALTRI</em></span>':"")+
       '</div></div>';
@@ -1135,18 +1146,18 @@ function renderBest(){
   var nome=P===7?"ultimi 7 giorni":P===30?"ultimi 30 giorni":"ultimi 12 mesi";
   if(!lista.length){
     body.innerHTML='<div class="empty">Nessun titolo con voto della stampa negli '+nome+
-      (state.genre?' per il genere “'+state.genre+'”':'')+
+      (state.genre?' per il genere “'+esc(state.genre)+'”':'')+
       '. I voti arrivano con il giro notturno su IGDB: finché la fonte è lo snapshot, ne sono presenti pochi.</div>';
     return;
   }
   body.innerHTML='<div class="rank-list">'+lista.slice(0,24).map(function(g,i){
     var d=pdate(g.date);
     var cls=g.score>=85?"":g.score>=70?"mid":"low";
-    var gen=(g.genres||[]).slice(0,3).map(function(x){return'<span class="gtag">'+x+'</span>';}).join("");
+    var gen=(g.genres||[]).slice(0,3).map(function(x){return'<span class="gtag">'+esc(x)+'</span>';}).join("");
     return'<a class="ritem'+(i<3?" top"+(i+1):"")+'" href="'+g.links[0].u+'" target="_blank" rel="noopener noreferrer">'+
       '<span class="pos px">'+(i+1)+'</span>'+
       covImg(g,40,53,"t_cover_small")+
-      '<span class="rtx"><b>'+g.t+'</b>'+
+      '<span class="rtx"><b>'+esc(g.t)+'</b>'+
       '<span class="rmeta">'+d.getDate()+" "+MESI[d.getMonth()].slice(0,3)+" "+d.getFullYear()+
       ' · '+g.plat.map(function(p){return PLAT[p];}).join(" · ")+'</span>'+
       (gen?'<span class="genres">'+gen+'</span>':'')+'</span>'+
@@ -1171,7 +1182,7 @@ function renderAllTime(){
   if(!lista.length){
     /* Due vuoti diversi: nessun dato affatto, o un genere che non ha titoli in lista. */
     body.innerHTML='<div class="empty">'+(state.genre
-      ?'Nessun titolo di genere “'+state.genre+'” in questa classifica.'
+      ?'Nessun titolo di genere “'+esc(state.genre)+'” in questa classifica.'
       :'Classifica non disponibile: il primo giro del cron non è ancora passato.')+'</div>';
     btn.hidden=true;return;
   }
@@ -1186,13 +1197,13 @@ function renderAllTime(){
        colore piu' spento mentre il sesto era dorato. Due scale per la stessa
        colonna si leggono come un errore, perche' lo sono. */
     var cls=pos<=10?"":pos<=25?"mid":"low";
-    var gen=(g.genres||[]).slice(0,2).map(function(x){return'<span class="gtag">'+x+'</span>';}).join("");
+    var gen=(g.genres||[]).slice(0,2).map(function(x){return'<span class="gtag">'+esc(x)+'</span>';}).join("");
     return'<a class="ritem'+(pos<=3?" top"+pos:"")+'" href="https://en.wikipedia.org/w/index.php?search='+
       encodeURIComponent(g.t+" video game")+'" target="_blank" rel="noopener noreferrer">'+
       '<span class="pos px">'+pos+'</span>'+
       covImg(g,40,53,"t_cover_small")+
-      '<span class="rtx"><b>'+g.t+'</b>'+
-      '<span class="rmeta">'+g.year+' · '+g.platName+'</span>'+
+      '<span class="rtx"><b>'+esc(g.t)+'</b>'+
+      '<span class="rmeta">'+g.year+' · '+esc(g.platName)+'</span>'+
       (gen?'<span class="genres">'+gen+'</span>':'')+'</span>'+
       '<span class="sbox '+cls+'"><i>'+g.score+'</i><em>'+(g.scoreN?g.scoreN+" REC":"STAMPA")+'</em></span>'+
       '</a>';
@@ -1225,10 +1236,10 @@ function renderTba(){
   var list=GAMES.filter(function(g){return g.vague&&visible(g);}).sort(function(a,b){return b.hype-a.hype;});
   document.getElementById("tbalist").innerHTML=list.map(function(g){
     var dots=g.plat.map(function(p){return'<i style="width:5px;height:5px;display:block;background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i>';}).join("");
-    return'<a class="tbai" href="'+g.links[0].u+'" target="_blank" rel="noopener noreferrer">'+covImg(g,24,32,"t_cover_small")+''+
-      '<span style="min-width:0;flex:1"><span class="ot" style="display:block">'+g.t+'</span>'+
+    return'<a class="tbai" href="'+esc(g.links[0].u)+'" target="_blank" rel="noopener noreferrer">'+covImg(g,24,32,"t_cover_small")+''+
+      '<span style="min-width:0;flex:1"><span class="ot" style="display:block">'+esc(g.t)+'</span>'+
       '<span class="ometa"><span class="odots">'+dots+'</span>'+g.plat.map(function(p){return PLAT[p];}).join(" · ")+'</span></span>'+
-      '<span class="tbad">'+g.vague+'</span></a>';
+      '<span class="tbad">'+esc(g.vague)+'</span></a>';
   }).join("");
 }
 

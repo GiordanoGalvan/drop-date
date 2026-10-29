@@ -117,6 +117,14 @@ Il campo era `websites.category`, dismesso: non dava errore, semplicemente non
 corrispondeva mai, e **tutti i titoli finivano con i soli link di ricerca** — zero
 pagine store, zero siti ufficiali, su 28.715 giochi.
 
+**Niente entra in HTML senza `esc()`.** I titoli arrivano da IGDB e contengono di
+tutto: 69 hanno doppi apici, 2 hanno `<` o `>`, 466 una `&`. Un apice dentro un
+attributo lo chiude in anticipo, il browser legge il resto come spazzatura e l'ancora
+perde l'`href` — erano i link morti su alcune card in evidenza, visibili solo nei giorni
+con poche uscite, dove anche un titolo ad attesa zero finisce in evidenza. La pagina
+costruisce HTML concatenando stringhe, che è legittimo; non mettere in sicurezza quello
+che ci si concatena non lo è.
+
 **Gli slittamenti escono dal confronto fra giri.** `sync.mjs` legge il `data.json` del
 giorno prima e, se una data è cambiata, scrive la precedente nel campo `was`. È l'unico
 momento in cui quel dato esiste: IGDB espone la data corrente, non la storia delle date.
