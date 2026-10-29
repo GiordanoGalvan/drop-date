@@ -266,9 +266,16 @@ async function popolarita(tok, ids) {
 /* Percentile dentro un gruppo. A parita' di valore, stesso punteggio: senza questo
    un pareggio verrebbe spezzato dall'ordine di arrivo, cioe' dal nulla. */
 function percentili(gruppo) {
-  /* Solo segnali di anticipazione: "Playing" misura quanto un gioco e' vivo
-     adesso, non quanto e' atteso, e nel percentile dell'attesa non ci entra. */
-  const segnali = [(g) => g._pop?.[2] || 0, (g) => g._pop?.[1] || 0, (g) => g.hypes || 0];
+  /* Solo segnali di desiderio di giocare. Non ci entrano:
+       "Playing"  misura quanto un gioco e' vivo adesso, non quanto e' atteso;
+       "Visits"   conta chi apre la scheda, cioe' curiosita'.
+     Visits era dentro, ed e' stato un errore grosso: un titolo con un nome
+     assurdo raccoglie visite proprio perche' fa ridere. "Fart Together" aveva un
+     Want to Play 240 volte piu' basso di GTA VI ma visite solo 2,4 volte piu'
+     basse, e poiche' si teneva il percentile piu' alto fra i segnali, arrivava a
+     100 come GTA VI. Chi guarda una scheda per curiosita' non sta aspettando il
+     gioco. */
+  const segnali = [(g) => g._pop?.[2] || 0, (g) => g.hypes || 0];
   for (const leggi of segnali) {
     const con = gruppo.filter((g) => leggi(g) > 0).sort((a, b) => leggi(a) - leggi(b));
     if (!con.length) continue;
