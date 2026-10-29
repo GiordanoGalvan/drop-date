@@ -1,0 +1,304 @@
+<!doctype html><html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drop Date — bozze estetiche</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Pagina di confronto. Ogni direzione vive dentro il suo blocco .dir e ridefinisce
+   solo le proprie variabili: cosi' le quattro proposte si vedono una sotto l'altra
+   con gli stessi componenti e gli stessi dati, che e' l'unico modo onesto di
+   confrontarle. Tre componenti bastano a decidere: la barra, una striscia di
+   calendario, una scheda in evidenza e una riga di classifica. */
+*{box-sizing:border-box}
+body{margin:0;background:#0e1016;color:#e8eaf2;font:15px/1.5 Archivo,system-ui,sans-serif}
+.page{max-width:1180px;margin:0 auto;padding:28px 18px 80px}
+h1{font:800 30px/1.1 Archivo,sans-serif;margin:0 0 6px;letter-spacing:-.02em}
+.sub{color:#9ba3bd;margin:0 0 30px;max-width:70ch}
+.dir{margin:0 0 46px;border:1px solid #262b3d;border-radius:14px;overflow:hidden;background:#141826}
+.dir-h{padding:16px 18px;border-bottom:1px solid #262b3d;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.dir-h b{font:700 17px Archivo,sans-serif}
+.dir-h .tag{font:600 11px Archivo,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  color:#0e1016;background:#9ba3bd;padding:3px 7px;border-radius:999px}
+.dir-h p{margin:0;color:#9ba3bd;font-size:13.5px;flex:1 1 300px;min-width:0}
+.demo{padding:20px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+@media(min-width:900px){.row2{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+.lab{font:600 10px Archivo,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6f778f;margin:0 0 8px}
+.nota{margin:14px 0 0;color:#8089a3;font-size:12.5px;line-height:1.55}
+.nota b{color:#b9c0d6;font-weight:600}
+
+/* ===================== A — PIXEL, l'attuale =========================== */
+.dir-a .demo{--bg:#eceef6;--surf:#fff;--surf2:#f4f5fb;--surf3:#e7e9f4;--ink:#191b28;--ink2:#474d66;
+  --ink3:#777d99;--line:#c2c7dd;--line2:#9aa1bd;--line3:#6b7292;--amber:#b56f00;--amber-sol:#f0a823;
+  --gold:#dba018;--violet:#7b3fd4;--violet-sol:#a36bf0;--shadow:#c2c7dd;
+  background:var(--bg);color:var(--ink);font-family:Archivo,sans-serif}
+.dir-a .bar{background:var(--surf);border:2px solid var(--line3);box-shadow:4px 4px 0 var(--shadow);
+  padding:9px 11px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.dir-a .brand{font:700 13px Silkscreen,monospace;letter-spacing:.02em}
+.dir-a .brand em{display:block;font:400 7px Silkscreen,monospace;color:var(--ink3);font-style:normal;margin-top:3px}
+.dir-a .chipf{font:400 8px Silkscreen,monospace;padding:5px 7px;border:2px solid var(--line);
+  background:var(--surf2);text-transform:uppercase}
+.dir-a .chipf.on{background:var(--surf);color:var(--ink);border-color:currentColor}
+.dir-a .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dir-a .cell{background:var(--surf);border:2px solid var(--violet-sol);min-height:112px;padding:5px;
+  display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.dir-a .cell.today{border-color:var(--amber)}
+.dir-a .dnum{font:400 11px Silkscreen,monospace;background:var(--surf3);color:var(--ink2);
+  padding:2px 4px;align-self:flex-start}
+.dir-a .cell.today .dnum{background:var(--amber-sol);color:#5e3a00}
+.dir-a .g{display:flex;gap:4px;align-items:center;background:var(--surf2);border-left:3px solid var(--line2);
+  padding:2px 3px;font:600 11px Archivo Narrow,sans-serif;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.dir-a .g.hot{border-left-color:var(--amber-sol)}
+.dir-a .g.aaa{border-left-color:var(--gold);background:color-mix(in srgb,var(--gold) 22%,var(--surf))}
+.dir-a .card{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;background:var(--surf2);
+  border:2px solid var(--line3);box-shadow:5px 5px 0 var(--shadow);padding:12px}
+.dir-a .card img{width:120px;aspect-ratio:3/4;object-fit:cover;border:2px solid var(--line3);display:block}
+.dir-a .card h4{margin:0 0 6px;font:700 21px/1.15 Archivo,sans-serif;letter-spacing:-.01em}
+.dir-a .meta{font:400 8px Silkscreen,monospace;color:var(--ink3)}
+.dir-a .rk{display:grid;grid-template-columns:28px 64px minmax(0,1fr) auto;gap:10px;align-items:center;
+  background:var(--surf);border:2px solid var(--line);padding:8px;margin-top:8px}
+.dir-a .rk img{width:64px;aspect-ratio:3/4;object-fit:cover;border:2px solid var(--line3);display:block}
+.dir-a .rk .pos{font:400 13px Silkscreen,monospace;color:var(--ink3);text-align:center}
+.dir-a .rk b{font:700 14px Archivo,sans-serif}
+.dir-a .sc{font:400 17px Silkscreen,monospace;background:var(--amber-sol);color:#5e3a00;padding:5px 7px}
+
+/* ===================== B — EDITORIALE ================================= */
+.dir-b .demo{--paper:#fbf9f4;--ink:#1b1a17;--ink2:#56534c;--ink3:#8d887e;--rule:#ddd8cc;
+  --accent:#9c2b1f;--accent2:#1f4f4a;
+  background:var(--paper);color:var(--ink);font-family:Archivo,sans-serif}
+.dir-b .bar{display:flex;align-items:baseline;gap:14px;padding:4px 0 14px;border-bottom:2px solid var(--ink);
+  margin-bottom:18px;flex-wrap:wrap}
+.dir-b .brand{font:800 26px/1 Fraunces,Georgia,serif;letter-spacing:-.02em}
+.dir-b .brand em{font:400 12px Archivo,sans-serif;font-style:normal;color:var(--ink3);margin-left:10px;
+  letter-spacing:.14em;text-transform:uppercase}
+.dir-b .chipf{font:600 11px Archivo,sans-serif;color:var(--ink3);text-transform:uppercase;
+  letter-spacing:.08em;padding:3px 0;border-bottom:2px solid transparent}
+.dir-b .chipf.on{color:var(--ink);border-bottom-color:var(--accent)}
+.dir-b .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-top:1px solid var(--rule)}
+.dir-b .cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-height:118px;
+  padding:9px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.dir-b .cell:last-child{border-right:0}
+.dir-b .cell.today{background:#fff5ef;box-shadow:inset 0 3px 0 var(--accent)}
+.dir-b .dnum{font:600 13px Archivo,sans-serif;color:var(--ink3)}
+.dir-b .cell.today .dnum{color:var(--accent)}
+.dir-b .g{font:500 12.5px/1.3 Archivo,sans-serif;color:var(--ink2);overflow:hidden;white-space:nowrap;
+  text-overflow:ellipsis;padding-left:9px;position:relative}
+.dir-b .g::before{content:"";position:absolute;left:0;top:6px;width:4px;height:4px;border-radius:50%;
+  background:var(--rule)}
+.dir-b .g.hot{color:var(--ink);font-weight:600}
+.dir-b .g.hot::before{background:var(--accent2)}
+.dir-b .g.aaa{color:var(--ink);font-weight:700}
+.dir-b .g.aaa::before{background:var(--accent)}
+.dir-b .card{display:grid;grid-template-columns:132px minmax(0,1fr);gap:16px;padding:16px 0;
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.dir-b .card img{width:132px;aspect-ratio:3/4;object-fit:cover;display:block}
+.dir-b .card h4{margin:0 0 8px;font:600 26px/1.08 Fraunces,Georgia,serif;letter-spacing:-.015em}
+.dir-b .meta{font:500 11px Archivo,sans-serif;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
+.dir-b .rk{display:grid;grid-template-columns:30px 64px minmax(0,1fr) auto;gap:14px;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--rule)}
+.dir-b .rk img{width:64px;aspect-ratio:3/4;object-fit:cover;display:block}
+.dir-b .rk .pos{font:600 20px Fraunces,Georgia,serif;color:var(--ink3);text-align:right}
+.dir-b .rk b{font:600 16px Archivo,sans-serif}
+.dir-b .sc{font:800 22px Fraunces,Georgia,serif;color:var(--accent)}
+
+/* ===================== C — TERMINALE ================================== */
+.dir-c .demo{--bg:#0b0f0d;--surf:#101614;--surf2:#141c19;--ink:#d6f5e3;--ink2:#7fae95;--ink3:#4d7461;
+  --line:#1e2b26;--line2:#2b3f37;--acc:#39d98a;--acc2:#ffd166;--acc3:#ff7b72;
+  background:var(--bg);color:var(--ink);font-family:JetBrains Mono,ui-monospace,monospace;font-size:13px}
+.dir-c .bar{display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px solid var(--line2);
+  background:var(--surf);margin-bottom:14px;flex-wrap:wrap}
+.dir-c .brand{font-weight:700;letter-spacing:.06em}
+.dir-c .brand em{font-style:normal;color:var(--ink3);margin-left:8px;font-size:11px}
+.dir-c .chipf{font-size:11px;padding:3px 7px;border:1px solid var(--line2);color:var(--ink3);background:transparent}
+.dir-c .chipf.on{color:var(--acc);border-color:var(--acc)}
+.dir-c .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line2)}
+.dir-c .cell{background:var(--surf);min-height:112px;padding:6px;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.dir-c .cell.today{background:var(--surf2);box-shadow:inset 0 0 0 1px var(--acc2)}
+.dir-c .dnum{color:var(--ink3);font-size:11px}
+.dir-c .cell.today .dnum{color:var(--acc2);font-weight:700}
+.dir-c .g{font-size:11px;line-height:1.35;color:var(--ink2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.dir-c .g::before{content:"· ";color:var(--ink3)}
+.dir-c .g.hot{color:var(--ink)}
+.dir-c .g.hot::before{content:"> ";color:var(--acc)}
+.dir-c .g.aaa{color:var(--acc2)}
+.dir-c .g.aaa::before{content:"* ";color:var(--acc2)}
+.dir-c .card{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;background:var(--surf);
+  border:1px solid var(--line2);padding:12px}
+.dir-c .card img{width:112px;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--line2)}
+.dir-c .card h4{margin:0 0 8px;font:700 18px/1.2 JetBrains Mono,monospace;color:var(--ink)}
+.dir-c .meta{font-size:11px;color:var(--ink3)}
+.dir-c .bar-m{height:6px;background:var(--line);display:flex;margin:8px 0 4px}
+.dir-c .bar-m i{background:var(--acc);display:block}
+.dir-c .rk{display:grid;grid-template-columns:34px 56px minmax(0,1fr) auto;gap:10px;align-items:center;
+  background:var(--surf);border:1px solid var(--line2);border-top:0;padding:7px 9px}
+.dir-c .rk:first-of-type{border-top:1px solid var(--line2)}
+.dir-c .rk img{width:56px;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--line2)}
+.dir-c .rk .pos{color:var(--ink3)}
+.dir-c .rk b{font-weight:700;font-size:13px}
+.dir-c .sc{color:var(--acc);font-weight:700;font-size:16px}
+
+/* ===================== D — VETRINA ==================================== */
+.dir-d .demo{--bg:#0d0b14;--surf:#181327;--ink:#f2eefc;--ink2:#b3a8cf;--ink3:#7d719c;
+  --line:#2a2142;--acc:#ff5f9e;--acc2:#ffc24b;--acc3:#6ee7ff;
+  background:radial-gradient(900px 400px at 15% -10%,#2b1d4d 0%,transparent 60%),var(--bg);
+  color:var(--ink);font-family:Archivo,sans-serif}
+.dir-d .bar{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:18px;flex-wrap:wrap;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:999px}
+.dir-d .brand{font:800 17px Archivo,sans-serif;letter-spacing:-.01em;
+  background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.dir-d .brand em{font:500 11px Archivo,sans-serif;font-style:normal;color:var(--ink3);margin-left:9px}
+.dir-d .chipf{font:600 11px Archivo,sans-serif;padding:5px 12px;border-radius:999px;
+  background:rgba(255,255,255,.05);color:var(--ink3);border:1px solid transparent}
+.dir-d .chipf.on{color:var(--ink);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18)}
+.dir-d .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.dir-d .cell{background:var(--surf);border:1px solid var(--line);border-radius:12px;min-height:118px;
+  padding:9px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.dir-d .cell.today{border-color:var(--acc2);box-shadow:0 0 0 1px var(--acc2),0 8px 24px -12px var(--acc2)}
+.dir-d .dnum{font:700 12px Archivo,sans-serif;color:var(--ink3)}
+.dir-d .cell.today .dnum{color:var(--acc2)}
+.dir-d .g{display:flex;align-items:center;gap:6px;font:600 11.5px Archivo,sans-serif;color:var(--ink2);
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.dir-d .g i{width:5px;height:5px;border-radius:50%;background:var(--ink3);flex:none}
+.dir-d .g.hot{color:var(--ink)}
+.dir-d .g.hot i{background:var(--acc3)}
+.dir-d .g.aaa{color:var(--ink)}
+.dir-d .g.aaa i{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.dir-d .card{position:relative;border-radius:16px;overflow:hidden;min-height:230px;display:flex;
+  align-items:flex-end;border:1px solid var(--line)}
+.dir-d .card .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(18px) saturate(1.5);transform:scale(1.2);opacity:.6}
+.dir-d .card .fg{position:relative;display:grid;grid-template-columns:116px minmax(0,1fr);gap:14px;
+  padding:16px;width:100%;background:linear-gradient(0deg,rgba(13,11,20,.94) 35%,rgba(13,11,20,.35))}
+.dir-d .card img{width:116px;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:10px;
+  box-shadow:0 12px 30px -10px #000}
+.dir-d .card h4{margin:0 0 8px;font:800 24px/1.1 Archivo,sans-serif;letter-spacing:-.02em}
+.dir-d .meta{font:600 11px Archivo,sans-serif;color:var(--ink2);letter-spacing:.04em}
+.dir-d .pill{display:inline-block;font:700 10px Archivo,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#1a0f20}
+.dir-d .rk{display:grid;grid-template-columns:30px 60px minmax(0,1fr) auto;gap:12px;align-items:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:8px}
+.dir-d .rk img{width:60px;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:7px}
+.dir-d .rk .pos{font:800 15px Archivo,sans-serif;color:var(--ink3);text-align:center}
+.dir-d .rk b{font:700 15px Archivo,sans-serif}
+.dir-d .sc{font:800 19px Archivo,sans-serif;
+  background:linear-gradient(90deg,var(--acc2),var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.err{padding:20px;color:#ff7b72}
+</style></head><body>
+<div class="page">
+<h1>Drop Date — quattro direzioni estetiche</h1>
+<p class="sub">Stessi componenti, stessi dati veri, stesse copertine: la barra, una striscia di sette giorni
+a partire da oggi, la scheda del titolo più atteso e due righe di classifica. Confrontarle su contenuti
+diversi non direbbe niente.</p>
+<div id="out"><p class="sub">Carico i dati…</p></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var IMG="https://images.igdb.com/igdb/image/upload/";
+var PLAT={pc:"PC",switch2:"SWITCH 2",ps5:"PS5",xbox:"XBOX"};
+var MESI=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+var AAA=70,REL=50;
+function esc(v){return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function cov(g,size){return g.cov?IMG+size+"/"+g.cov+".jpg":"";}
+
+var DIR=[
+ {k:"a",nome:"Pixel",tag:"l'attuale",
+  nota:"Font a pixel, bordi spessi, ombra dura. Ha un carattere forte e un costo: a corpo 7-8 il testo a pixel si legge male, e l'ombra piena occupa spazio su schermo stretto. È il riferimento per giudicare le altre."},
+ {k:"b",nome:"Editoriale",tag:"carta",
+  nota:"Titoli in serif, griglia a filetti sottili, fondo caldo. Il colore diventa raro e quindi significativo: rosso per oggi e per il tripla A, verde per i rilevanti. Più righe leggibili nella stessa altezza, meno personaggio."},
+ {k:"c",nome:"Terminale",tag:"denso",
+  nota:"Monospaziato, scuro, densità alta e marcatori testuali al posto delle fasce colorate. Ci stanno più titoli per cella e la lettura è a scansione. Fa molto strumento e poco rivista."},
+ {k:"d",nome:"Vetrina",tag:"copertine",
+  nota:"La copertina diventa protagonista: sfondo sfocato dall'artwork, angoli morbidi, accenti in gradiente. Il più attraente a colpo d'occhio, il più lento da leggere quando i titoli sono quaranta in un giorno."}
+];
+
+function barra(k){
+  var f=["pc","switch2","ps5","xbox"];
+  return '<div class="bar"><span class="brand">DROP DATE<em>pc · switch 2 · ps5 · xbox</em></span>'+
+    '<span style="flex:1"></span>'+
+    f.map(function(p,i){return '<span class="chipf'+(i<3?" on":"")+'">'+PLAT[p]+'</span>';}).join("")+
+    '</div>';
+}
+function cella(k,ds,lista,oggi){
+  var d=new Date(ds.slice(0,4),+ds.slice(5,7)-1,+ds.slice(8,10));
+  var top=lista.slice(0,3);
+  var righe=top.map(function(g){
+    var cls=g.hype>=AAA?"aaa":g.hype>=REL?"hot":"";
+    var pal=k==="d"?'<i></i>':"";
+    return '<span class="g '+cls+'">'+pal+'<span>'+esc(g.t)+'</span></span>';
+  }).join("");
+  var resto=lista.length-top.length;
+  return '<div class="cell'+(ds===oggi?" today":"")+'">'+
+    '<span class="dnum">'+d.getDate()+" "+MESI[d.getMonth()].toUpperCase()+'</span>'+
+    righe+(resto>0?'<span class="g" style="opacity:.6">+'+resto+'</span>':"")+'</div>';
+}
+function scheda(k,g){
+  var quando=g.date?(function(){var d=new Date(g.date.slice(0,4),+g.date.slice(5,7)-1,+g.date.slice(8,10));
+    return d.getDate()+" "+MESI[d.getMonth()]+" "+d.getFullYear();})():g.vague;
+  var meta=esc(quando.toUpperCase())+" · "+g.plat.map(function(p){return PLAT[p];}).join(" · ")+" · ATTESA "+g.hype;
+  var im=cov(g,"t_cover_big");
+  if(k==="d"){
+    return '<div class="card"><div class="bgimg" style="background-image:url('+im+')"></div>'+
+      '<div class="fg"><img src="'+im+'" alt=""><div><span class="pill">tripla A</span>'+
+      '<h4 style="margin-top:9px">'+esc(g.t)+'</h4><div class="meta">'+meta+'</div></div></div></div>';
+  }
+  if(k==="c"){
+    var n=Math.round(g.hype/5);
+    var barre="";for(var i=0;i<20;i++)barre+='<i style="width:5%'+(i<n?"":";opacity:.18")+'"></i>';
+    return '<div class="card"><img src="'+im+'" alt=""><div><h4>'+esc(g.t)+'</h4>'+
+      '<div class="meta">'+meta+'</div><div class="bar-m">'+barre+'</div>'+
+      '<div class="meta">attesa '+g.hype+'/100</div></div></div>';
+  }
+  return '<div class="card"><img src="'+im+'" alt=""><div><h4>'+esc(g.t)+'</h4>'+
+    '<div class="meta">'+meta+'</div></div></div>';
+}
+function riga(k,g,i){
+  return '<div class="rk"><span class="pos">'+(i+1)+'</span>'+
+    '<img src="'+cov(g,"t_cover_big")+'" alt="">'+
+    '<span><b>'+esc(g.t)+'</b><br><span class="meta">'+g.year+' · '+esc(g.platName||"")+'</span></span>'+
+    '<span class="sc">'+g.score+'</span></div>';
+}
+
+fetch("../data.json",{cache:"no-store"}).then(function(r){
+  if(!r.ok)throw new Error("data.json non raggiungibile ("+r.status+")");
+  return r.json();
+}).then(function(d){
+  var oggi=iso(new Date());
+  var giochi=d.games||[];
+  var byDay={};
+  giochi.forEach(function(g){if(g.date){(byDay[g.date]=byDay[g.date]||[]).push(g);}});
+  Object.keys(byDay).forEach(function(k){byDay[k].sort(function(a,b){return b.hype-a.hype;});});
+  /* Sette giorni di fila a partire da oggi, vuoti compresi: una striscia fatta
+     solo di giorni pieni mentirebbe su come appare il calendario vero. */
+  var giorni=[];
+  for(var i=0;i<7;i++){
+    var dt=new Date();dt.setDate(dt.getDate()+i);
+    var ds=iso(dt);
+    giorni.push({ds:ds,lista:byDay[ds]||[]});
+  }
+  var futuri=giochi.filter(function(g){return (!g.date||g.date>=oggi)&&g.cov;});
+  futuri.sort(function(a,b){return b.hype-a.hype;});
+  var star=futuri[0];
+  var top=(d.allTime||[]).filter(function(g){return g.cov;}).slice(0,2);
+
+  document.getElementById("out").innerHTML=DIR.map(function(D){
+    return '<section class="dir dir-'+D.k+'">'+
+      '<div class="dir-h"><b>'+D.nome+'</b><span class="tag">'+D.tag+'</span><p>'+D.nota+'</p></div>'+
+      '<div class="demo">'+barra(D.k)+
+        '<p class="lab" style="color:inherit;opacity:.55">calendario · sette giorni da oggi</p>'+
+        '<div class="cal">'+giorni.map(function(x){return cella(D.k,x.ds,x.lista,oggi);}).join("")+'</div>'+
+        '<div class="row2" style="margin-top:18px">'+
+          '<div><p class="lab" style="color:inherit;opacity:.55">in evidenza</p>'+(star?scheda(D.k,star):"")+'</div>'+
+          '<div><p class="lab" style="color:inherit;opacity:.55">top 50 ever</p>'+
+            top.map(function(g,i){return riga(D.k,g,i);}).join("")+'</div>'+
+        '</div>'+
+      '</div></section>';
+  }).join("");
+}).catch(function(e){
+  document.getElementById("out").innerHTML='<p class="err">Non riesco a caricare i dati: '+esc(e.message)+'</p>';
+});
+})();
+</script>
+</body></html>
