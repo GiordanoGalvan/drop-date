@@ -263,53 +263,62 @@ async function popolarita(tok, ids) {
   return out;
 }
 
-/* Percentile dentro un gruppo. A parita' di valore, stesso punteggio: senza questo
-   un pareggio verrebbe spezzato dall'ordine di arrivo, cioe' dal nulla. */
-function percentili(gruppo) {
+/* Dal rango alla grandezza.
+
+   L'attesa era il percentile del titolo dentro il gruppo. Un percentile dice la
+   posizione in fila, non di quanto si e' indietro, e su una distribuzione a coda
+   lunga come questa le due cose divergono brutalmente: il catalogo e' fatto di
+   pochi giganti e di migliaia di titoli ignoti, quindi "piu' atteso del 91% delle
+   uscite" si ottiene con un Want to Play 36 volte piu' basso di quello di GTA VI.
+   Era il caso di "Haunted by Femboy" a 91 e di "Your Boyfriend" a 95: numeri non
+   sbagliati come rango, ma che a chi legge dicono una cosa falsa.
+
+   Si misura invece la grandezza, su scala logaritmica perche' i valori coprono
+   quattro ordini di grandezza e su scala lineare tutto cio' che non e' GTA
+   finirebbe schiacciato a zero. La coda bassa si taglia al 5o percentile: un
+   singolo valore minuscolo allungherebbe la scala e spingerebbe in basso tutti
+   gli altri. Resta una scala relativa al gruppo, quindi continua ad auto-regolarsi
+   fra un novembre pieno di uscite e un febbraio deserto. */
+function scalaLog(gruppo, leggi) {
+  const v = gruppo.map(leggi).filter((x) => x > 0).sort((a, b) => a - b);
+  if (v.length < 2) return null;
+  const min = Math.log(v[Math.floor(v.length * 0.05)]);
+  const max = Math.log(v[v.length - 1]);
+  if (!(max > min)) return null;
+  return (x) => (x > 0
+    ? Math.max(0, Math.min(100, Math.round(((Math.log(x) - min) / (max - min)) * 100)))
+    : 0);
+}
+
+function punteggia(gruppo) {
   /* Solo segnali di desiderio di giocare. Non ci entrano:
        "Playing"  misura quanto un gioco e' vivo adesso, non quanto e' atteso;
        "Visits"   conta chi apre la scheda, cioe' curiosita'.
      Visits era dentro, ed e' stato un errore grosso: un titolo con un nome
      assurdo raccoglie visite proprio perche' fa ridere. "Fart Together" aveva un
      Want to Play 240 volte piu' basso di GTA VI ma visite solo 2,4 volte piu'
-     basse, e poiche' si teneva il percentile piu' alto fra i segnali, arrivava a
-     100 come GTA VI. Chi guarda una scheda per curiosita' non sta aspettando il
-     gioco. */
+     basse, e arrivava a 100 come GTA VI. Chi guarda una scheda per curiosita'
+     non sta aspettando il gioco. */
   const segnali = [(g) => g._pop?.[2] || 0, (g) => g.hypes || 0];
   for (const leggi of segnali) {
-    const con = gruppo.filter((g) => leggi(g) > 0).sort((a, b) => leggi(a) - leggi(b));
-    if (!con.length) continue;
-    let i = 0;
-    while (i < con.length) {
-      let j = i;
-      while (j + 1 < con.length && leggi(con[j + 1]) === leggi(con[i])) j++;
-      const p = Math.round(((j + 1) / con.length) * 100);
-      for (let k = i; k <= j; k++) if (p > con[k].hype) con[k].hype = p;
-      i = j + 1;
+    const scala = scalaLog(gruppo, leggi);
+    if (!scala) continue;
+    /* Fra due segnali che misurano la stessa cosa si tiene il piu' generoso:
+       un titolo coperto da una sola fonte non va punito per cio' che manca. */
+    for (const g of gruppo) {
+      const p = scala(leggi(g));
+      if (p > g.hype) g.hype = p;
     }
   }
 }
 
-/* Quale numero si segue nel tempo per un dato gioco. Per un titolo non ancora
-   uscito l'unica cosa misurabile e' l'attesa; per uno uscito conta quanta gente
-   ci sta giocando davvero. Sono grandezze diverse, quindi il punto storico porta
-   con se' l'id della metrica: senza quello, il giorno dell'uscita il confronto
-   passerebbe da "quanti lo vogliono" a "quanti ci giocano" e produrrebbe
-   un'impennata inventata, cioe' l'errore piu' visibile che questa sezione possa
-   fare. Chi confronta, poi, usa solo punti con la stessa metrica. */
-function metrica(g, uscito) {
-  const p = g._pop || {};
-  const scelte = uscito ? [3, 5, 1] : [2, 1];
-  for (const m of scelte) if (p[m]) return { m, v: p[m] };
-  return { m: 0, v: g.hypes || 0 };
-}
-
-/* Il percentile si calcola separatamente fra non-usciti e usciti: un valore assoluto
-   non si confronta fra novembre, pieno di uscite, e febbraio che e' deserto. */
+/* Il punteggio si calcola separatamente fra non-usciti e usciti: una scala
+   costruita su tutto il catalogo mescolerebbe l'attesa per cio' che deve arrivare
+   con il residuo di cio' che e' gia' uscito. */
 function assegnaAttesa(giochi) {
   for (const g of giochi) g.hype = 0;
-  percentili(giochi.filter((g) => !g.date || g.date >= OGGI));
-  percentili(giochi.filter((g) => g.date && g.date < OGGI));
+  punteggia(giochi.filter((g) => !g.date || g.date >= OGGI));
+  punteggia(giochi.filter((g) => g.date && g.date < OGGI));
 }
 
 /* ------------------------------------------------------------------ main */
@@ -390,6 +399,15 @@ async function main() {
     g._pop = pop.get(g.igdb);
   }
   assegnaAttesa(giochi);
+
+  /* La taratura dell'attesa si giudica guardando chi finisce in cima: una scala
+     plausibile in astratto puo' mettere primo un titolo ridicolo. */
+  {
+    const fut = giochi.filter((g) => !g.date || g.date >= OGGI);
+    const cima = [...fut].sort((a, b) => b.hype - a.hype).slice(0, 12);
+    console.log(`attesa: ${fut.filter((g) => g.hype === 0).length} futuri a zero su ${fut.length}`);
+    console.log("attesa, i primi 12: " + cima.map((g) => `${g.hype} ${g.t}`).join(" | "));
+  }
 
   /* ---------- i 50 di sempre, su qualsiasi console ----------
      Nessun filtro di piattaforma: restringerla alle tre del sito taglierebbe
