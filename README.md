@@ -125,6 +125,23 @@ con poche uscite, dove anche un titolo ad attesa zero finisce in evidenza. La pa
 costruisce HTML concatenando stringhe, che è legittimo; non mettere in sicurezza quello
 che ci si concatena non lo è.
 
+**La ricerca ordina per attesa, non per qualità della corrispondenza.** Cerca su
+tutto il catalogo — non su quello che i filtri lasciano passare: chi scrive un titolo
+vuole trovare quel titolo, non sentirsi dire che non esiste perché è di una piattaforma
+che ha spento. Il punteggio è `attesa + bonus`: +15 se il titolo comincia col testo
+cercato, +8 se una sua parola comincia così, +0 se capita in mezzo a una parola. Con
+livelli rigidi invece — prima tutti i prefissi, poi il resto — cercando "knight" usciva
+*Knight's Path* sopra *Hollow Knight*, e "auto" metteva *Autotag* sopra GTA VI. Il bonus
+diventa decisivo proprio dove l'attesa non dice niente, cioè sui quattro quinti del
+catalogo che stanno a zero.
+
+Il confronto è su minuscole senza accenti, così "pokemon" trova *Pokémon*. Le sigle non
+si trovano per sottostringa — nessun titolo contiene "gta" — quindi c'è una lista di
+abbreviazioni, tenuta corta di proposito: un elenco lungo diventa una tassonomia da
+mantenere a mano e invecchia male. Andando su un risultato nascosto dai filtri attivi,
+i filtri si aprono quanto basta: portare a un giorno dove il titolo cercato non compare
+sarebbe una risposta sbagliata.
+
 **Gli slittamenti escono dal confronto fra giri.** `sync.mjs` legge il `data.json` del
 giorno prima e, se una data è cambiata, scrive la precedente nel campo `was`. È l'unico
 momento in cui quel dato esiste: IGDB espone la data corrente, non la storia delle date.

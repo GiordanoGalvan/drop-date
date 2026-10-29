@@ -293,6 +293,29 @@ a.lk{color:var(--ink2)}
 .pitem em{font-family:var(--f-px);font-size:7px;color:var(--warnc);font-style:normal}
 
 /* ---- classifiche migliori ---- */
+.srch{position:relative;display:flex;align-items:center}
+.qin{font-family:var(--f-nar);font-weight:600;font-size:13px;padding:7px 9px;width:200px;max-width:40vw;
+  background:var(--surf2);color:var(--ink);border:2px solid var(--line2);min-width:0}
+.qin::placeholder{color:var(--ink3);font-weight:500}
+.qin:focus{outline:none;border-color:var(--amber-sol);background:var(--surf)}
+.qres{position:absolute;top:calc(100% + 6px);right:0;width:min(440px,92vw);
+  max-height:min(62vh,440px);overflow-y:auto;background:var(--surf);
+  border:2px solid var(--line3);box-shadow:5px 5px 0 var(--shadow);z-index:40}
+.qhead{font-family:var(--f-px);font-size:8px;color:var(--ink3);padding:7px 9px;
+  border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surf);z-index:1}
+.qrow{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:8px;align-items:center;
+  width:100%;padding:6px 9px;background:none;border:0;border-bottom:1px solid var(--line);
+  text-align:left;cursor:pointer;color:inherit;font:inherit}
+.qrow:last-child{border-bottom:0}
+.qrow:hover,.qrow.on{background:var(--surf2)}
+.qrow.on{outline:2px solid var(--amber-sol);outline-offset:-2px}
+.qrow .cov{width:32px;border-width:1px}
+.qt{display:block;font-family:var(--f-nar);font-weight:600;font-size:13px;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qm{display:block;font-family:var(--f-px);font-size:8px;color:var(--ink3);margin-top:2px}
+.qm i{width:5px;height:5px;display:inline-block;margin-right:2px}
+.qd{font-family:var(--f-px);font-size:9px;color:var(--ink2);white-space:nowrap;text-align:right}
+.qd b{display:block;color:var(--amber);font-weight:400}
 .gsel{font-family:var(--f-px);font-size:9px;padding:6px 8px;background:var(--surf2);
   border:2px solid var(--line);color:var(--ink);text-transform:uppercase;max-width:170px}
 .rank-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1px;
@@ -359,6 +382,12 @@ a.lk{color:var(--ink2)}
       <span class="brand-txt">DROP DATE<em>pc · switch 2 · ps5</em></span>
     </div>
     <div class="bar-sp"></div>
+    <div class="srch">
+      <label class="lab" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Cerca un gioco per titolo</label>
+      <input id="q" class="qin notch-s" type="search" placeholder="cerca un titolo…" autocomplete="off"
+             role="combobox" aria-expanded="false" aria-controls="qres" aria-autocomplete="list">
+      <div class="qres" id="qres" role="listbox" aria-label="Risultati" hidden></div>
+    </div>
     <div class="pf" id="pf" role="group" aria-label="Filtro piattaforme"></div>
     <div style="display:flex;align-items:center;gap:6px">
       <label class="lab" for="gsel">Genere</label>
@@ -451,7 +480,7 @@ a.lk{color:var(--ink2)}
     <div id="growthbody"></div>
   </section>
 
-  <section class="sec">
+  <section class="sec" id="tba">
     <div class="sech"><h2>DATE DA DEFINIRE</h2></div>
     <p class="secp">Titoli con finestra vaga. Restano fuori dalla griglia finch&eacute; la fonte non espone un giorno preciso.</p>
     <div class="tba" id="tbalist"></div>
@@ -488,6 +517,10 @@ var PLAT={pc:"PC",switch2:"SWITCH 2",ps5:"PS5"};
 var REL=50; /* soglia attesa per "atteso dalla comunità" */
 var AAA=90; /* soglia tripla A: card grande nel pannello, giorno dorato in griglia */
 function eur(n){return n===0?"Gratis":n.toFixed(2).replace(".",",")+" €";}
+
+/* Confronto fra titoli: minuscole e via gli accenti, così "pokemon" trova
+   "Pokémon" e "FINAL FANTASY" trova "Final Fantasy". */
+function fold(v){return String(v==null?"":v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 
 /* Nessun dato entra in HTML senza passare da qui. I titoli arrivano da IGDB e
    contengono di tutto: 69 hanno doppi apici, 2 hanno < o >, 466 una &. Un apice
@@ -788,7 +821,7 @@ function buildGames(rows,hist){
     var key=o.igdb!=null?String(o.igdb):o.t;
     var h=hist&&hist[key]?hist[key]:null;
     return{id:"g"+i,igdb:o.igdb||null,t:o.t,date:o.date||null,vague:o.vague||null,plat:pl,
-      hype:o.hype||0,cov:o.cov||null,was:o.was||null,links:o.links&&o.links.length?o.links:linksFor(o.t,pl),
+      key:fold(o.t),hype:o.hype||0,cov:o.cov||null,was:o.was||null,links:o.links&&o.links.length?o.links:linksFor(o.t,pl),
       genres:o.genres||null,score:o.score||null,scoreN:o.scoreN||0,scoreKind:o.scoreKind||"stampa",
       aaa:(o.hype||0)>=80,hist:h&&h.length?h:null};
   });
@@ -1211,6 +1244,129 @@ function renderAllTime(){
 }
 document.getElementById("allbtn").addEventListener("click",function(){
   allOpen=!allOpen;renderAllTime();
+});
+
+/* ---------------- ricerca per titolo ---------------- */
+/* Cerca su tutto il catalogo, non su quello che i filtri lasciano passare: chi
+   scrive un titolo vuole trovare quel titolo, non sentirsi dire che non esiste
+   perché è di una piattaforma che ha spento. Se il gioco trovato è nascosto dai
+   filtri, al momento di andarci i filtri si aprono quanto basta — il cambio si
+   vede nella barra, quindi non è un comportamento occulto. */
+var Q_MAX=30, Q_MIN=2;
+var qEl=document.getElementById("q"), qResEl=document.getElementById("qres");
+var qHits=[], qSel=-1, qTimer=0;
+
+function qdate(g){
+  if(!g.date)return '<b>'+esc(g.vague||"TBA")+'</b>';
+  var d=pdate(g.date);
+  return d.getDate()+" "+MESI[d.getMonth()].slice(0,3).toUpperCase()+"<b>"+d.getFullYear()+"</b>";
+}
+function qClose(){
+  qResEl.hidden=true;qResEl.innerHTML="";qHits=[];qSel=-1;
+  qEl.setAttribute("aria-expanded","false");
+}
+/* Le sigle non si trovano per sottostringa: nessun titolo contiene "gta". Lista
+   deliberatamente corta, solo abbreviazioni d'uso corrente — un elenco lungo
+   diventa una tassonomia da mantenere a mano, e invecchia male. */
+var ALIAS={gta:"grand theft auto", ff:"final fantasy", botw:"breath of the wild",
+  totk:"tears of the kingdom", cod:"call of duty", mgs:"metal gear solid",
+  dq:"dragon quest", ac:"assassin's creed", re:"resident evil", gow:"god of war"};
+function qFind(testo){
+  var k=fold(testo).trim();
+  if(ALIAS[k])k=fold(ALIAS[k]);
+  if(k.length<Q_MIN)return null;
+  /* La qualita' della corrispondenza non deve schiacciare la popolarita', solo
+     spostarla. Con livelli rigidi (prima tutti i prefissi, poi il resto) cercando
+     "knight" usciva "Knight's Path" sopra "Hollow Knight", e "auto" metteva
+     "Autotag" sopra GTA VI: il titolo giusto finiva sotto a titoli ignoti. Un
+     punteggio unico mette l'attesa davanti e lascia alla corrispondenza il ruolo
+     di spareggio — che e' decisivo proprio dove l'attesa non dice niente, cioe'
+     sui quattro quinti del catalogo che stanno a zero.
+       inizio del titolo  +15   una parola comincia cosi'  +8   in mezzo  +0 */
+  var out=[];
+  for(var i=0;i<GAMES.length;i++){
+    var g=GAMES[i],pos=g.key.indexOf(k);
+    if(pos<0)continue;
+    var bonus=pos===0?15:(/[^a-z0-9]/.test(g.key.charAt(pos-1))?8:0);
+    out.push({g:g,p:(g.hype||0)+bonus});
+  }
+  /* A pari punteggio vince il titolo piu' corto: di norma e' l'opera principale,
+     non una sua edizione speciale o un pacchetto di costumi. */
+  out.sort(function(a,b){return b.p-a.p||a.g.t.length-b.g.t.length;});
+  return out.map(function(x){return x.g;});
+}
+function qRender(){
+  var tutti=qFind(qEl.value);
+  if(!tutti){qClose();return;}
+  qHits=tutti.slice(0,Q_MAX);qSel=-1;
+  if(!qHits.length){
+    qResEl.innerHTML='<div class="qhead">Nessun titolo contiene “'+esc(qEl.value.trim())+'”.</div>';
+  }else{
+    var n=tutti.length;
+    qResEl.innerHTML='<div class="qhead">'+n+(n===1?' TITOLO':' TITOLI')+
+      (n>Q_MAX?' · MOSTRO I PRIMI '+Q_MAX:'')+'</div>'+
+      qHits.map(function(g,i){
+        var dots=g.plat.map(function(p){return '<i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i>';}).join("");
+        return'<button type="button" class="qrow" role="option" aria-selected="false" data-i="'+i+'">'+
+          covImg(g,32,43,"t_cover_small")+
+          '<span style="min-width:0"><span class="qt">'+esc(g.t)+'</span>'+
+          '<span class="qm">'+dots+' '+g.plat.map(function(p){return PLAT[p];}).join(" · ")+
+          (g.hype?' · ATTESA '+g.hype:'')+'</span></span>'+
+          '<span class="qd">'+qdate(g)+'</span></button>';
+      }).join("");
+  }
+  qResEl.hidden=false;qEl.setAttribute("aria-expanded","true");
+}
+function qMark(){
+  var righe=qResEl.querySelectorAll(".qrow");
+  for(var i=0;i<righe.length;i++){
+    var on=i===qSel;
+    righe[i].classList.toggle("on",on);
+    righe[i].setAttribute("aria-selected",on?"true":"false");
+    if(on)righe[i].scrollIntoView({block:"nearest"});
+  }
+}
+function qGo(g){
+  qClose();qEl.value="";qEl.blur();
+  /* Se i filtri attivi nascondono il gioco, si aprono quanto basta: portare a un
+     giorno dove il titolo cercato non compare sarebbe una risposta sbagliata. */
+  if(!g.plat.some(function(p){return state.filters[p];}))
+    g.plat.forEach(function(p){state.filters[p]=true;});
+  if(state.genre&&(!g.genres||g.genres.indexOf(state.genre)<0)){
+    state.genre="";gsel.value="";
+  }
+  if(g.date){
+    var d=pdate(g.date);
+    state.y=d.getFullYear();state.m=d.getMonth();
+    state.sel=g.date;state.moreOpen=false;
+    panel.hidden=false;main.classList.add("open");
+    paint();
+    document.getElementById("main").scrollIntoView({behavior:"smooth",block:"start"});
+  }else{
+    paint();
+    document.getElementById("tba").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+}
+qEl.addEventListener("input",function(){
+  clearTimeout(qTimer);
+  qTimer=setTimeout(qRender,110);
+});
+qEl.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){
+    if(!qResEl.hidden)e.stopPropagation();
+    qClose();qEl.value="";return;
+  }
+  if(!qHits.length)return;
+  if(e.key==="ArrowDown"){e.preventDefault();qSel=(qSel+1)%qHits.length;qMark();}
+  else if(e.key==="ArrowUp"){e.preventDefault();qSel=(qSel-1+qHits.length)%qHits.length;qMark();}
+  else if(e.key==="Enter"){e.preventDefault();qGo(qHits[qSel<0?0:qSel]);}
+});
+qResEl.addEventListener("click",function(e){
+  var r=e.target.closest(".qrow");
+  if(r)qGo(qHits[+r.dataset.i]);
+});
+document.addEventListener("click",function(e){
+  if(!qResEl.hidden&&!e.target.closest(".srch"))qClose();
 });
 
 /* ---------------- filtro generi ---------------- */
