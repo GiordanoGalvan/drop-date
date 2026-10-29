@@ -77,9 +77,6 @@ a.lk{color:var(--ink2)}
   background:var(--surf2);border:2px solid var(--line);color:var(--ink3);text-transform:uppercase}
 .pf-b svg{width:14px;height:14px;flex:none}
 .pf-b[aria-pressed="true"]{color:var(--ink);background:var(--surf);border-color:currentColor}
-.pf-b[data-p="pc"][aria-pressed="true"]{color:var(--pc)}
-.pf-b[data-p="switch2"][aria-pressed="true"]{color:var(--sw)}
-.pf-b[data-p="ps5"][aria-pressed="true"]{color:var(--ps)}
 .seg{display:flex;border:2px solid var(--line);background:var(--surf2)}
 .seg button{padding:6px 8px;font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase}
 .seg button[aria-pressed="true"]{background:var(--amber-sol);color:var(--amber-ink)}
@@ -932,7 +929,13 @@ function maxChips(){
 var pfEl=document.getElementById("pf");
 function renderFilters(){
   pfEl.innerHTML=Object.keys(PLAT).map(function(p){
-    return '<button type="button" class="pf-b notch-s" data-p="'+p+'" aria-pressed="'+state.filters[p]+'">'+svg(p)+PLAT[p]+'</button>';
+    var on=state.filters[p];
+    /* Il colore del filtro attivo viene da PCOL, non da una regola CSS per
+       piattaforma. Erano tre righe da ricordare a mano e aggiungendo Xbox me ne
+       sono dimenticata la quarta: l'icona in alto restava grigia. Ora la mappa e'
+       una sola, e una piattaforma nuova non ha niente da dimenticare. */
+    return '<button type="button" class="pf-b notch-s" data-p="'+p+'" aria-pressed="'+on+'"'+
+      (on?' style="color:'+pcol(p)+'"':'')+'>'+svg(p)+PLAT[p]+'</button>';
   }).join("");
 }
 pfEl.addEventListener("click",function(e){
