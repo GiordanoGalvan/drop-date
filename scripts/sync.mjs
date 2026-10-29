@@ -38,10 +38,13 @@ const GIORNI_AVANTI = 540;
 const STORICO_GIORNI = 120;
 
 const PIATTAFORME = {
-  pc: "PC (Microsoft Windows)",
-  switch2: "Nintendo Switch 2",
-  ps5: "PlayStation 5",
+  pc: ["PC (Microsoft Windows)"],
+  switch2: ["Nintendo Switch 2"],
+  ps5: ["PlayStation 5"],
+  xbox: ["Xbox Series X|S", "Xbox Series X/S", "Xbox Series"],
 };
+/* Ordine di presentazione, usato per non mostrare le piattaforme a caso. */
+const ORDINE_PIATT = ["pc", "switch2", "ps5", "xbox"];
 
 const oggi = new Date();
 const iso = (d) => d.toISOString().slice(0, 10);
@@ -100,12 +103,12 @@ async function paginato(tok, endpoint, campi, dove, max = 200000) {
 /* Gli ID piattaforma vengono risolti per nome: se IGDB ne cambia uno,
    lo script continua a funzionare invece di scaricare il vuoto. */
 async function idPiattaforme(tok) {
-  const nomi = Object.values(PIATTAFORME).map((n) => `"${n}"`).join(",");
+  const nomi = Object.values(PIATTAFORME).flat().map((n) => `"${n}"`).join(",");
   const righe = await igdb(tok, "platforms", `fields id,name; where name = (${nomi}); limit 50;`);
   const map = {};
-  for (const [chiave, nome] of Object.entries(PIATTAFORME)) {
-    const t = righe.find((r) => r.name === nome);
-    if (!t) throw new Error(`Piattaforma non trovata su IGDB: ${nome}`);
+  for (const [chiave, varianti] of Object.entries(PIATTAFORME)) {
+    const t = righe.find((r) => varianti.includes(r.name));
+    if (!t) throw new Error(`Piattaforma non trovata su IGDB, nessuno di: ${varianti.join(" / ")}`);
     map[chiave] = t.id;
   }
   return map;
@@ -175,6 +178,11 @@ function linkDi(gioco, piattaforme, tipo) {
     const nin = di("Nintendo", "Nintendo eShop");
     if (nin) out.push({ k: "bag", u: nin.url, n: "Pagina Nintendo" });
     else out.push({ k: "bag", u: `https://www.nintendo.com/search/?q=${q}`, n: "Cerca su Nintendo" });
+  }
+  if (piattaforme.includes("xbox")) {
+    const xb = di("Xbox");
+    if (xb) out.push({ k: "bag", u: xb.url, n: "Pagina Xbox" });
+    else out.push({ k: "bag", u: `https://www.xbox.com/it-IT/search/results/games?q=${q}`, n: "Cerca su Xbox" });
   }
 
   const uff = di("Official Website");
@@ -366,7 +374,7 @@ async function main() {
   const giochi = [...perGioco.values()];
   const pop = await popolarita(tok, giochi.map((g) => g.igdb));
   for (const g of giochi) {
-    g.plat.sort((a, b) => ["pc", "switch2", "ps5"].indexOf(a) - ["pc", "switch2", "ps5"].indexOf(b));
+    g.plat.sort((a, b) => ORDINE_PIATT.indexOf(a) - ORDINE_PIATT.indexOf(b));
     if (g._cat === 0 && g._d) g.date = iso(g._d);
     else g.vague = etichettaVaga(g._cat, g._d);
     g.links = linkDi({ name: g.t, websites: g._siti }, g.plat, tipoSito);

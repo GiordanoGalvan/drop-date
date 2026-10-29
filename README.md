@@ -1,6 +1,6 @@
 # Drop Date
 
-Calendario delle uscite videogiochi per **PC, Switch 2 e PS5**, con vista giornaliera,
+Calendario delle uscite videogiochi per **PC, Switch 2, PS5 e Xbox Series X|S**, con vista giornaliera,
 tracciamento degli slittamenti e classifica dei titoli in crescita.
 
 Un file HTML autosufficiente più due file di dati. Nessun framework, nessuna build,
@@ -102,6 +102,16 @@ sta affermando che valgono uguale.
 non hanno copertina, e si riconosce a vista: un segnaposto inventato spacciato per
 copertina reale è fuorviante.
 
+**Il nome della piattaforma su IGDB è una lista di candidati.** Ogni piattaforma porta
+più scritture possibili (`Xbox Series X|S`, `Xbox Series X/S`, `Xbox Series`) e si
+risolve per nome. Se nessuna corrisponde lo script si ferma con un errore esplicito,
+invece di scaricare il vuoto: è lo stesso principio per cui `category` è stato un guasto
+silenzioso per settimane.
+
+Il colore della piattaforma stava in un ternario a tre rami ripetuto in quattro punti:
+aggiungere la quarta piattaforma voleva dire ricordarsi di tutti e quattro. Ora è una
+mappa sola (`PCOL`), e chi manca si vede subito.
+
 **"Segnalati" guarda i titoli usciti, non quelli attesi.** La sezione elenca giochi
 usciti negli ultimi quattro mesi che stanno impennando: è il posto dove un titolo
 sconosciuto si fa notare dopo l'uscita. Prima seguiva i non-usciti, cioè accumulo di
@@ -187,7 +197,7 @@ se mancano i voti stampa ma ci sono almeno venti voti utenti si usa quello, e la
 lo dichiara con l'etichetta `UTENTI` invece del numero di recensioni.
 
 **"I 50 di sempre" ignora il filtro piattaforme.** La classifica storica si calcola su
-qualsiasi console: restringerla a PC, Switch 2 e PS5 taglierebbe metà dei classici, e un
+qualsiasi console: restringerla alle quattro piattaforme del sito taglierebbe metà dei classici, e un
 Ocarina of Time assente da una classifica di sempre è un errore, non una scelta di campo.
 Il filtro generi invece si applica. La lista la costruisce IGDB con `game_type = 0`,
 che tiene fuori DLC, espansioni, port e riedizioni — altrimenti la classifica si
