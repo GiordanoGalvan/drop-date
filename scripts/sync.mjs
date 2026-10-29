@@ -131,22 +131,56 @@ function etichettaVaga(cat, d) {
   return `${f} ${anno}`;
 }
 
-const STEAM = 13, UFFICIALE = 1, EPIC = 16, GOG = 17;
-function linkDi(gioco, piattaforme) {
+/* Gli id dei tipi di sito si risolvono per nome, come quelli delle piattaforme:
+   se IGDB ne rinumera uno lo script continua a funzionare. Prima erano costanti
+   confrontate con `websites.category`, campo dismesso che IGDB non restituisce
+   piu': nessuna corrispondenza scattava mai, nessun errore veniva alzato, e tutti
+   i 28.715 titoli finivano con i soli link di ricerca costruiti dal titolo. Zero
+   pagine store vere, zero siti ufficiali. */
+async function idSiti(tok) {
+  const righe = await igdb(tok, "website_types", "fields id,type; limit 100;");
+  const m = {};
+  for (const r of righe) m[r.type] = r.id;
+  console.log(`tipi di sito noti a IGDB: ${righe.map((r) => r.type).sort().join(", ")}`);
+  return m;
+}
+
+/* Un link di ricerca e' un ripiego: porta su una lista di risultati, non sul gioco.
+   Quando IGDB ha la pagina vera si usa quella, e l'etichetta lo dice, cosi' si
+   distingue a colpo d'occhio cosa si sta per aprire. */
+function linkDi(gioco, piattaforme, tipo) {
   const out = [];
   const siti = gioco.websites || [];
-  const steam = siti.find((s) => s.category === STEAM);
+  const di = (...nomi) => {
+    for (const n of nomi) {
+      const t = tipo[n];
+      const s = t ? siti.find((x) => x.type === t) : null;
+      if (s) return s;
+    }
+    return null;
+  };
+  const q = encodeURIComponent(gioco.name);
+
+  const steam = di("Steam");
   if (steam) out.push({ k: "steam", u: steam.url, n: "Pagina Steam" });
   else if (piattaforme.includes("pc"))
-    out.push({ k: "steam", u: `https://store.steampowered.com/search/?term=${encodeURIComponent(gioco.name)}`, n: "Cerca su Steam" });
-  if (piattaforme.includes("ps5"))
-    out.push({ k: "bag", u: `https://store.playstation.com/it-it/search/${encodeURIComponent(gioco.name)}`, n: "Cerca su PlayStation Store" });
-  if (piattaforme.includes("switch2"))
-    out.push({ k: "bag", u: `https://www.nintendo.com/search/?q=${encodeURIComponent(gioco.name)}`, n: "Cerca su Nintendo" });
-  const uff = siti.find((s) => s.category === UFFICIALE);
+    out.push({ k: "steam", u: `https://store.steampowered.com/search/?term=${q}`, n: "Cerca su Steam" });
+
+  if (piattaforme.includes("ps5")) {
+    const ps = di("Playstation", "PlayStation");
+    if (ps) out.push({ k: "bag", u: ps.url, n: "Pagina PlayStation Store" });
+    else out.push({ k: "bag", u: `https://store.playstation.com/it-it/search/${q}`, n: "Cerca su PlayStation Store" });
+  }
+  if (piattaforme.includes("switch2")) {
+    const nin = di("Nintendo", "Nintendo eShop");
+    if (nin) out.push({ k: "bag", u: nin.url, n: "Pagina Nintendo" });
+    else out.push({ k: "bag", u: `https://www.nintendo.com/search/?q=${q}`, n: "Cerca su Nintendo" });
+  }
+
+  const uff = di("Official Website");
   if (uff) out.push({ k: "globe", u: uff.url, n: "Sito ufficiale" });
   else {
-    const alt = siti.find((s) => s.category === EPIC || s.category === GOG);
+    const alt = di("Epic", "GOG", "Itch");
     if (alt) out.push({ k: "globe", u: alt.url, n: "Altro store" });
   }
   return out;
@@ -236,6 +270,7 @@ function assegnaAttesa(giochi) {
 
 async function main() {
   const tok = await token();
+  const tipoSito = await idSiti(tok);
   const pop = await popolarita(tok);
   const plat = await idPiattaforme(tok);
   const idToKey = Object.fromEntries(Object.entries(plat).map(([k, v]) => [v, k]));
@@ -248,7 +283,7 @@ async function main() {
   const campi = [
     "date", "date_format", "platform",
     "game.id", "game.name", "game.hypes", "game.cover.image_id",
-    "game.websites.url", "game.websites.category",
+    "game.websites.url", "game.websites.type",
     "game.genres.name",
     /* aggregated_rating = media della stampa raccolta da IGDB, su 100.
        rating = voto degli utenti IGDB: usato solo come ripiego, e dichiarato come tale. */
@@ -263,7 +298,7 @@ async function main() {
   /* Titoli senza alcuna data annunciata: non compaiono fra le release_dates,
      ma sono proprio quelli della sezione "date da definire". */
   const senzaData = await paginato(tok, "games",
-    "id,name,hypes,cover.image_id,websites.url,websites.category,platforms",
+    "id,name,hypes,cover.image_id,websites.url,websites.type,platforms",
     `platforms = (${ids}) & first_release_date = null & hypes > 10`, 3000);
   console.log(`titoli senza data: ${senzaData.length}`);
 
@@ -303,7 +338,7 @@ async function main() {
     g.plat.sort((a, b) => ["pc", "switch2", "ps5"].indexOf(a) - ["pc", "switch2", "ps5"].indexOf(b));
     if (g._cat === 0 && g._d) g.date = iso(g._d);
     else g.vague = etichettaVaga(g._cat, g._d);
-    g.links = linkDi({ name: g.t, websites: g._siti }, g.plat);
+    g.links = linkDi({ name: g.t, websites: g._siti }, g.plat, tipoSito);
     g.genres = (g._gioco?.genres || []).map((x) => GENERE_IT[x.name] || x.name).filter(Boolean);
     Object.assign(g, votoDi(g._gioco));
     g._pop = pop.get(g.igdb);

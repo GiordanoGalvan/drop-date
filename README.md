@@ -106,6 +106,17 @@ copertina reale è fuorviante.
 la finestra a 7 giorni resta di 7 giorni veri invece di diventare di 8. Un giro mancato
 degrada il dato, non lo falsa.
 
+**I link puntano alla pagina vera quando esiste.** `websites.type` da IGDB: pagina
+Steam, pagina PlayStation Store, pagina Nintendo, sito ufficiale. Gli id dei tipi si
+risolvono **per nome**, come quelli delle piattaforme, così una rinumerazione a monte
+non rompe niente. Dove IGDB non ha la pagina si ripiega sulla ricerca nello store, e
+l'etichetta del link dice sempre quale dei due stai per aprire: una ricerca spacciata
+per scheda prodotto fa perdere tempo a chi clicca.
+
+Il campo era `websites.category`, dismesso: non dava errore, semplicemente non
+corrispondeva mai, e **tutti i titoli finivano con i soli link di ricerca** — zero
+pagine store, zero siti ufficiali, su 28.715 giochi.
+
 **Gli slittamenti escono dal confronto fra giri.** `sync.mjs` legge il `data.json` del
 giorno prima e, se una data è cambiata, scrive la precedente nel campo `was`. È l'unico
 momento in cui quel dato esiste: IGDB espone la data corrente, non la storia delle date.
