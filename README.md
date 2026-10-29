@@ -92,6 +92,31 @@ dorata della cella in calendario. Sono 36 giorni su 140 con uscite, un quarto: v
 senza diventare decorazione. Nella cella si dora anche la chip del titolo che ha fatto
 scattare la regola, così si vede di chi è il merito invece di dover indovinare.
 
+**I valori di popolarità non sono conteggi.** `popularity_primitives.value` è una
+quota normalizzata, dell'ordine di `0,000004`: stamparla come "500 → 800 giocatori"
+sarebbe falso, e arrotondata darebbe zero. *Segnalati* mostra quindi la **posizione
+percentile** del titolo dentro la sua metrica — `35° → 83° percentile · visite` — che è
+esattamente la cosa che la sezione vuole dire: il gioco si è spostato dal fondo del
+gruppo verso l'alto. La crescita percentuale resta valida perché è un rapporto, e non
+dipende dalla scala.
+
+Sotto il 25° percentile di partenza il titolo resta fuori: le quote più basse sono
+quantizzate, e passare dal minimo al gradino successivo è +100% senza che sia accaduto
+niente. La soglia è in percentile e non in valore assoluto perché le quattro metriche
+vivono su scale diverse, e un numero fisso ne taglierebbe tre male.
+
+**Un solo segnale forte per cella.** La fascia di fondo colorata vale solo per il tripla
+A. Averla su tutto ciò che supera attesa 50 la rendeva il colore normale della pagina:
+se tre chip su quattro sono evidenziate, nessuna lo è — sopra la soglia resta il filetto
+laterale ambra, che basta. Per lo stesso motivo la cella del giorno tripla A ha la
+cornice dorata e il doppio filo interno, ma **nessun riempimento**: un fondo colorato su
+un quarto delle celle smette di segnalare e diventa sfondo.
+
+**Il giallo del PC è scurito nel tema chiaro.** `#7d7000` dà 5,01 di contrasto su bianco;
+il giallo acceso che sarebbe stato naturale si fermava a 3,46, e quelle etichette sono a
+7px. Resta comunque un giallo limone e non ambra: l'ambra marca "in evidenza" e l'oro il
+tripla A, e tre gialli adiacenti nella stessa pagina non si distinguono più.
+
 **Lo spazio in pagina è la gerarchia.** Nel pannello del giorno le card hanno tre
 taglie secondo l'attesa: sopra 90 la copertina è a 140px, sopra 75 a 104px, sotto a
 72px. Se il titolo più atteso dell'anno occupa quanto un indie sconosciuto, la pagina
