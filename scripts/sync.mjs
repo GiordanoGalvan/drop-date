@@ -81,14 +81,19 @@ async function igdb(tok, endpoint, query, tentativo = 0) {
   return r.json();
 }
 
-async function paginato(tok, endpoint, campi, dove, max = 20000) {
+async function paginato(tok, endpoint, campi, dove, max = 200000) {
   const out = [];
+  let troncato = true;
   for (let offset = 0; offset < max; offset += 500) {
     const q = `fields ${campi}; where ${dove}; sort id asc; limit 500; offset ${offset};`;
     const page = await igdb(tok, endpoint, q);
     out.push(...page);
-    if (page.length < 500) break;
+    if (page.length < 500) { troncato = false; break; }
   }
+  /* Il tetto esiste solo per non girare a vuoto se una query impazzisce. Toccarlo
+     vuol dire che i dati sono incompleti, e un elenco incompleto spacciato per
+     intero e' peggio di un errore: va detto. */
+  if (troncato) console.warn(`ATTENZIONE: ${endpoint} ha raggiunto il tetto di ${max} righe, i dati sono troncati.`);
   return out;
 }
 
@@ -108,8 +113,11 @@ async function idPiattaforme(tok) {
 
 /* ------------------------------------------------------- trasformazione */
 
-/* category di release_dates = precisione della data.
-   0 giorno esatto · 1 mese · 2 anno · 3-6 trimestre · 7 da definire */
+/* date_format di release_dates = precisione della data annunciata.
+   0 giorno esatto · 1 mese · 2 anno · 3-6 trimestre · 7 da definire
+   Era `category`: IGDB l'ha dismesso e oggi non lo restituisce affatto. Letto con
+   `?? 0` diventava "giorno esatto" per tutti, cosi' le date a precisione anno
+   finivano tutte sul 31 dicembre: 1705 giochi ammucchiati su un giorno solo. */
 const FINESTRA = { 1: "m", 2: "a", 3: "Q1", 4: "Q2", 5: "Q3", 6: "Q4", 7: "TBA" };
 const MESI = ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"];
 
@@ -238,7 +246,7 @@ async function main() {
   const a = ts(addDays(oggi, GIORNI_AVANTI));
 
   const campi = [
-    "date", "category", "platform",
+    "date", "date_format", "platform",
     "game.id", "game.name", "game.hypes", "game.cover.image_id",
     "game.websites.url", "game.websites.category",
     "game.genres.name",
@@ -276,7 +284,9 @@ async function main() {
       perGioco.set(key, g);
     }
     if (!g.plat.includes(piatt)) g.plat.push(piatt);
-    const cat = r.category ?? 0;
+    /* Nessun date_format: la data e' inutilizzabile come giorno esatto, si
+       degrada a "da definire" invece di inventare una precisione che non c'e'. */
+    const cat = r.date_format ?? 7;
     if (cat < g._cat || (cat === g._cat && d && (!g._d || d < g._d))) { g._cat = cat; g._d = d; }
   }
   for (const s of senzaData) {

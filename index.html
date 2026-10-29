@@ -980,15 +980,26 @@ function shiftNote(g){
   var d=pdate(g.was);
   return'<span class="shiftnote px">↺ SPOSTATO DA <s>'+d.getDate()+" "+MESI[d.getMonth()].slice(0,3)+" "+d.getFullYear()+'</s></span>';
 }
+/* Una soglia serve a scegliere dentro un elenco lungo. Su un giorno da due uscite
+   non scegli niente: filtravi due titoli e la sezione "In evidenza" restava vuota
+   26 giorni su 45. Sotto le cinque uscite si mostrano tutte in evidenza; sopra,
+   passa chi supera REL piu' i primi tre comunque, perche' una sezione vuota non
+   informa di niente. La lista arriva gia' ordinata per attesa. */
+function splitDay(list){
+  if(list.length<=4)return{rel:list.slice(),oth:[]};
+  var rel=list.filter(function(g){return g.hype>=REL;});
+  if(rel.length<3)rel=list.slice(0,3);
+  var dentro={};rel.forEach(function(g){dentro[g.id]=1;});
+  return{rel:rel,oth:list.filter(function(g){return !dentro[g.id];})};
+}
 function renderPanel(){
   var ds=state.sel,d=pdate(ds),list=dayList(ds);
-  var rel=list.filter(function(g){return g.hype>=REL;});
-  var oth=list.filter(function(g){return g.hype<REL;});
+  var sp=splitDay(list),rel=sp.rel,oth=sp.oth;
   document.getElementById("ptitle").textContent=GIORNI[d.getDay()].toUpperCase()+" "+d.getDate()+" "+MESI[d.getMonth()].toUpperCase();
   document.getElementById("psub").textContent=list.length+" USCITE · "+rel.length+" IN EVIDENZA"+(ds===TODAY?" · OGGI":"");
   var h="";
   h+='<div><div class="blk-h"><h3>In evidenza</h3><span class="n px">'+rel.length+'</span><span class="rule"></span></div>';
-  if(!rel.length)h+='<div class="empty">Nessun titolo sopra la soglia di hype in questo giorno.</div>';
+  if(!rel.length)h+='<div class="empty">Nessuna uscita in questo giorno.</div>';
   else h+='<div class="feat">'+rel.map(function(g){
     var tr=tierOf(g),cw=tr==="t1"?140:tr==="t2"?104:72;
     return'<article class="fcard '+tr+'">'+covImg(g,cw,Math.round(cw*4/3),"t_cover_big")+
