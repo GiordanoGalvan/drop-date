@@ -132,6 +132,21 @@ togliere l'etichetta a una select è un'altra cosa che rimpicciolire una barra. 
 390px di larghezza: da ~142px a ~102px di altezza, più ~15px recuperati fra padding
 della pagina e intestazione del mese.
 
+**La data di oggi viene dall'orologio, non da una costante.** Era scritta a mano
+(`var TODAY="2026-10-29"`) e il giorno dopo era già sbagliata: la cella "oggi", la
+finestra della classifica del periodo e il filtro degli usciti seguivano una data ferma.
+Lo stesso valeva per il mese di apertura, fisso a novembre 2026.
+
+Su schermo largo la colonna del giorno parte aperta su oggi: sta accanto al calendario e
+non copre niente, quindi la pagina risponde subito a "cosa esce oggi". Su mobile no — lì
+il pannello è a tutto schermo e si presenterebbe davanti al calendario.
+
+A mezzanotte la pagina si aggiorna da sé: un solo risveglio programmato sul confine, non
+un controllo a ripetizione, con due secondi di margine perché un timer che scatta un
+istante prima calcolerebbe ancora la data di ieri. Il giorno mostrato si sposta **solo se
+si stava guardando "oggi"**: se chi legge è andato su un'altra data, strappargliela
+sarebbe sbagliato.
+
 **Lo spazio in pagina è la gerarchia.** Nel pannello del giorno le card hanno tre
 taglie secondo l'attesa: sopra 90 la copertina è a 140px, sopra 75 a 104px, sotto a
 72px. Se il titolo più atteso dell'anno occupa quanto un indie sconosciuto, la pagina

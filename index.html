@@ -537,7 +537,11 @@ function addD(s,n){var d=pdate(s);d.setDate(d.getDate()+n);return iso(d);}
 var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
 var GIORNI=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
 var DOWS=["LUN","MAR","MER","GIO","VEN","SAB","DOM"];
-var TODAY="2026-10-29";
+/* La data di oggi era una costante scritta a mano, e il giorno dopo era gia'
+   sbagliata: la cella "oggi", la finestra dei migliori e il filtro degli usciti
+   seguivano una data ferma. Si prende dall'orologio, in ora locale come tutto il
+   resto della pagina. */
+var TODAY=iso(new Date());
 var PLAT={pc:"PC",switch2:"SWITCH 2",ps5:"PS5",xbox:"XBOX"};
 /* Il colore della piattaforma stava in un ternario a tre rami, ripetuto in quattro
    punti: aggiungere la quarta piattaforma voleva dire ricordarsi di tutti e quattro.
@@ -928,7 +932,12 @@ function indexDays(){
 }
 
 /* ---------------- stato ---------------- */
-var state={y:2026,m:10,sel:null,filters:{pc:true,switch2:true,ps5:true,xbox:true},badge:"compact",win:7,genre:"",best:30,moreOpen:false};
+/* Anche il mese di apertura era fisso a novembre 2026. Si apre sul mese in cui
+   si sta, che e' l'unica scelta che non invecchia. */
+var _oggi=pdate(TODAY);
+var state={y:_oggi.getFullYear(),m:_oggi.getMonth(),sel:null,
+  filters:{pc:true,switch2:true,ps5:true,xbox:true},
+  badge:"compact",win:7,genre:"",best:30,moreOpen:false};
 var mqM=window.matchMedia("(max-width:720px)");
 function visible(g){
   if(!g.plat.some(function(p){return state.filters[p];}))return false;
@@ -1058,6 +1067,38 @@ gridEl.addEventListener("click",function(e){
 });
 document.getElementById("pclose").addEventListener("click",closeDay);
 function closeDay(){state.sel=null;panel.hidden=true;main.classList.remove("open");buildGrid();}
+
+/* Su schermo largo la colonna del giorno sta accanto al calendario e non copre
+   niente, quindi all'apertura conviene averla gia' piena: la pagina risponde
+   subito alla domanda "cosa esce oggi". Su mobile il pannello e' a tutto schermo
+   e si aprirebbe davanti al calendario, che non e' un buon modo di presentarsi. */
+function apriOggi(){
+  if(mqM.matches)return;
+  state.sel=TODAY;state.moreOpen=false;
+  panel.hidden=false;main.classList.add("open");
+}
+
+/* La pagina puo' restare aperta tutta la notte. A mezzanotte cambia la data, e
+   con essa la cella "oggi", le finestre delle classifiche e il giorno mostrato.
+   Un solo risveglio programmato sul confine, non un controllo a ripetizione;
+   due secondi di margine perche' un timer che scatta un istante prima
+   calcolerebbe ancora la data di ieri. */
+function allaMezzanotte(){
+  var ora=new Date();
+  var prossima=new Date(ora.getFullYear(),ora.getMonth(),ora.getDate()+1,0,0,2);
+  setTimeout(function(){
+    var ieri=TODAY;
+    TODAY=iso(new Date());
+    /* Si sposta il giorno mostrato solo se si stava guardando "oggi": se
+       l'utente e' andato su un'altra data, strappargliela sarebbe sbagliato. */
+    if(state.sel===ieri){
+      var d=pdate(TODAY);
+      state.y=d.getFullYear();state.m=d.getMonth();state.sel=TODAY;
+    }
+    paint();
+    allaMezzanotte();
+  },Math.max(1000,prossima-ora));
+}
 
 function platChips(g){
   return g.plat.map(function(p){return '<span class="pchip '+p+' notch-s">'+svg(p)+PLAT[p]+'</span>';}).join("");
@@ -1643,7 +1684,9 @@ Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
     buildGames(fallbackRows(),hist);
     DATA_SRC="snapshot incorporato del 29 ottobre 2026 — data.json non raggiungibile";
   }
+  apriOggi();
   paint();
+  allaMezzanotte();
 });
 })();
 </script>
