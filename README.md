@@ -105,6 +105,19 @@ quantizzate, e passare dal minimo al gradino successivo è +100% senza che sia a
 niente. La soglia è in percentile e non in valore assoluto perché le quattro metriche
 vivono su scale diverse, e un numero fisso ne taglierebbe tre male.
 
+**Il giallo in griglia significa una cosa sola: oggi.** Tutte le altre celle sono
+contornate di viola, compresa quella selezionata — che si distingue per il doppio filo
+interno, non per il colore: due gialli a dire due cose diverse si annullano. Il tripla A
+non tocca più la cornice e si riconosce dalla striscia di fondo della sua chip, dentro
+la cella.
+
+Il contorno di oggi usa `--amber` e non `--amber-sol`: nel tema chiaro l'ambra accesa dà
+2,03 di contrasto sul fondo della cella e il contorno spariva. Così sta a 4,01, e il
+viola a 3,55 — sopra il 3,0 richiesto agli elementi non testuali. Il colore da solo non
+basterebbe comunque: giallo e viola hanno luminanza simile (1,13 di rapporto fra loro) e
+una discromatopsia non li separa. Il secondo segnale è il numero del giorno riempito, che
+resta solo per oggi.
+
 **Un solo segnale forte per cella.** La fascia di fondo colorata vale solo per il tripla
 A. Averla su tutto ciò che supera attesa 50 la rendeva il colore normale della pagina:
 se tre chip su quattro sono evidenziate, nessuna lo è — sopra la soglia resta il filetto

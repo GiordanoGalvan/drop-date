@@ -9,7 +9,7 @@
   --ink:#191b28; --ink2:#474d66; --ink3:#777d99;
   --line:#c2c7dd; --line2:#9aa1bd; --line3:#6b7292;
   --amber:#b56f00; --amber-sol:#f0a823; --amber-ink:#5e3a00;
-  --gold:#8a5d00; --gold-sol:#dba018; --gold-ink:#4a3000; --gold-bg:#fdf3d8; --gold-line:#c9952c;
+  --gold-sol:#dba018;
   --violet:#7b3fd4; --violet-sol:#a36bf0;
   --pc:#7d7000; --sw:#c2342a; --ps:#2250c8; --xb:#1d7a33;
   --ok:#2c7d4e; --warnc:#9a6a07;
@@ -23,7 +23,7 @@
   --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
   --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
   --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
-  --gold:#ffd166; --gold-sol:#e8b63a; --gold-ink:#241a00; --gold-bg:#2b2309; --gold-line:#7d6422;
+  --gold-sol:#e8b63a;
   --violet:#b388f5; --violet-sol:#a36bf0;
   --pc:#e8e03c; --sw:#ff6a5e; --ps:#6b95ff; --xb:#4fd96a;
   --ok:#5fd396; --warnc:#e0b347;
@@ -35,7 +35,7 @@
   --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
   --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
   --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
-  --gold:#ffd166; --gold-sol:#e8b63a; --gold-ink:#241a00; --gold-bg:#2b2309; --gold-line:#7d6422;
+  --gold-sol:#e8b63a;
   --violet:#b388f5; --violet-sol:#a36bf0;
   --pc:#e8e03c; --sw:#ff6a5e; --ps:#6b95ff; --xb:#4fd96a;
   --ok:#5fd396; --warnc:#e0b347;
@@ -116,29 +116,28 @@ a.lk{color:var(--ink2)}
 @keyframes pgInR{from{transform:rotateY(-24deg) scale(.97);opacity:0}to{transform:rotateY(0deg) scale(1);opacity:1}}
 @media (prefers-reduced-motion:reduce){.grid.anim-out,.grid.anim-in{animation-duration:.01s}}
 
-.cell{position:relative;min-height:116px;background:var(--surf);border:2px solid var(--line);
+/* Il giallo in griglia significa una cosa sola: oggi. Tutte le altre celle sono
+   contornate di viola, compresa quella selezionata — che si distingue per il
+   doppio filo, non per il colore, altrimenti ci sarebbero due gialli a dire due
+   cose diverse. Il tripla A non tocca piu' la cornice: si riconosce dalla
+   striscia di fondo della sua chip, dentro la cella. */
+.cell{position:relative;min-height:116px;background:var(--surf);border:2px solid var(--violet-sol);
   padding:4px;display:flex;flex-direction:column;gap:3px;text-align:left;overflow:hidden}
-.cell:hover{border-color:var(--line3);z-index:2}
+.cell:hover{border-color:var(--violet);z-index:2}
 .cell.out{background:var(--surf2);opacity:.5}
 .cell.wknd{background:var(--surf2)}
-.cell.sel{border-color:var(--amber-sol);box-shadow:inset 0 0 0 2px var(--amber-sol)}
+/* Selezione: stesso viola, doppio filo. */
+.cell.sel{border-color:var(--violet);box-shadow:inset 0 0 0 2px var(--violet)}
+/* Oggi: l'unica cornice gialla della griglia, a prescindere da cosa e' selezionato.
+   Si usa --amber e non --amber-sol perche' nel tema chiaro l'ambra accesa da' 2,03
+   di contrasto sul fondo della cella e il contorno spariva. Il colore da solo non
+   basterebbe comunque: giallo e viola hanno luminanza simile e una discromatopsia
+   non li separa. Il secondo segnale e' il numero del giorno riempito, che resta. */
+.cell.today{border-color:var(--amber)}
 .cell.today .dnum{background:var(--amber-sol);color:var(--amber-ink)}
-/* Giorno con un'uscita tripla A: cornice e fondo dorati. La soglia e' la stessa
-   che fa scattare la card grande nel pannello, cosi' la regola resta una sola. */
-/* Solo la cornice, nessun fondo: il fondo colorato su un quarto delle celle
-   smetteva di segnalare e diventava sfondo. Il doppio filo interno regge la
-   distinzione anche senza riempimento. */
-.cell.aaa{border-color:var(--gold-line);
-  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--gold-sol) 55%,transparent)}
-.cell.aaa .dnum{background:var(--gold-sol);color:var(--gold-ink);font-weight:700}
-/* L'angolo smussato dice "qui c'e' qualcosa" anche a colpo d'occhio sulla griglia. */
-.cell.aaa::before{content:"";position:absolute;top:0;right:0;width:0;height:0;
-  border-top:9px solid var(--gold-sol);border-left:9px solid transparent}
-.cell.aaa.sel{border-color:var(--amber-sol)}
-/* La chip del titolo che rende il giorno dorato: si vede subito di chi e' il merito. */
-/* La fascia di fondo e' l'unico segnale forte dentro la cella, e vale solo per il
-   tripla A. Averla su tutto cio' che supera 50 la rendeva il colore normale della
-   pagina: se tre chip su quattro sono evidenziate, nessuna lo e'. */
+/* La fascia di fondo e' l'unico segnale del tripla A, e vale solo per lui. Averla
+   su tutto cio' che supera attesa 50 la rendeva il colore normale della pagina:
+   se tre chip su quattro sono evidenziate, nessuna lo e'. */
 .chip.aaa{border-left-color:var(--gold-sol);
   background:color-mix(in srgb,var(--gold-sol) 22%,var(--surf))}
 .dnum{font-family:var(--f-px);font-size:11px;color:var(--ink2);padding:2px 4px;align-self:flex-start;
@@ -513,7 +512,8 @@ a.lk{color:var(--ink2)}
   <div class="foot">
     <p>Dati: <span id="datasrc">—</span><br>I link portano alla pagina store o al sito ufficiale quando IGDB li ha; dove mancano, aprono la ricerca sullo store &mdash; l’etichetta del link dice sempre quale dei due. "Attesa" è il percentile del titolo fra quelli non ancora usciti, calcolato sui dati di popolarità IGDB.<br>Copertine da IGDB. Dove IGDB non ne ha una, la pagina disegna un segnaposto a pixel, riconoscibile come tale.</p>
     <div class="legend">
-      <span class="lgi"><i style="background:var(--gold-sol)"></i>giorno tripla A</span>
+      <span class="lgi"><i style="background:var(--gold-sol)"></i>uscita tripla A</span>
+      <span class="lgi"><i style="background:var(--amber-sol)"></i>oggi</span>
       <span class="lgi"><i style="background:var(--amber-sol)"></i>in evidenza</span>
       <span class="lgi"><i style="background:var(--pc)"></i>pc</span>
       <span class="lgi"><i style="background:var(--sw)"></i>switch 2</span>
