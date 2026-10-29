@@ -70,11 +70,34 @@ dal browser e la pagina ripiega sullo snapshot. Serve un server, anche banale.
 
 ## Scelte da sapere
 
-**L'attesa è un percentile, non un numero assoluto.** Ogni titolo non ancora uscito riceve
-un punteggio 0-100 in base al suo rango di popolarità fra gli altri titoli non ancora usciti.
-Un valore assoluto non si confronta fra novembre, pieno di uscite, e febbraio che è deserto:
-il percentile si auto-regola. La soglia dei "rilevanti" in calendario è a 50 e si cambia
-da una riga sola in `index.html` (`var REL=50`).
+**L'attesa misura la grandezza, non il rango.** Era un percentile dentro il gruppo dei
+titoli non ancora usciti. Un percentile dice la posizione in fila, non di quanto si è
+indietro, e su una distribuzione a coda lunga le due cose divergono brutalmente: il
+catalogo è fatto di pochi giganti e migliaia di titoli ignoti, quindi "più atteso del 91%
+delle uscite" si otteneva con un *Want to Play* **36 volte più basso** di quello di GTA VI.
+Numeri corretti come rango, che a chi legge dicevano una cosa falsa — *Haunted by Femboy*
+a 91, *Your Boyfriend* a 95.
+
+Ora il punteggio è la posizione su una **scala logaritmica** del valore: i segnali coprono
+quattro ordini di grandezza, e su scala lineare tutto ciò che non è GTA finirebbe
+schiacciato a zero. La coda bassa si taglia al 5° percentile, altrimenti un singolo valore
+minuscolo allunga la scala e spinge in basso tutti gli altri. Resta relativa al gruppo,
+quindi continua ad auto-regolarsi fra un novembre pieno di uscite e un febbraio deserto.
+
+**`Visits` non è attesa.** Contava chi apre la scheda del gioco, cioè curiosità, ed era uno
+dei segnali dell'indice. Un titolo con un nome assurdo raccoglie visite proprio perché fa
+ridere: *Fart Together* aveva un *Want to Play* **240 volte più basso** di GTA VI ma visite
+solo 2,4 volte più basse, e poiché si teneva il segnale più alto arrivava a 100 come GTA VI.
+Restano *Want to Play* e `hypes`, che misurano entrambi la stessa cosa: quanta gente vuole
+giocarlo. `Visits` sopravvive solo nei *Segnalati*, dove si misura il movimento
+dell'attenzione e non il livello dell'attesa.
+
+**Una soglia va riletta ogni volta che cambia la scala sotto.** `AAA` era 90, tarata sui
+percentili: con la scala logaritmica sopra 90 restavano tre titoli in tutto e i giorni
+dorati sparivano. Ora è 70 — 41 titoli, 12 giorni su 139 — e la lista è esattamente quella
+che quel nome significa. Le tre taglie delle card si appoggiano a `AAA` e `REL` invece di
+avere una terza soglia propria, che era rimasta a 75 e quindi sopra `AAA`: la taglia media
+era diventata irraggiungibile. `REL=50` resta la soglia dei rilevanti in calendario.
 
 **La popolarità non viene da `follows`.** IGDB ha dismesso quel campo: oggi risponde
 vuoto su tutto il catalogo, senza dare errore. Un percentile calcolato su una colonna

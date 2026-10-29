@@ -549,7 +549,14 @@ var PLAT={pc:"PC",switch2:"SWITCH 2",ps5:"PS5",xbox:"XBOX"};
 var PCOL={pc:"pc",switch2:"sw",ps5:"ps",xbox:"xb"};
 function pcol(p){return "var(--"+(PCOL[p]||"line2")+")";}
 var REL=50; /* soglia attesa per "atteso dalla comunità" */
-var AAA=90; /* soglia tripla A: card grande nel pannello, giorno dorato in griglia */
+/* Soglia tripla A: card grande nel pannello e giorno dorato in griglia. Era 90,
+   tarata su una scala a percentili dove i valori si distribuivano uniformi. Con
+   l'attesa misurata su scala logaritmica la distribuzione e' schiacciata in basso
+   e sopra 90 restano tre titoli in tutto: i giorni dorati sparivano. A 70 sono 41
+   titoli e 12 giorni su 139, e la lista e' esattamente quella che quel nome
+   significa — GTA VI, Elder Scrolls VI, Fable, Kingdom Come II, Monster Hunter
+   Wilds. Una soglia va riletta ogni volta che cambia la scala sotto. */
+var AAA=70;
 function eur(n){return n===0?"Gratis":n.toFixed(2).replace(".",",")+" €";}
 
 /* Confronto fra titoli: minuscole e via gli accenti, così "pokemon" trova
@@ -579,7 +586,10 @@ function covImg(g,w,h,size){
     ' width="'+w+'" height="'+h+'">';
 }
 /* La taglia della card in evidenza segue l'attesa. */
-function tierOf(g){return g.hype>=AAA?"t1":g.hype>=75?"t2":"t3";}
+/* Le tre taglie si appoggiano alle due soglie che esistono gia', invece di avere
+   una terza soglia propria: quella era a 75, cioe' sopra AAA appena AAA e' scesa a
+   70, e la taglia media diventava irraggiungibile. */
+function tierOf(g){return g.hype>=AAA?"t1":g.hype>=REL?"t2":"t3";}
 
 /* ---------------- cover procedurali, di ripiego (canvas, pixel) ---------------- */
 var covCache={};
