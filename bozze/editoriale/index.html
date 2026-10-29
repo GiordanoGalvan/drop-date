@@ -1,0 +1,375 @@
+<!doctype html><html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drop Date — editoriale notturno</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Editoriale notturno con i marcatori del terminale.
+   Dalla direzione editoriale: serif nei titoli, griglia a filetti sottili, fondo
+   caldo, colore raro. Dalla direzione terminale: i segnali sono segni, non fasce
+   — una stella per il tripla A, una freccia per i rilevanti. Un marcatore
+   testuale si legge anche senza distinguere i colori, che e' il limite che
+   avevamo trovato nel giallo contro viola della pagina attuale. */
+:root{
+  --paper:#17161b; --paper2:#1d1c22; --paper3:#232128;
+  --ink:#f1ede5; --ink2:#b6afa3; --ink3:#8b8478;
+  --rule:#3a3640; --rule2:#4b4753;
+  --acc:#6fd2ff;      /* rilevanti: la freccia */
+  --acc2:#ffc861;     /* oggi e tripla A: la stella */
+  --acc3:#ff8574;     /* slittamenti */
+  --maxw:1320px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.55 Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ---------------- barra ---------------- */
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.bar-in{max-width:var(--maxw);margin:0 auto;padding:14px 20px;display:flex;align-items:center;
+  gap:18px;flex-wrap:wrap}
+.brand{font:800 25px/1 Fraunces,Georgia,serif;letter-spacing:-.025em;white-space:nowrap}
+.brand em{font:500 10px Archivo,sans-serif;font-style:normal;color:var(--ink3);margin-left:10px;
+  letter-spacing:.16em;text-transform:uppercase}
+.sp{flex:1 1 auto}
+.srch{position:relative}
+.srch input{font:500 14px Archivo,sans-serif;color:var(--ink);background:var(--paper2);
+  border:1px solid var(--rule2);border-radius:3px;padding:7px 11px;width:210px;max-width:44vw}
+.srch input::placeholder{color:var(--ink3)}
+.srch input:focus{outline:none;border-color:var(--acc)}
+.filt{display:flex;gap:16px;flex-wrap:wrap}
+.filt button{font:600 11px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);padding:4px 0;border-bottom:2px solid transparent}
+.filt button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--acc)}
+
+/* ---------------- intestazione mese ---------------- */
+.mhead{display:flex;align-items:baseline;gap:16px;padding:28px 0 14px;flex-wrap:wrap}
+.mtitle{font:600 38px/1 Fraunces,Georgia,serif;margin:0;letter-spacing:-.025em}
+.mtitle span{color:var(--ink3)}
+.mnav{display:flex;gap:4px}
+.mnav button{width:32px;height:32px;border:1px solid var(--rule2);border-radius:3px;color:var(--ink2);
+  display:grid;place-items:center;font-size:13px}
+.mnav button:hover{color:var(--ink);border-color:var(--ink3)}
+.mmeta{margin-left:auto;font:500 11px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);text-align:right;line-height:1.9}
+.mmeta b{color:var(--ink2);font-weight:600}
+
+/* ---------------- impaginato ---------------- */
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:26px;padding-bottom:50px}
+@media(min-width:1040px){.main.open{grid-template-columns:minmax(0,1fr) 380px}}
+
+/* ---------------- calendario ---------------- */
+.dows{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--rule)}
+.dows div{font:600 10px Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink3);padding:0 8px 8px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--rule)}
+.cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-height:124px;
+  padding:9px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden;text-align:left;
+  background:none;width:100%}
+.cell:nth-child(7n){border-right:0}
+.cell:hover{background:var(--paper2)}
+.cell.out{opacity:.38}
+.cell.sel{background:var(--paper3);box-shadow:inset 0 0 0 1px var(--rule2)}
+.cell.today{box-shadow:inset 0 3px 0 var(--acc2)}
+.cell.today.sel{box-shadow:inset 0 3px 0 var(--acc2),inset 0 0 0 1px var(--rule2)}
+.dnum{font:600 13px Archivo,sans-serif;color:var(--ink3);display:flex;align-items:center;gap:6px}
+.cell.today .dnum{color:var(--acc2)}
+.cell.today .dnum::after{content:"oggi";font:600 9px Archivo,sans-serif;letter-spacing:.1em;
+  text-transform:uppercase}
+.g{display:grid;grid-template-columns:11px minmax(0,1fr);gap:5px;align-items:start;
+  font:500 12.5px/1.32 Archivo,sans-serif;color:var(--ink2);min-width:0}
+.g b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+/* I marcatori: una stella per il tripla A, una freccia per i rilevanti, un punto
+   per tutto il resto. Monospaziati, cosi' restano incolonnati. */
+.mk{font:700 12px JetBrains Mono,monospace;color:var(--rule2);line-height:1.3;text-align:center}
+.g.hot{color:var(--ink)}
+.g.hot .mk{color:var(--acc)}
+.g.aaa{color:var(--ink)}
+.g.aaa b{font-weight:600}
+.g.aaa .mk{color:var(--acc2)}
+.more{font:600 10px Archivo,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+  margin-top:auto;padding-top:4px}
+
+/* ---------------- pannello del giorno ---------------- */
+.panel{border-top:1px solid var(--rule)}
+@media(min-width:1040px){.panel{border-top:0;border-left:1px solid var(--rule);padding-left:22px;
+  position:sticky;top:76px;max-height:calc(100vh - 100px);overflow-y:auto}}
+.ph{display:flex;align-items:baseline;gap:10px;padding:16px 0 4px}
+.ph h2{font:600 23px/1.1 Fraunces,Georgia,serif;margin:0}
+.ph .x{margin-left:auto;color:var(--ink3);font-size:18px;line-height:1}
+.psub{font:600 10px Archivo,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+  margin:0 0 16px}
+.blk{font:600 10px Archivo,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+  display:flex;align-items:center;gap:9px;margin:20px 0 10px}
+.blk::after{content:"";flex:1;height:1px;background:var(--rule)}
+.fc{display:grid;grid-template-columns:72px minmax(0,1fr);gap:13px;padding:13px 0;
+  border-bottom:1px solid var(--rule)}
+.fc.big{grid-template-columns:104px minmax(0,1fr)}
+.fc img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px;background:var(--paper3)}
+.fc h4{margin:0 0 5px;font:600 18px/1.12 Fraunces,Georgia,serif;letter-spacing:-.012em}
+.fc.big h4{font-size:23px}
+.fc .mkb{font:700 11px JetBrains Mono,monospace;color:var(--acc2);letter-spacing:.1em;
+  display:block;margin-bottom:3px}
+.fc .mkb.rel{color:var(--acc)}
+.meta{font:500 10.5px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.plats{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.plats span{font:600 9.5px Archivo,sans-serif;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink2);border:1px solid var(--rule2);border-radius:2px;padding:2px 6px}
+.att{display:flex;align-items:center;gap:8px;margin-top:9px}
+.att .trk{flex:1;height:3px;background:var(--rule);position:relative;overflow:hidden}
+.att .trk i{position:absolute;inset:0 auto 0 0;background:var(--acc)}
+.att.aaa .trk i{background:var(--acc2)}
+.att b{font:700 11px JetBrains Mono,monospace;color:var(--ink2)}
+.oth{display:flex;flex-direction:column}
+.oc{display:grid;grid-template-columns:11px minmax(0,1fr) auto;gap:9px;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px}
+.oc .mk{color:var(--rule2)}
+.oc span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}
+.vuoto{color:var(--ink3);font-size:13.5px;padding:10px 0}
+
+/* ---------------- sezioni ---------------- */
+.sec{padding:40px 0 0;border-top:1px solid var(--rule)}
+.sech{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.sech h2{font:600 27px/1 Fraunces,Georgia,serif;margin:0;letter-spacing:-.02em}
+.secp{color:var(--ink2);margin:0 0 18px;max-width:68ch;font-size:14px}
+.seg{display:flex;gap:14px;margin-left:auto}
+.seg button{font:600 11px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);border-bottom:2px solid transparent;padding:3px 0}
+.seg button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--acc)}
+.rank{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:0 34px}
+.rk{display:grid;grid-template-columns:28px 72px minmax(0,1fr) auto;gap:14px;align-items:center;
+  padding:12px 0;border-bottom:1px solid var(--rule)}
+.rk img{width:72px;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px;background:var(--paper3)}
+.rk .pos{font:600 19px Fraunces,Georgia,serif;color:var(--ink3);text-align:right}
+.rk .pos.top{color:var(--acc2)}
+.rk b{font:600 16px/1.2 Archivo,sans-serif;display:block;margin-bottom:3px}
+.sc{text-align:center}
+.sc i{display:block;font:700 21px JetBrains Mono,monospace;font-style:normal;color:var(--ink)}
+.sc em{display:block;font:600 9px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);font-style:normal;margin-top:2px}
+.foot{border-top:1px solid var(--rule);margin-top:44px;padding:22px 0 60px;color:var(--ink3);font-size:13px}
+.leg{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font:500 11px Archivo,sans-serif;
+  letter-spacing:.07em;text-transform:uppercase}
+.leg span{display:flex;align-items:center;gap:7px}
+.leg i{font:700 12px JetBrains Mono,monospace;font-style:normal}
+.err{color:var(--acc3);padding:40px 0}
+</style></head><body>
+
+<div class="bar"><div class="bar-in">
+  <span class="brand">Drop Date<em>pc · switch 2 · ps5 · xbox</em></span>
+  <span class="sp"></span>
+  <span class="srch"><input id="q" type="search" placeholder="cerca un titolo…" autocomplete="off"></span>
+  <span class="filt" id="filt"></span>
+</div></div>
+
+<div class="wrap">
+  <div class="mhead">
+    <div class="mnav"><button id="prev" aria-label="Mese precedente">←</button><button id="next" aria-label="Mese successivo">→</button></div>
+    <h1 class="mtitle" id="mtitle">—</h1>
+    <div class="mmeta" id="mmeta"></div>
+  </div>
+  <div class="main" id="main">
+    <div>
+      <div class="dows" id="dows"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+    <aside class="panel" id="panel" hidden></aside>
+  </div>
+
+  <section class="sec">
+    <div class="sech"><h2>I migliori</h2>
+      <div class="seg" id="seg">
+        <button data-p="7" aria-pressed="true">Settimana</button>
+        <button data-p="30" aria-pressed="false">Mese</button>
+        <button data-p="365" aria-pressed="false">Anno</button>
+      </div>
+    </div>
+    <div class="rank" id="best"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sech"><h2>Top 50 ever</h2></div>
+    <p class="secp">I titoli col voto stampa più alto di sempre, su qualsiasi console.</p>
+    <div class="rank" id="ever"></div>
+  </section>
+
+  <div class="foot">
+    <div id="src">—</div>
+    <div class="leg">
+      <span><i style="color:var(--acc2)">★</i> uscita tripla A</span>
+      <span><i style="color:var(--acc)">▸</i> in evidenza</span>
+      <span><i style="color:var(--rule2)">·</i> altra uscita</span>
+      <span><i style="color:var(--acc2)">▌</i> oggi</span>
+      <span><i style="color:var(--acc3)">↺</i> data spostata</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var IMG="https://images.igdb.com/igdb/image/upload/";
+var PLAT={pc:"PC",switch2:"Switch 2",ps5:"PS5",xbox:"Xbox"};
+var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+var MESI3=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+var DOWS=["Lun","Mar","Mer","Gio","Ven","Sab","Dom"];
+var AAA=70,REL=50;
+
+function esc(v){return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function pdate(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+function cov(g,size){return g.cov?IMG+size+"/"+g.cov+".jpg":"";}
+/* Il marcatore e' l'unico segnale di rango dentro la griglia, e non dipende dal
+   colore: resta leggibile anche per chi non separa celeste e ambra. */
+function mark(g){return g.hype>=AAA?"★":g.hype>=REL?"▸":"·";}
+function cls(g){return g.hype>=AAA?"aaa":g.hype>=REL?"hot":"";}
+
+var TODAY=iso(new Date()),GAMES=[],byDay={},EVER=[],SRC="";
+var oggiD=pdate(TODAY);
+var st={y:oggiD.getFullYear(),m:oggiD.getMonth(),sel:null,best:7,
+  filt:{pc:true,switch2:true,ps5:true,xbox:true}};
+var mqL=window.matchMedia("(min-width:1040px)");
+
+function visibile(g){return g.plat.some(function(p){return st.filt[p];});}
+function delGiorno(ds){return (byDay[ds]||[]).filter(visibile);}
+
+function renderFiltri(){
+  document.getElementById("filt").innerHTML=Object.keys(PLAT).map(function(p){
+    return '<button data-p="'+p+'" aria-pressed="'+st.filt[p]+'">'+PLAT[p]+'</button>';
+  }).join("");
+}
+function renderDows(){
+  document.getElementById("dows").innerHTML=DOWS.map(function(d){return "<div>"+d+"</div>";}).join("");
+}
+function cella(d,inMese){
+  var ds=iso(d),lista=delGiorno(ds);
+  var righe=lista.slice(0,3).map(function(g){
+    return '<span class="g '+cls(g)+'"><span class="mk">'+mark(g)+'</span><b>'+esc(g.t)+'</b></span>';
+  }).join("");
+  var resto=lista.length-Math.min(3,lista.length);
+  return '<button class="cell'+(inMese?"":" out")+(ds===TODAY?" today":"")+(ds===st.sel?" sel":"")+
+    '" data-d="'+ds+'"><span class="dnum">'+d.getDate()+'</span>'+righe+
+    (resto>0?'<span class="more">+'+resto+' altre</span>':"")+'</button>';
+}
+function renderGriglia(){
+  var primo=new Date(st.y,st.m,1),off=(primo.getDay()+6)%7;
+  var start=new Date(st.y,st.m,1-off),h="";
+  for(var i=0;i<42;i++){
+    var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+    h+=cella(d,d.getMonth()===st.m);
+  }
+  document.getElementById("grid").innerHTML=h;
+  document.getElementById("mtitle").innerHTML=MESI[st.m].replace(/^./,function(c){return c.toUpperCase();})+
+    ' <span>'+st.y+'</span>';
+  var tot=0,ril=0;
+  for(var k in byDay){ if(k.slice(0,7)===iso(new Date(st.y,st.m,1)).slice(0,7)){
+    var l=delGiorno(k);tot+=l.length;ril+=l.filter(function(g){return g.hype>=REL;}).length; } }
+  document.getElementById("mmeta").innerHTML='<b>'+ril+'</b> in evidenza<br><b>'+tot+'</b> uscite';
+}
+function scheda(g,grande){
+  var quando=g.date?(function(){var d=pdate(g.date);return d.getDate()+" "+MESI3[d.getMonth()]+" "+d.getFullYear();})():g.vague;
+  var m=mark(g),rel=g.hype>=AAA?"":"rel";
+  return '<article class="fc'+(grande?" big":"")+'">'+
+    '<img src="'+cov(g,"t_cover_big")+'" alt="" loading="lazy">'+
+    '<div><span class="mkb '+rel+'">'+m+(g.hype>=AAA?" TRIPLA A":g.hype>=REL?" IN EVIDENZA":"")+'</span>'+
+    '<h4>'+esc(g.t)+'</h4><div class="meta">'+esc(quando)+'</div>'+
+    '<div class="plats">'+g.plat.map(function(p){return "<span>"+PLAT[p]+"</span>";}).join("")+'</div>'+
+    '<div class="att'+(g.hype>=AAA?" aaa":"")+'"><span class="trk"><i style="width:'+g.hype+'%"></i></span>'+
+    '<b>'+g.hype+'</b></div></div></article>';
+}
+function renderPannello(){
+  var p=document.getElementById("panel"),main=document.getElementById("main");
+  if(!st.sel){p.hidden=true;main.classList.remove("open");return;}
+  p.hidden=false;main.classList.add("open");
+  var d=pdate(st.sel),lista=delGiorno(st.sel);
+  /* Sotto le cinque uscite si mostrano tutte: filtrare un elenco da due titoli
+     non e' scegliere. */
+  var ev,altre;
+  if(lista.length<=4){ev=lista.slice();altre=[];}
+  else{
+    ev=lista.filter(function(g){return g.hype>=REL;});
+    if(ev.length<3)ev=lista.slice(0,3);
+    var dentro={};ev.forEach(function(g){dentro[g.igdb]=1;});
+    altre=lista.filter(function(g){return !dentro[g.igdb];});
+  }
+  var h='<div class="ph"><h2>'+d.getDate()+" "+MESI[d.getMonth()]+'</h2>'+
+    '<button class="x" id="px" aria-label="Chiudi">✕</button></div>'+
+    '<p class="psub">'+lista.length+(lista.length===1?" uscita":" uscite")+(st.sel===TODAY?" · oggi":"")+'</p>';
+  if(!lista.length)h+='<p class="vuoto">Nessuna uscita in questo giorno.</p>';
+  else{
+    h+='<div class="blk">In evidenza</div>'+ev.map(function(g,i){return scheda(g,i===0&&g.hype>=AAA);}).join("");
+    if(altre.length){
+      h+='<div class="blk">Altre uscite</div><div class="oth">'+
+        altre.slice(0,18).map(function(g){
+          return '<a class="oc"><span class="mk">'+mark(g)+'</span><span>'+esc(g.t)+'</span>'+
+            '<span class="meta">'+g.plat.map(function(x){return PLAT[x];}).join(" · ")+'</span></a>';
+        }).join("")+'</div>';
+      if(altre.length>18)h+='<p class="vuoto">+'+(altre.length-18)+' altre</p>';
+    }
+  }
+  p.innerHTML=h;p.scrollTop=0;
+  var x=document.getElementById("px");
+  if(x)x.addEventListener("click",function(){st.sel=null;renderGriglia();renderPannello();});
+}
+function rigaRank(g,i,voto,sotto){
+  return '<div class="rk"><span class="pos'+(i<3?" top":"")+'">'+(i+1)+'</span>'+
+    '<img src="'+cov(g,"t_cover_big")+'" alt="" loading="lazy">'+
+    '<span><b>'+esc(g.t)+'</b><span class="meta">'+esc(sotto)+'</span></span>'+
+    '<span class="sc"><i>'+voto+'</i><em>'+(g.scoreN?g.scoreN+" rec":"stampa")+'</em></span></div>';
+}
+function renderBest(){
+  var P=st.best,lim=iso(new Date(Date.now()-P*86400000));
+  var l=GAMES.filter(function(g){return g.score&&g.date&&g.date<=TODAY&&g.date>lim&&visibile(g);})
+    .sort(function(a,b){return b.score-a.score||b.scoreN-a.scoreN;}).slice(0,12);
+  document.getElementById("best").innerHTML=l.length
+    ? l.map(function(g,i){var d=pdate(g.date);
+        return rigaRank(g,i,g.score,d.getDate()+" "+MESI3[d.getMonth()]+" · "+g.plat.map(function(p){return PLAT[p];}).join(" · "));}).join("")
+    : '<p class="vuoto">Nessun titolo con voto della stampa nel periodo.</p>';
+}
+function renderEver(){
+  document.getElementById("ever").innerHTML=EVER.slice(0,12).map(function(g,i){
+    return rigaRank(g,i,g.score,g.year+" · "+(g.platName||""));
+  }).join("");
+}
+function dipingi(){renderFiltri();renderGriglia();renderPannello();renderBest();renderEver();
+  document.getElementById("src").textContent=SRC;}
+
+document.getElementById("grid").addEventListener("click",function(e){
+  var c=e.target.closest(".cell");if(!c)return;
+  st.sel=st.sel===c.dataset.d?null:c.dataset.d;
+  renderGriglia();renderPannello();
+});
+document.getElementById("filt").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  st.filt[b.dataset.p]=!st.filt[b.dataset.p];dipingi();
+});
+document.getElementById("seg").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  st.best=+b.dataset.p;
+  [].forEach.call(this.children,function(x){x.setAttribute("aria-pressed",x===b);});
+  renderBest();
+});
+document.getElementById("prev").addEventListener("click",function(){st.m--;if(st.m<0){st.m=11;st.y--;}renderGriglia();});
+document.getElementById("next").addEventListener("click",function(){st.m++;if(st.m>11){st.m=0;st.y++;}renderGriglia();});
+
+renderDows();
+fetch("../../data.json",{cache:"no-store"}).then(function(r){
+  if(!r.ok)throw new Error("data.json non raggiungibile ("+r.status+")");
+  return r.json();
+}).then(function(d){
+  GAMES=(d.games||[]).map(function(g){return g;});
+  EVER=d.allTime||[];
+  SRC=(d.source||"IGDB")+" · aggiornato "+(d.generated||"—")+" · "+GAMES.length+" titoli";
+  GAMES.forEach(function(g){if(g.date){(byDay[g.date]=byDay[g.date]||[]).push(g);}});
+  Object.keys(byDay).forEach(function(k){byDay[k].sort(function(a,b){return b.hype-a.hype;});});
+  if(mqL.matches)st.sel=TODAY;
+  dipingi();
+}).catch(function(e){
+  document.getElementById("grid").innerHTML='<p class="err">Non riesco a caricare i dati: '+esc(e.message)+'</p>';
+});
+})();
+</script>
+</body></html>
