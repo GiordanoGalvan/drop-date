@@ -991,7 +991,13 @@ dowsEl.innerHTML=DOWS.map(function(d){return '<div class="dow">'+d+'</div>';}).j
 function cellHTML(d,inMonth){
   var ds=iso(d),list=dayList(ds),tot=list.length;
   var rel=list.filter(function(g){return g.hype>=REL;});
-  var mc=maxChips(),shown=rel.slice(0,mc);
+  /* La cella mostra sempre i titoli piu' attesi del giorno, soglia o no: la
+     soglia decide l'enfasi — il filetto ambra, la striscia dorata — non la
+     presenza. Mostrando solo chi supera REL, il 2 novembre con 46 uscite usciva
+     come cella vuota perche' nessuna arrivava a 50. Un giorno pieno che sembra
+     deserto e' un errore, non una scelta di pulizia. La lista arriva gia'
+     ordinata per attesa. */
+  var mc=maxChips(),shown=list.slice(0,mc);
   var cls="cell";
   var aaa=list.some(function(g){return g.hype>=AAA;});
   if(aaa)cls+=" aaa";

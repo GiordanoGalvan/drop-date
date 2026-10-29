@@ -141,6 +141,15 @@ basterebbe comunque: giallo e viola hanno luminanza simile (1,13 di rapporto fra
 una discromatopsia non li separa. Il secondo segnale è il numero del giorno riempito, che
 resta solo per oggi.
 
+**La soglia decide l'enfasi, non la presenza.** Vale in due punti, e averla applicata
+in un posto solo è stato un errore ripetuto due volte. Nel pannello del giorno: sotto le
+cinque uscite si mostrano tutte, perché filtrare un elenco da due titoli non è scegliere.
+In calendario: la cella mostra sempre i titoli più attesi del giorno, e la soglia decide
+solo il filetto ambra e la striscia dorata. Mostrando solo chi superava `REL`, il 2
+novembre con **46 uscite** compariva come cella vuota perché nessuna arrivava a 50 — 105
+giorni su 139 erano così. Un giorno pieno che sembra deserto è un errore, non una scelta
+di pulizia.
+
 **Un solo segnale forte per cella.** La fascia di fondo colorata vale solo per il tripla
 A. Averla su tutto ciò che supera attesa 50 la rendeva il colore normale della pagina:
 se tre chip su quattro sono evidenziate, nessuna lo è — sopra la soglia resta il filetto
