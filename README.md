@@ -86,6 +86,12 @@ si tiene il più alto. Scale incompatibili così non si sommano a vanvera, e un 
 coperto da una sola fonte non viene punito. A parità di valore il punteggio è lo
 stesso: un pareggio spezzato dall'ordine di arrivo è esattamente il bug di prima.
 
+**Una soglia sola per "tripla A".** Attesa a 90 — in `index.html`, `var AAA=90` —
+e la usano due cose insieme: la card grande nel pannello del giorno e la cornice
+dorata della cella in calendario. Sono 36 giorni su 140 con uscite, un quarto: visibile
+senza diventare decorazione. Nella cella si dora anche la chip del titolo che ha fatto
+scattare la regola, così si vede di chi è il merito invece di dover indovinare.
+
 **Lo spazio in pagina è la gerarchia.** Nel pannello del giorno le card hanno tre
 taglie secondo l'attesa: sopra 90 la copertina è a 140px, sopra 75 a 104px, sotto a
 72px. Se il titolo più atteso dell'anno occupa quanto un indie sconosciuto, la pagina

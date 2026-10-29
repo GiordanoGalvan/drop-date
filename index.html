@@ -9,6 +9,7 @@
   --ink:#191b28; --ink2:#474d66; --ink3:#777d99;
   --line:#c2c7dd; --line2:#9aa1bd; --line3:#6b7292;
   --amber:#b56f00; --amber-sol:#f0a823; --amber-ink:#5e3a00;
+  --gold:#8a5d00; --gold-sol:#dba018; --gold-ink:#4a3000; --gold-bg:#fdf3d8; --gold-line:#c9952c;
   --violet:#7b3fd4; --violet-sol:#a36bf0;
   --pc:#1f6f8c; --sw:#c2342a; --ps:#2250c8;
   --ok:#2c7d4e; --warnc:#9a6a07;
@@ -22,6 +23,7 @@
   --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
   --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
   --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
+  --gold:#ffd166; --gold-sol:#e8b63a; --gold-ink:#241a00; --gold-bg:#2b2309; --gold-line:#7d6422;
   --violet:#b388f5; --violet-sol:#a36bf0;
   --pc:#5fc2e0; --sw:#ff6a5e; --ps:#6b95ff;
   --ok:#5fd396; --warnc:#e0b347;
@@ -33,6 +35,7 @@
   --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
   --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
   --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
+  --gold:#ffd166; --gold-sol:#e8b63a; --gold-ink:#241a00; --gold-bg:#2b2309; --gold-line:#7d6422;
   --violet:#b388f5; --violet-sol:#a36bf0;
   --pc:#5fc2e0; --sw:#ff6a5e; --ps:#6b95ff;
   --ok:#5fd396; --warnc:#e0b347;
@@ -123,6 +126,19 @@ a.lk{color:var(--ink2)}
 .cell.wknd{background:var(--surf2)}
 .cell.sel{border-color:var(--amber-sol);box-shadow:inset 0 0 0 2px var(--amber-sol)}
 .cell.today .dnum{background:var(--amber-sol);color:var(--amber-ink)}
+/* Giorno con un'uscita tripla A: cornice e fondo dorati. La soglia e' la stessa
+   che fa scattare la card grande nel pannello, cosi' la regola resta una sola. */
+.cell.aaa{background:var(--gold-bg);border-color:var(--gold-line);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold-sol) 45%,transparent)}
+.cell.aaa.wknd{background:var(--gold-bg)}
+.cell.aaa .dnum{background:var(--gold-sol);color:var(--gold-ink);font-weight:700}
+/* L'angolo smussato dice "qui c'e' qualcosa" anche a colpo d'occhio sulla griglia. */
+.cell.aaa::before{content:"";position:absolute;top:0;right:0;width:0;height:0;
+  border-top:9px solid var(--gold-sol);border-left:9px solid transparent}
+.cell.aaa.sel{border-color:var(--amber-sol)}
+/* La chip del titolo che rende il giorno dorato: si vede subito di chi e' il merito. */
+.chip.aaa{border-left-color:var(--gold-sol);
+  background:color-mix(in srgb,var(--gold-sol) 20%,var(--surf))}
 .dnum{font-family:var(--f-px);font-size:11px;color:var(--ink2);padding:2px 4px;align-self:flex-start;
   background:var(--surf3);min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
 .chips{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -444,6 +460,7 @@ a.lk{color:var(--ink2)}
   <div class="foot">
     <p>Dati: <span id="datasrc">—</span><br>I link aprono la ricerca sullo store della piattaforma. "Attesa" è il percentile del titolo fra quelli non ancora usciti, calcolato sui dati di popolarità IGDB.<br>Copertine da IGDB. Dove IGDB non ne ha una, la pagina disegna un segnaposto a pixel, riconoscibile come tale.</p>
     <div class="legend">
+      <span class="lgi"><i style="background:var(--gold-sol)"></i>giorno tripla A</span>
       <span class="lgi"><i style="background:var(--amber-sol)"></i>in evidenza</span>
       <span class="lgi"><i style="background:var(--pc)"></i>pc</span>
       <span class="lgi"><i style="background:var(--sw)"></i>switch 2</span>
@@ -469,6 +486,7 @@ var DOWS=["LUN","MAR","MER","GIO","VEN","SAB","DOM"];
 var TODAY="2026-10-29";
 var PLAT={pc:"PC",switch2:"SWITCH 2",ps5:"PS5"};
 var REL=50; /* soglia attesa per "atteso dalla comunità" */
+var AAA=90; /* soglia tripla A: card grande nel pannello, giorno dorato in griglia */
 function eur(n){return n===0?"Gratis":n.toFixed(2).replace(".",",")+" €";}
 
 /* ---------------- cover ----------------
@@ -483,7 +501,7 @@ function covImg(g,w,h,size){
     ' width="'+w+'" height="'+h+'">';
 }
 /* La taglia della card in evidenza segue l'attesa. */
-function tierOf(g){return g.hype>=90?"t1":g.hype>=75?"t2":"t3";}
+function tierOf(g){return g.hype>=AAA?"t1":g.hype>=75?"t2":"t3";}
 
 /* ---------------- cover procedurali, di ripiego (canvas, pixel) ---------------- */
 var covCache={};
@@ -875,13 +893,15 @@ function cellHTML(d,inMonth){
   var rel=list.filter(function(g){return g.hype>=REL;});
   var mc=maxChips(),shown=rel.slice(0,mc);
   var cls="cell";
+  var aaa=list.some(function(g){return g.hype>=AAA;});
+  if(aaa)cls+=" aaa";
   if(!inMonth)cls+=" out";
   if(d.getDay()===0||d.getDay()===6)cls+=" wknd";
   if(ds===TODAY)cls+=" today";
   if(ds===state.sel)cls+=" sel";
   var chips=shown.map(function(g){
     var p=g.plat.filter(function(x){return state.filters[x];})[0]||g.plat[0];
-    return '<span class="chip'+(g.hype>=REL?' hot':'')+'"><i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i><span>'+g.t+'</span></span>';
+    return '<span class="chip'+(g.hype>=AAA?' aaa':g.hype>=REL?' hot':'')+'"><i style="background:var(--'+(p==="pc"?"pc":p==="switch2"?"sw":"ps")+')"></i><span>'+g.t+'</span></span>';
   }).join("");
   var rest=tot-shown.length,badge="";
   if(tot>0){
@@ -892,7 +912,7 @@ function cellHTML(d,inMonth){
     }
   }
   var shift=list.some(function(g){return g.was;})?'<span class="shift px" title="Data spostata">↺</span>':"";
-  return '<button type="button" class="'+cls+'" data-d="'+ds+'" aria-label="'+d.getDate()+" "+MESI[d.getMonth()]+", "+tot+' uscite">'+
+  return '<button type="button" class="'+cls+'" data-d="'+ds+'" aria-label="'+d.getDate()+" "+MESI[d.getMonth()]+", "+tot+' uscite'+(aaa?", include un'uscita tripla A":"")+'">'+
     '<span class="dnum">'+d.getDate()+'</span>'+shift+'<span class="chips">'+chips+'</span>'+badge+'</button>';
 }
 function buildGrid(){
