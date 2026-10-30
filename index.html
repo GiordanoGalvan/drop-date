@@ -1,55 +1,42 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Drop Date</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* Layout: banda pixel sticky in alto; desktop = griglia mese fluida + pannello giorno 380px affiancato; "In crescita" sotto; mobile = colonna singola, pannello giorno come bottom sheet a tutto schermo. */
 :root{
-  --bg:#eceef6; --bg2:#dfe2ee; --surf:#ffffff; --surf2:#f4f5fb; --surf3:#e7e9f4;
-  --ink:#191b28; --ink2:#474d66; --ink3:#777d99;
-  --line:#c2c7dd; --line2:#9aa1bd; --line3:#6b7292;
-  --amber:#b56f00; --amber-sol:#f0a823; --amber-ink:#5e3a00;
-  --gold-sol:#dba018;
-  --violet:#7b3fd4; --violet-sol:#a36bf0;
-  --pc:#7d7000; --sw:#c2342a; --ps:#2250c8; --xb:#1d7a33;
-  --ok:#2c7d4e; --warnc:#9a6a07;
-  --shadow:rgba(25,27,40,.16);
-  --f-px:"Silkscreen","Courier New",monospace;
+  /* Editoriale notturno. Una sola veste, non due: questa direzione e' il fondo
+     scuro e caldo, e una variante chiara sarebbe un altro disegno, non lo stesso
+     con i colori girati. Chi arriva con il sistema in chiaro vede comunque
+     questa, dichiarata con color-scheme. */
+  --bg:#131217; --bg2:#131217; --surf:#17161b; --surf2:#1d1c22; --surf3:#232128;
+  --ink:#f1ede5; --ink2:#b6afa3; --ink3:#8b8478;
+  --line:#3a3640; --line2:#4b4753; --line3:#5d5869;
+  /* L'ambra marca oggi e il tripla A, il celeste i rilevanti, il corallo gli
+     slittamenti. Tre segnali, tre tinte, e in piu' ognuno porta un segno proprio:
+     il colore e' rinforzo, non unico canale. */
+  --amber:#ffc861; --amber-sol:#ffc861; --amber-ink:#2a1f05;
+  --gold-sol:#ffc861;
+  --violet:#6fd2ff; --violet-sol:#6fd2ff;
+  --coral:#ff8574;
+  --pc:#e8e03c; --sw:#ff8574; --ps:#86b4ff; --xb:#5fd98f;
+  --ok:#63d3bd; --warnc:#ffc861;
+  --shadow:transparent;
+  --f-px:"JetBrains Mono",ui-monospace,"Courier New",monospace;
   --f-body:"Archivo",system-ui,-apple-system,sans-serif;
-  --f-nar:"Archivo Narrow","Archivo",system-ui,sans-serif;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0e1020; --bg2:#080a16; --surf:#191c33; --surf2:#20244000; --surf2:#202440; --surf3:#2a2f52;
-  --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
-  --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
-  --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
-  --gold-sol:#e8b63a;
-  --violet:#b388f5; --violet-sol:#a36bf0;
-  --pc:#e8e03c; --sw:#ff6a5e; --ps:#6b95ff; --xb:#4fd96a;
-  --ok:#5fd396; --warnc:#e0b347;
-  --shadow:rgba(0,0,0,.5);
-  color-scheme:dark;
-}}
-:root[data-theme="dark"]{
-  --bg:#0e1020; --bg2:#080a16; --surf:#191c33; --surf2:#202440; --surf3:#2a2f52;
-  --ink:#eef0fa; --ink2:#b3b9d6; --ink3:#8187a8;
-  --line:#343a62; --line2:#4a5287; --line3:#6a74ab;
-  --amber:#f0a823; --amber-sol:#f0a823; --amber-ink:#2a1a00;
-  --gold-sol:#e8b63a;
-  --violet:#b388f5; --violet-sol:#a36bf0;
-  --pc:#e8e03c; --sw:#ff6a5e; --ps:#6b95ff; --xb:#4fd96a;
-  --ok:#5fd396; --warnc:#e0b347;
-  --shadow:rgba(0,0,0,.5);
+  --f-nar:"Archivo",system-ui,sans-serif;
+  --f-ser:"Fraunces",Georgia,"Times New Roman",serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45;
-  background-image:linear-gradient(var(--bg2),var(--bg) 320px)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surf)}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
 img,canvas{max-width:100%}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 a{color:var(--violet)}
+h1,h2,h3,h4{font-family:var(--f-ser);font-weight:600;letter-spacing:-.02em}
 a.lk,a.ocard,a.tbai{text-decoration:none;color:inherit}
 a.lk{color:var(--ink2)}
 :focus-visible{outline:3px solid var(--amber-sol);outline-offset:2px}
@@ -57,29 +44,41 @@ a.lk{color:var(--ink2)}
 
 /* ---- primitive pixel ---- */
 .px{font-family:var(--f-px);letter-spacing:.02em;font-variant-numeric:tabular-nums}
-.notch{clip-path:polygon(4px 0,calc(100% - 4px) 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px)}
-.notch-s{clip-path:polygon(3px 0,calc(100% - 3px) 0,100% 3px,100% calc(100% - 3px),calc(100% - 3px) 100%,3px 100%,0 calc(100% - 3px),0 3px)}
-.frame{background:var(--surf);border:2px solid var(--line2);box-shadow:4px 4px 0 var(--shadow)}
+/* Il mono serve ai numeri e alle etichette brevi, il serif ai titoli: il corpo
+   del testo resta Archivo, che a corpo piccolo si legge meglio di entrambi. */
+.mono{font-family:var(--f-px);font-variant-numeric:tabular-nums}
+/* Gli angoli tagliati e le ombre dure erano il linguaggio della veste a pixel.
+   Le classi restano, applicate in trenta punti del markup, ma non fanno piu'
+   niente: svuotarle qui e' meno rischioso che rincorrerle una per una, e un
+   giorno si rimuovono insieme. */
+.notch,.notch-s{clip-path:none}
+.frame{background:none;border:0}
 
 /* ---- toolbar ---- */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surf);
-  border-bottom:3px solid var(--line3);box-shadow:0 4px 0 var(--shadow)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);
+  border-bottom:1px solid var(--line)}
 .bar-in{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;
   display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:9px;min-width:0}
 .brand-mark{width:26px;height:26px;flex:none}
-.brand-txt{font-family:var(--f-px);font-size:13px;line-height:1.1;letter-spacing:.02em}
-.brand-txt em{display:block;font-style:normal;font-size:8px;color:var(--ink3);margin-top:3px}
+.brand-txt{font-family:var(--f-ser);font-weight:800;font-size:25px;line-height:1;letter-spacing:-.025em}
+.brand-txt em{display:inline;font-style:normal;font-family:var(--f-body);font-weight:500;font-size:10px;
+  color:var(--ink3);margin-left:10px;letter-spacing:.16em;text-transform:uppercase}
+/* Il marchio a pixel apparteneva alla veste precedente: qui la parola in serif
+   basta da sola, e un'icona a pixel accanto a un serif stona. */
+.brand-mark{display:none}
 .bar-sp{flex:1 1 auto}
 .pf{display:flex;gap:6px;flex-wrap:wrap}
-.pf-b{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;font-family:var(--f-px);font-size:9px;
-  background:var(--surf2);border:2px solid var(--line);color:var(--ink3);text-transform:uppercase}
+.pf-b{display:inline-flex;align-items:center;gap:6px;padding:4px 0;font-family:var(--f-body);font-weight:600;
+  font-size:11px;letter-spacing:.09em;
+  background:none;border:0;border-bottom:2px solid transparent;color:var(--ink3);text-transform:uppercase}
 .pf-b svg{width:14px;height:14px;flex:none}
-.pf-b[aria-pressed="true"]{color:var(--ink);background:var(--surf);border-color:currentColor}
-.seg{display:flex;border:2px solid var(--line);background:var(--surf2)}
-.seg button{padding:6px 8px;font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase}
-.seg button[aria-pressed="true"]{background:var(--amber-sol);color:var(--amber-ink)}
+.pf-b[aria-pressed="true"]{color:var(--ink);background:none;border-bottom-color:currentColor}
+.seg{display:flex;gap:14px;border:0;background:none}
+.seg button{padding:3px 0;font-family:var(--f-body);font-weight:600;font-size:11px;letter-spacing:.09em;
+  color:var(--ink3);text-transform:uppercase;border-bottom:2px solid transparent}
+.seg button[aria-pressed="true"]{background:none;color:var(--ink);border-bottom-color:var(--violet)}
 .lab{font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
 
 /* ---- intestazione mese ---- */
@@ -87,24 +86,31 @@ a.lk{color:var(--ink2)}
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
 .mhead{display:flex;align-items:flex-end;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .mnav{display:flex;gap:6px}
-.mnav button{width:34px;height:34px;display:grid;place-items:center;background:var(--surf);
-  border:2px solid var(--line2);box-shadow:3px 3px 0 var(--shadow);color:var(--ink2)}
-.mnav button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.mnav button{width:32px;height:32px;display:grid;place-items:center;background:none;border-radius:2px;
+  border:2px solid var(--line2);box-shadow:none;color:var(--ink2)}
+.mnav button:active{transform:translate(2px,2px);box-shadow:none}
 .mnav svg{width:12px;height:12px}
-.mtitle{font-family:var(--f-px);font-size:clamp(17px,4.4vw,26px);line-height:1;margin:0}
-.mtitle span{color:var(--amber)}
-.mmeta{font-family:var(--f-px);font-size:9px;color:var(--ink3);margin-left:auto;text-align:right;line-height:1.7}
-.mmeta b{color:var(--ink2);font-weight:400}
+.mtitle{font-family:var(--f-ser);font-weight:600;font-size:clamp(26px,6vw,40px);line-height:1;margin:0;
+  letter-spacing:-.025em;text-transform:capitalize}
+.mtitle span{color:var(--ink3)}
+.mmeta{font-family:var(--f-body);font-weight:500;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);margin-left:auto;text-align:right;line-height:1.9}
+.mmeta b{color:var(--ink2);font-weight:600}
 
 /* ---- griglia ---- */
 .main{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
 @media (min-width:1000px){.main.open{grid-template-columns:minmax(0,1fr) 382px}}
 .calcol{min-width:0}
 .flipwrap{perspective:1600px}
-.dows{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:6px}
-.dow{font-family:var(--f-px);font-size:9px;color:var(--ink3);text-align:center;padding:4px 0;
-  background:var(--surf3);text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;transform-origin:left center}
+/* La griglia editoriale e' una tavola continua, non una fila di riquadri
+   staccati: niente spazio fra le celle, e il reticolo nasce dai filetti. */
+.dows{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;
+  border-bottom:2px solid var(--line);margin-bottom:0}
+.dow{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink3);text-align:left;padding:0 8px 8px;
+  background:none}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;
+  border-top:2px solid var(--line);transform-origin:left center}
 .grid.anim-out{animation:pgOut .17s ease-in forwards}
 .grid.anim-in{animation:pgIn .22s ease-out backwards}
 .grid.rev{transform-origin:right center}
@@ -116,50 +122,49 @@ a.lk{color:var(--ink2)}
 @keyframes pgInR{from{transform:rotateY(-24deg) scale(.97);opacity:0}to{transform:rotateY(0deg) scale(1);opacity:1}}
 @media (prefers-reduced-motion:reduce){.grid.anim-out,.grid.anim-in{animation-duration:.01s}}
 
-/* Il giallo in griglia significa una cosa sola: oggi. Tutte le altre celle sono
-   contornate di viola, compresa quella selezionata — che si distingue per il
-   doppio filo, non per il colore, altrimenti ci sarebbero due gialli a dire due
-   cose diverse. Il tripla A non tocca piu' la cornice: si riconosce dalla
-   striscia di fondo della sua chip, dentro la cella. */
-.cell{position:relative;min-height:116px;background:var(--surf);border:2px solid var(--violet-sol);
-  padding:4px;display:flex;flex-direction:column;gap:3px;text-align:left;overflow:hidden}
-.cell:hover{border-color:var(--violet);z-index:2}
-.cell.out{background:var(--surf2);opacity:.5}
-.cell.wknd{background:var(--surf2)}
-/* Selezione: stesso viola, doppio filo. */
-.cell.sel{border-color:var(--violet);box-shadow:inset 0 0 0 2px var(--violet)}
-/* Oggi: l'unica cornice gialla della griglia, a prescindere da cosa e' selezionato.
-   Si usa --amber e non --amber-sol perche' nel tema chiaro l'ambra accesa da' 2,03
-   di contrasto sul fondo della cella e il contorno spariva. Il colore da solo non
-   basterebbe comunque: giallo e viola hanno luminanza simile e una discromatopsia
-   non li separa. Il secondo segnale e' il numero del giorno riempito, che resta. */
-.cell.today{border-color:var(--amber)}
-.cell.today .dnum{background:var(--amber-sol);color:var(--amber-ink)}
-/* La fascia di fondo e' l'unico segnale del tripla A, e vale solo per lui. Averla
-   su tutto cio' che supera attesa 50 la rendeva il colore normale della pagina:
-   se tre chip su quattro sono evidenziate, nessuna lo e'. */
-.chip.aaa{border-left-color:var(--gold-sol);
-  background:color-mix(in srgb,var(--gold-sol) 22%,var(--surf))}
-.dnum{font-family:var(--f-px);font-size:11px;color:var(--ink2);padding:2px 4px;align-self:flex-start;
-  background:var(--surf3);min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
-.chips{display:flex;flex-direction:column;gap:2px;min-width:0}
-.chip{display:flex;align-items:center;gap:4px;min-width:0;background:var(--surf2);
-  border-left:3px solid var(--line2);padding:2px 3px}
-.chip i{width:5px;height:5px;flex:none;display:block}
-.chip span{font-family:var(--f-nar);font-weight:600;font-size:11.5px;line-height:1.2;color:var(--ink);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.chip.hot{border-left-color:var(--amber-sol)}
-.badge{position:absolute;right:3px;bottom:3px;font-family:var(--f-px);font-size:8px;
-  background:var(--line3);color:var(--surf);padding:3px 5px;letter-spacing:0;white-space:nowrap}
-.badge.two{background:var(--surf3);color:var(--ink2);border:1px solid var(--line2)}
-.badge.two b{color:var(--amber);font-weight:400}
-.cell .shift{position:absolute;right:3px;top:3px;font-family:var(--f-px);font-size:8px;color:var(--violet)}
+/* Il giorno si legge dai segni, non dal colore della cornice. La griglia e' a
+   filetti: due pixel, perche' a uno su fondo scuro la struttura si perde. Oggi
+   porta una barra ambra sul bordo alto, la selezione un fondo piu' chiaro. Il
+   tripla A non tocca la cella: sta nel marcatore del titolo. */
+.cell{position:relative;min-height:124px;background:transparent;border:0;
+  border-right:2px solid var(--line);border-bottom:2px solid var(--line);
+  padding:9px 8px;display:flex;flex-direction:column;gap:5px;text-align:left;overflow:hidden}
+.cell:nth-child(7n){border-right:0}
+.cell:hover{background:var(--surf2);z-index:2}
+.cell.out{opacity:.38}
+.cell.wknd{background:color-mix(in srgb,var(--surf2) 55%,transparent)}
+.cell.sel{background:var(--surf3);box-shadow:inset 0 0 0 1px var(--line2)}
+.cell.today{box-shadow:inset 0 3px 0 var(--amber-sol)}
+.cell.today.sel{box-shadow:inset 0 3px 0 var(--amber-sol),inset 0 0 0 1px var(--line2)}
+/* Il titolo porta il suo marcatore: stella per il tripla A, freccia per i
+   rilevanti, punto per il resto. Monospaziato, cosi' i segni restano incolonnati
+   e l'occhio scorre la colonna invece di cercare le fasce colorate. */
+.chip{display:grid;grid-template-columns:11px minmax(0,1fr);gap:5px;align-items:start;min-width:0;
+  background:none;border:0;padding:0;font-family:var(--f-nar);font-weight:500;font-size:12.5px;
+  line-height:1.32;color:var(--ink2)}
+.chip .mk{font-family:var(--f-px);font-weight:700;font-size:12px;color:var(--line2);text-align:center;
+  line-height:1.3}
+.chip span.t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;min-width:0}
+.chip.hot{color:var(--ink)}
+.chip.hot .mk{color:var(--violet)}
+.chip.aaa{color:var(--ink)}
+.chip.aaa span.t{font-weight:600}
+.chip.aaa .mk{color:var(--amber-sol)}
+.dnum{font-family:var(--f-body);font-weight:600;font-size:13px;color:var(--ink3);align-self:flex-start;
+  display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.cell.today .dnum{color:var(--amber-sol)}
+.cell.today .dnum::after{content:"oggi";font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.chips{display:flex;flex-direction:column;gap:3px;min-width:0}
+.badge{position:absolute;right:7px;bottom:6px;font-family:var(--f-body);font-weight:600;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
+.badge.two{color:var(--ink3)}
+.badge.two b{color:var(--ink2);font-weight:600}
+.cell .shift{position:absolute;right:5px;top:7px;font-family:var(--f-px);font-size:11px;color:var(--coral)}
 @media (max-width:720px){
   .bar-in{gap:8px;padding-block:7px}
-  .brand-mark{width:20px;height:20px}
   .brand{gap:7px}
-  .brand-txt{font-size:11px}
-  .brand-txt em{font-size:6px;margin-top:2px}
+  .brand-txt{font-size:19px}
+  .brand-txt em{font-size:8px;margin-left:7px;letter-spacing:.1em}
   .bar-sp{flex-basis:0}
   .qin{font-size:12px;padding:5px 7px;width:150px;max-width:46vw}
   .pf{gap:4px}
@@ -176,17 +181,22 @@ a.lk{color:var(--ink2)}
      cosa che rimpicciolire la barra. */
   .bar-in label.lab{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
   .mnav button{width:30px;height:30px}
+  .mtitle{font-size:clamp(22px,7vw,30px)}
   .wrap{padding-block:12px 40px}
   .mhead{gap:8px;margin-bottom:9px}
-  .grid,.dows{gap:2px}
-  .cell{min-height:74px;padding:2px;gap:2px}
-  .dnum{font-size:9px;padding:1px 3px;min-width:16px}
-  .chip i{display:none}
-  .chip span{font-size:9.5px;line-height:1.15;white-space:normal;display:-webkit-box;
-    -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .chip{gap:0;padding:1px 2px 2px 3px;border-left-width:3px;align-items:flex-start}
-  .badge{font-size:7px;padding:2px 3px;right:2px;bottom:2px}
-  .dow{font-size:7px}
+  .cell{min-height:80px;padding:5px 4px;gap:3px}
+  .dnum{font-size:11px;gap:4px}
+  /* Su schermo stretto l'etichetta "oggi" accanto al numero non ci sta: la barra
+     ambra sul bordo alto della cella continua a dirlo. */
+  .cell.today .dnum::after{display:none}
+  /* Il titolo va a capo invece di troncarsi: in una cella da 50 pixel di
+     larghezza un troncamento lascerebbe tre lettere. */
+  .chip{gap:4px;grid-template-columns:9px minmax(0,1fr)}
+  .chip .mk{font-size:10px}
+  .chip span.t{font-size:10.5px;line-height:1.2;white-space:normal;display:-webkit-box;
+    -webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .badge{font-size:9px;right:4px;bottom:3px}
+  .dow{font-size:8px;padding:0 4px 6px}
 }
 
 /* ---- pannello giorno ---- */
@@ -194,7 +204,7 @@ a.lk{color:var(--ink2)}
 @media (min-width:1000px){
   .panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);max-height:calc(100vh - 110px);
     display:flex;flex-direction:column;background:var(--surf);border:2px solid var(--line2);
-    box-shadow:4px 4px 0 var(--shadow)}
+    box-shadow:none}
 }
 @media (max-width:999px){
   .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--surf);
@@ -203,34 +213,37 @@ a.lk{color:var(--ink2)}
   .panel-head{padding-top:calc(10px + env(safe-area-inset-top,0px))}
 }
 .panel[hidden]{display:none!important}
-.panel-head{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:3px solid var(--line3);
+.panel-head{display:flex;align-items:flex-start;gap:10px;padding:16px 0 10px;border-bottom:1px solid var(--line);
   background:var(--surf2);position:sticky;top:0;z-index:2}
-.panel-head h2{font-family:var(--f-px);font-size:12px;margin:0;line-height:1.5}
-.panel-head p{margin:4px 0 0;font-family:var(--f-px);font-size:8px;color:var(--ink3)}
-.panel-x{width:30px;height:30px;flex:none;margin-left:auto;display:grid;place-items:center;
+.panel-head h2{font-family:var(--f-ser);font-weight:600;font-size:23px;margin:0;line-height:1.1;
+  letter-spacing:-.02em;text-transform:capitalize}
+.panel-head p{margin:5px 0 0;font-family:var(--f-body);font-weight:600;font-size:10px;color:var(--ink3);
+  letter-spacing:.11em;text-transform:uppercase}
+.panel-x{width:30px;height:30px;flex:none;margin-left:auto;display:grid;place-items:center;border-radius:2px;
   background:var(--surf3);border:2px solid var(--line2);font-family:var(--f-px);font-size:11px;color:var(--ink2)}
 .panel-body{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:16px;flex:1;
   padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .blk-h{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.blk-h h3{font-family:var(--f-px);font-size:10px;margin:0;text-transform:uppercase;letter-spacing:.04em}
-.blk-h .n{font-family:var(--f-px);font-size:8px;background:var(--surf3);color:var(--ink3);padding:3px 5px}
-.blk-h .rule{flex:1;height:0;border-top:2px dotted var(--line2)}
+.blk-h h3{font-family:var(--f-body);font-weight:600;font-size:10px;margin:0;text-transform:uppercase;
+  letter-spacing:.11em;color:var(--ink3)}
+.blk-h .n{font-family:var(--f-px);font-size:10px;color:var(--ink3);background:none;padding:0}
+.blk-h .rule{flex:1;height:1px;border:0;background:var(--line)}
 
 /* card in evidenza */
 .feat{display:flex;flex-direction:column;gap:10px}
-.fcard{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;background:var(--surf2);
+.fcard{display:grid;grid-template-columns:72px minmax(0,1fr);gap:13px;background:none;
   border:2px solid var(--line);padding:8px}
-.cov{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border:2px solid var(--line3);
+.cov{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border:0;border-radius:2px;
   background:var(--surf3);max-width:100%}
 .cov.gen{image-rendering:pixelated}
 .fcard .cov{width:72px}
 .fcard.t1{grid-template-columns:140px minmax(0,1fr);gap:14px;padding:14px;
-  border-color:var(--line3);box-shadow:5px 5px 0 var(--shadow)}
+  border-color:var(--line3);box-shadow:none}
 .fcard.t1 .cov{width:140px}
-.fcard.t1 .gt{font-size:23px;line-height:1.1}
+.fcard.t1 .gt{font-size:27px;line-height:1.05}
 .fcard.t2{grid-template-columns:104px minmax(0,1fr);gap:12px;padding:11px}
 .fcard.t2 .cov{width:104px}
-.fcard.t2 .gt{font-size:18px}
+.fcard.t2 .gt{font-size:22px}
 @media (max-width:420px){
   .fcard.t1{grid-template-columns:104px minmax(0,1fr)}
   .fcard.t1 .cov{width:104px}
@@ -239,127 +252,147 @@ a.lk{color:var(--ink2)}
   .fcard.t2 .cov{width:84px}
 }
 .fc-b{min-width:0;display:flex;flex-direction:column;gap:6px}
-.gt{font-family:var(--f-body);font-weight:700;font-size:15px;line-height:1.2;margin:0;letter-spacing:-.01em;
+.gt{font-family:var(--f-ser);font-weight:600;font-size:18px;line-height:1.14;margin:0;letter-spacing:-.015em;
   text-wrap:balance}
 .gsub{font-family:var(--f-nar);font-size:12px;color:var(--ink3);margin:0}
 .rowx{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.pchip{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-px);font-size:7px;
+.pchip{display:inline-flex;align-items:center;gap:5px;font-family:var(--f-body);font-weight:600;font-size:9.5px;
+  letter-spacing:.07em;border-radius:2px;
   padding:3px 4px;border:1px solid currentColor;text-transform:uppercase}
 .pchip svg{width:10px;height:10px}
 .pchip.pc{color:var(--pc)}.pchip.switch2{color:var(--sw)}.pchip.ps5{color:var(--ps)}.pchip.xbox{color:var(--xb)}
-.price{font-family:var(--f-px);font-size:9px;color:var(--ink);background:var(--surf3);padding:3px 5px}
+.price{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--amber-sol);background:none;padding:0}
 .price.free{color:var(--ok)}
 .links{display:flex;gap:5px;margin-left:auto}
-.lk{width:26px;height:26px;display:grid;place-items:center;background:var(--surf);border:2px solid var(--line2);
+.lk{width:28px;height:28px;display:grid;place-items:center;background:none;border:1px solid var(--line2);
+  border-radius:2px;
   color:var(--ink2)}
 .lk:hover{color:var(--ink);border-color:var(--line3);background:var(--surf3)}
 .lk svg{width:14px;height:14px}
 .hypebar{display:flex;align-items:center;gap:6px}
-.hypebar .track{flex:1;height:8px;background:var(--surf3);border:1px solid var(--line2);display:flex;gap:1px;padding:1px}
-.hypebar .track i{flex:1;background:var(--line);display:block}
-.hypebar .track i.on{background:var(--amber-sol)}
-.hypebar b{font-family:var(--f-px);font-size:8px;color:var(--ink3);font-weight:400}
+.hypebar .track{flex:1;height:3px;background:var(--line);border:0;display:flex;gap:1px;padding:0}
+.hypebar .track i{flex:1;background:transparent;display:block}
+.hypebar .track i.on{background:var(--violet)}
+.hypebar b{font-family:var(--f-px);font-size:11px;color:var(--ink2);font-weight:700}
+.hypebar .lab{font-size:9px}
 .shiftnote{font-family:var(--f-px);font-size:8px;color:var(--violet);display:flex;align-items:center;gap:4px}
 .shiftnote s{color:var(--ink3)}
 
 /* lista compatta altre uscite */
-.oth{display:flex;flex-direction:column;gap:1px;border:2px solid var(--line);background:var(--line)}
-.ocard{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;
+.oth{display:flex;flex-direction:column;gap:0;border:0;background:none}
+.ocard{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;
+  border-bottom:1px solid var(--line);
   background:var(--surf);padding:5px 7px;text-align:left;width:100%}
 .ocard:hover{background:var(--surf2)}
-.ocard .cov{width:26px;border-width:1px}
-.ot{font-family:var(--f-nar);font-weight:600;font-size:13px;line-height:1.25;overflow:hidden;
+.ocard .cov{width:26px}
+.ot{font-family:var(--f-body);font-weight:500;font-size:13.5px;line-height:1.25;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
-.ometa{font-family:var(--f-px);font-size:7px;color:var(--ink3);display:flex;gap:5px;align-items:center;margin-top:2px}
+.ometa{font-family:var(--f-body);font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink3);display:flex;gap:6px;align-items:center;margin-top:3px}
 .odots{display:flex;gap:2px}
 .odots i{width:5px;height:5px;display:block}
 .oprice{font-family:var(--f-px);font-size:8px;color:var(--ink2);white-space:nowrap}
-.showmore{font-family:var(--f-px);font-size:8px;color:var(--violet);padding:7px;background:var(--surf2);
+.showmore{font-family:var(--f-body);font-weight:600;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);padding:9px 0;background:none;
   text-transform:uppercase;width:100%}
-.empty{font-family:var(--f-nar);font-size:13px;color:var(--ink3);padding:14px;text-align:center;
+.empty{font-family:var(--f-body);font-size:13.5px;color:var(--ink3);padding:16px 0;text-align:left;
   border:2px dashed var(--line2);background:var(--surf2)}
 
 /* ---- sezioni sotto ---- */
-.sec{margin-top:34px}
+.sec{margin-top:40px;padding-top:40px;border-top:1px solid var(--line)}
 .sech{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
-.sech h2{font-family:var(--f-px);font-size:14px;margin:0}
-.sech .tag{font-family:var(--f-px);font-size:8px;padding:3px 6px;background:var(--violet);color:#fff;
+.sech h2{font-family:var(--f-ser);font-weight:600;font-size:27px;margin:0;letter-spacing:-.02em;
+  text-transform:capitalize}
+.sech .tag{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.1em;padding:0;
+  background:none;color:var(--ink3);
   text-transform:uppercase}
-.secp{font-family:var(--f-nar);font-size:14px;color:var(--ink2);margin:0 0 14px;max-width:62ch}
+.secp{font-family:var(--f-body);font-size:14px;color:var(--ink2);margin:0 0 18px;max-width:68ch}
 .gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:12px}
-.gcard{background:var(--surf);border:2px solid var(--line2);box-shadow:4px 4px 0 var(--shadow);padding:10px;
+.gcard{background:var(--surf);border:2px solid var(--line2);box-shadow:none;padding:10px;
   display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;align-items:start}
 .gcard .cov{width:54px}
 .gr{display:flex;align-items:baseline;gap:5px}
-.gr .pc-up{font-family:var(--f-px);font-size:15px;color:var(--ok)}
-.gr .pc-lab{font-family:var(--f-px);font-size:7px;color:var(--ink3);text-transform:uppercase}
+.gr .pc-up{font-family:var(--f-px);font-weight:700;font-size:19px;color:var(--violet)}
+.gr .pc-lab{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.09em;
+  color:var(--ink3);text-transform:uppercase}
 .spark{display:flex;align-items:flex-end;gap:1px;height:26px;margin-top:6px}
-.spark i{flex:1;background:var(--violet-sol);display:block;min-height:1px}
-.spark i.last{background:var(--amber-sol)}
-.folw{font-family:var(--f-px);font-size:7px;color:var(--ink3);margin-top:4px;display:flex;
+.spark i{flex:1;background:var(--line2);display:block;min-height:2px}
+.spark i.last{background:var(--violet)}
+.folw{font-family:var(--f-body);font-weight:500;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink3);margin-top:6px;display:flex;
   justify-content:space-between;gap:6px}
 .rank{font-family:var(--f-px);font-size:8px;color:var(--ink3);background:var(--surf3);padding:2px 4px;
   align-self:flex-start}
-.collect{border:3px dashed var(--line2);background:var(--surf2);padding:22px 16px;text-align:center}
-.collect .giorni{font-family:var(--f-px);font-size:clamp(26px,7vw,44px);line-height:1;
-  color:var(--amber);margin:0}
+.collect{border:2px solid var(--line);background:none;padding:30px 18px;text-align:center}
+.collect .giorni{font-family:var(--f-ser);font-weight:600;font-size:clamp(30px,7vw,48px);line-height:1;
+  color:var(--amber-sol);margin:0}
 .collect .giorni small{display:block;font-size:9px;color:var(--ink3);margin-top:10px;letter-spacing:.06em}
-.partial{margin-top:14px;border:2px solid var(--line);background:var(--surf2);padding:10px}
-.partial h4{font-family:var(--f-px);font-size:9px;margin:0 0 8px;color:var(--ink3);text-transform:uppercase}
+.partial{margin-top:18px;border:0;border-top:1px solid var(--line);background:none;padding:14px 0 0}
+.partial h4{font-family:var(--f-body);font-weight:600;font-size:10px;margin:0 0 10px;color:var(--ink3);
+  letter-spacing:.11em;text-transform:uppercase}
 .plist{display:flex;flex-wrap:wrap;gap:6px}
-.pitem{display:inline-flex;align-items:center;gap:6px;background:var(--surf);border:2px solid var(--line);
+.pitem{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid var(--line);
+  border-radius:2px;
   padding:4px 7px}
-.pitem span{font-family:var(--f-nar);font-size:12.5px;font-weight:600}
-.pitem em{font-family:var(--f-px);font-size:7px;color:var(--warnc);font-style:normal}
+.pitem span{font-family:var(--f-body);font-size:12.5px;font-weight:500}
+.pitem em{font-family:var(--f-px);font-size:10px;color:var(--amber-sol);font-style:normal}
 
 /* ---- classifiche migliori ---- */
 .srch{position:relative;display:flex;align-items:center}
-.qin{font-family:var(--f-nar);font-weight:600;font-size:13px;padding:7px 9px;width:200px;max-width:40vw;
+.qin{font-family:var(--f-body);font-weight:500;font-size:14px;padding:7px 11px;width:210px;max-width:44vw;
+  border-radius:3px;
   background:var(--surf2);color:var(--ink);border:2px solid var(--line2);min-width:0}
 .qin::placeholder{color:var(--ink3);font-weight:500}
-.qin:focus{outline:none;border-color:var(--amber-sol);background:var(--surf)}
-.qres{position:absolute;top:calc(100% + 6px);right:0;width:min(440px,92vw);
+.qin:focus{outline:none;border-color:var(--violet);background:var(--surf2)}
+.qres{position:absolute;top:calc(100% + 8px);right:0;width:min(440px,92vw);border-radius:3px;
   max-height:min(62vh,440px);overflow-y:auto;background:var(--surf);
-  border:2px solid var(--line3);box-shadow:5px 5px 0 var(--shadow);z-index:40}
-.qhead{font-family:var(--f-px);font-size:8px;color:var(--ink3);padding:7px 9px;
+  border:2px solid var(--line3);box-shadow:none;z-index:40}
+.qhead{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink3);padding:9px 11px;
   border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surf);z-index:1}
 .qrow{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:8px;align-items:center;
   width:100%;padding:6px 9px;background:none;border:0;border-bottom:1px solid var(--line);
   text-align:left;cursor:pointer;color:inherit;font:inherit}
 .qrow:last-child{border-bottom:0}
 .qrow:hover,.qrow.on{background:var(--surf2)}
-.qrow.on{outline:2px solid var(--amber-sol);outline-offset:-2px}
-.qrow .cov{width:32px;border-width:1px}
-.qt{display:block;font-family:var(--f-nar);font-weight:600;font-size:13px;color:var(--ink);
+.qrow.on{outline:2px solid var(--violet);outline-offset:-2px}
+.qrow .cov{width:32px}
+.qt{display:block;font-family:var(--f-body);font-weight:600;font-size:13.5px;color:var(--ink);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.qm{display:block;font-family:var(--f-px);font-size:8px;color:var(--ink3);margin-top:2px}
+.qm{display:block;font-family:var(--f-body);font-weight:500;font-size:10px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink3);margin-top:3px}
 .qm i{width:5px;height:5px;display:inline-block;margin-right:2px}
-.qd{font-family:var(--f-px);font-size:9px;color:var(--ink2);white-space:nowrap;text-align:right}
+.qd{font-family:var(--f-px);font-size:11px;color:var(--ink2);white-space:nowrap;text-align:right}
 .qd b{display:block;color:var(--amber);font-weight:400}
-.gsel{font-family:var(--f-px);font-size:9px;padding:6px 8px;background:var(--surf2);
+.gsel{font-family:var(--f-body);font-weight:600;font-size:11px;padding:5px 8px;background:var(--surf2);
   border:2px solid var(--line);color:var(--ink);text-transform:uppercase;max-width:170px}
 .rank-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:1px;
   background:var(--line);border:2px solid var(--line2)}
-.ritem{display:grid;grid-template-columns:30px 76px minmax(0,1fr) auto;gap:11px;align-items:center;
+.ritem{display:grid;grid-template-columns:30px 76px minmax(0,1fr) auto;gap:14px;align-items:center;
   background:var(--surf);padding:8px 10px;text-decoration:none;color:inherit}
 .ritem:hover{background:var(--surf2)}
-.ritem .pos{font-family:var(--f-px);font-size:13px;color:var(--ink3);text-align:center}
-.ritem.top1 .pos,.ritem.top2 .pos,.ritem.top3 .pos{color:var(--amber)}
+.ritem .pos{font-family:var(--f-ser);font-weight:600;font-size:19px;color:var(--ink3);text-align:right}
+.ritem.top1 .pos,.ritem.top2 .pos,.ritem.top3 .pos{color:var(--amber-sol)}
 .ritem .cov{width:76px}
 .rtx{min-width:0}
-.rtx b{display:block;font-family:var(--f-body);font-weight:700;font-size:14px;line-height:1.2;
+.rtx b{display:block;font-family:var(--f-body);font-weight:600;font-size:16px;line-height:1.2;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rmeta{font-family:var(--f-px);font-size:7px;color:var(--ink3);margin-top:3px;
+.rmeta{font-family:var(--f-body);font-weight:500;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink3);margin-top:4px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sbox{text-align:center;flex:none}
-.sbox i{display:block;font-family:var(--f-px);font-size:17px;font-style:normal;line-height:1;
+.sbox i{display:block;font-family:var(--f-px);font-weight:700;font-size:21px;font-style:normal;line-height:1;
+  background:none!important;color:var(--ink)!important;padding:0!important;
   padding:5px 6px;color:var(--amber-ink);background:var(--amber-sol)}
 .sbox.mid i{background:var(--surf3);color:var(--ink)}
 .sbox.low i{background:var(--line2);color:var(--surf)}
-.sbox em{display:block;font-family:var(--f-px);font-size:6px;color:var(--ink3);
+.sbox em{display:block;font-family:var(--f-body);font-weight:600;font-size:9px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink3);
   font-style:normal;margin-top:3px}
 .genres{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
-.gtag{font-family:var(--f-px);font-size:6.5px;padding:2px 4px;background:var(--surf3);
+.gtag{font-family:var(--f-body);font-weight:600;font-size:9.5px;letter-spacing:.06em;padding:2px 6px;
+  border:1px solid var(--line);border-radius:2px;background:none;
   color:var(--ink3);text-transform:uppercase}
 @media (max-width:720px){
   .rank-list{grid-template-columns:minmax(0,1fr)}
@@ -369,23 +402,26 @@ a.lk{color:var(--ink2)}
 }
 
 /* tba */
-.tba{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--line);
+.tba{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 28px;background:none;
   border:2px solid var(--line2)}
-.tbai{background:var(--surf);padding:8px 10px;display:flex;gap:8px;align-items:center;text-align:left;width:100%}
+.tbai{background:none;padding:9px 0;display:flex;gap:11px;align-items:center;text-align:left;width:100%;
+  border-bottom:1px solid var(--line)}
 .tbai:hover{background:var(--surf2)}
 .tbai .cov{width:44px}
-.tbad{font-family:var(--f-px);font-size:8px;color:var(--amber);background:var(--surf3);padding:2px 4px;
+.tbad{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--amber-sol);background:none;padding:0;
   margin-left:auto;white-space:nowrap}
 .foot{margin-top:40px;border-top:3px dotted var(--line2);padding-top:14px;display:flex;gap:16px;
   flex-wrap:wrap;align-items:center}
-.foot p{font-family:var(--f-px);font-size:8px;color:var(--ink3);margin:0;line-height:1.8}
+.foot p{font-family:var(--f-body);font-size:12.5px;color:var(--ink3);margin:0;line-height:1.7}
 .legend{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
-.lgi{display:flex;align-items:center;gap:5px;font-family:var(--f-px);font-size:7px;color:var(--ink3)}
-.lgi i{width:8px;height:8px;display:block}
-.sweep{position:fixed;inset:0;pointer-events:none;z-index:60;background:
-  repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,0,0,.025) 3px 4px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sweep{background:
-  repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,0,0,.12) 3px 4px)}}
+.lgi{display:flex;align-items:center;gap:6px;font-family:var(--f-body);font-weight:500;font-size:11px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
+.lgi i{width:8px;height:8px;display:block;border-radius:50%}
+.lgi b{font-family:var(--f-px);font-weight:700;font-size:12px;line-height:1}
+/* Le righe di scansione simulavano un monitor a tubo: era coerente con la veste
+   a pixel, qui sarebbe sporco sopra un impianto da carta. */
+.sweep{display:none}
 </style>
 
 <div class="bar">
@@ -512,14 +548,15 @@ a.lk{color:var(--ink2)}
   <div class="foot">
     <p>Dati: <span id="datasrc">—</span><br>I link portano alla pagina store o al sito ufficiale quando IGDB li ha; dove mancano, aprono la ricerca sullo store &mdash; l’etichetta del link dice sempre quale dei due. "Attesa" è il percentile del titolo fra quelli non ancora usciti, calcolato sui dati di popolarità IGDB.<br>Copertine da IGDB. Dove IGDB non ne ha una, la pagina disegna un segnaposto a pixel, riconoscibile come tale.</p>
     <div class="legend">
-      <span class="lgi"><i style="background:var(--gold-sol)"></i>uscita tripla A</span>
-      <span class="lgi"><i style="background:var(--amber-sol)"></i>oggi</span>
-      <span class="lgi"><i style="background:var(--amber-sol)"></i>in evidenza</span>
+      <span class="lgi"><b style="color:var(--amber-sol)">&#9733;</b>uscita tripla A</span>
+      <span class="lgi"><b style="color:var(--violet)">&#9656;</b>in evidenza</span>
+      <span class="lgi"><b style="color:var(--line2)">&#183;</b>altra uscita</span>
+      <span class="lgi"><b style="color:var(--amber-sol)">&#9612;</b>oggi</span>
+      <span class="lgi"><b style="color:var(--coral)">&#8634;</b>data spostata</span>
       <span class="lgi"><i style="background:var(--pc)"></i>pc</span>
       <span class="lgi"><i style="background:var(--sw)"></i>switch 2</span>
       <span class="lgi"><i style="background:var(--ps)"></i>ps5</span>
       <span class="lgi"><i style="background:var(--xb)"></i>xbox</span>
-      <span class="lgi"><i style="background:var(--violet)"></i>data spostata</span>
     </div>
   </div>
 </div>
@@ -1005,9 +1042,14 @@ function cellHTML(d,inMonth){
   if(d.getDay()===0||d.getDay()===6)cls+=" wknd";
   if(ds===TODAY)cls+=" today";
   if(ds===state.sel)cls+=" sel";
+  /* Il rango sta nel segno: stella per il tripla A, freccia per i rilevanti,
+     punto per il resto. Un segno si legge anche senza distinguere i colori, che
+     era il limite del giallo contro viola: due tinte con la stessa luminanza. */
   var chips=shown.map(function(g){
-    var p=g.plat.filter(function(x){return state.filters[x];})[0]||g.plat[0];
-    return '<span class="chip'+(g.hype>=AAA?' aaa':g.hype>=REL?' hot':'')+'"><i style="background:'+pcol(p)+'"></i><span>'+esc(g.t)+'</span></span>';
+    var cl=g.hype>=AAA?"aaa":g.hype>=REL?"hot":"";
+    var mk=g.hype>=AAA?"\u2605":g.hype>=REL?"\u25B8":"\u00B7";
+    return '<span class="chip '+cl+'"><span class="mk">'+mk+'</span>'+
+      '<span class="t">'+esc(g.t)+'</span></span>';
   }).join("");
   var rest=tot-shown.length,badge="";
   if(tot>0){

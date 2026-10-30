@@ -6,6 +6,19 @@ tracciamento degli slittamenti e classifica dei titoli in crescita.
 Un file HTML autosufficiente più due file di dati. Nessun framework, nessuna build,
 nessuna dipendenza da installare.
 
+**La veste è editoriale notturna.** Serif nei titoli (Fraunces), Archivo nel testo,
+monospaziato nei numeri e nei marcatori; griglia a filetti invece che a riquadri, fondo
+scuro e caldo, colore raro. Una sola veste e non due: una variante chiara sarebbe un
+altro disegno, non lo stesso coi colori girati, quindi la pagina dichiara
+`color-scheme: dark` e vale anche per chi ha il sistema in chiaro.
+
+**Il rango sta nel segno, non nel colore.** `★` tripla A, `▸` in evidenza, `·` tutto il
+resto, monospaziati così restano incolonnati. Nasce da un limite misurato: nella veste
+precedente il giallo di "oggi" e il viola degli altri giorni hanno **1,13** di rapporto
+di luminanza fra loro, quindi chi ha una discromatopsia non li separava. Con un segno il
+colore diventa rinforzo e non unico canale. Le bozze da cui è uscita questa direzione
+stanno in `bozze/`.
+
 ```
 index.html      la pagina: calendario, pannello giorno, classifiche, top 50 ever,
                 crescita, date da definire
