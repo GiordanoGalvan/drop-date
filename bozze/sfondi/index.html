@@ -1,0 +1,203 @@
+<!doctype html><html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drop Date — tre sfondi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Tre modi di mettere uno sfondo sotto la veste editoriale notturna, sugli stessi
+   componenti e sugli stessi dati. La veste e' costruita sull'assenza di sfondo —
+   regge sui filetti e sul fondo piatto — quindi la domanda vera non e' "quale
+   immagine" ma "quanto puo' entrare senza togliere leggibilita'". */
+:root{
+  --paper:#131217; --surf:#17161b; --surf2:#1d1c22; --surf3:#232128;
+  --ink:#f1ede5; --ink2:#b6afa3; --ink3:#8b8478;
+  --line:#3a3640; --line2:#4b4753;
+  --acc:#6fd2ff; --acc2:#ffc861; --acc3:#ff8574;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#0b0a0e;color:var(--ink);font:15px/1.55 Archivo,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:0 auto;padding:26px 18px 70px}
+h1{font:800 30px/1.1 Fraunces,Georgia,serif;margin:0 0 6px;letter-spacing:-.02em}
+.intro{color:var(--ink3);margin:0 0 30px;max-width:72ch}
+.opt{margin:0 0 42px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.opt-h{padding:16px 18px;border-bottom:1px solid var(--line);background:var(--surf2)}
+.opt-h b{font:700 17px Archivo,sans-serif;display:block;margin-bottom:5px}
+.opt-h p{margin:0;color:var(--ink3);font-size:13.5px;max-width:80ch}
+.opt-h .verdetto{display:inline-block;margin-top:9px;font:600 10px Archivo,sans-serif;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 8px;border-radius:999px}
+.v-si{background:#1e3a2c;color:#8ee0b0}
+.v-forse{background:#3a3320;color:#ffc861}
+.v-no{background:#3a2020;color:#ff9c90}
+
+/* ---------------- il campione: la veste vera in piccolo ---------------- */
+.demo{position:relative;background:var(--paper);padding:0;isolation:isolate}
+.demo-in{position:relative;z-index:2;padding:0 18px 22px}
+.bar{display:flex;align-items:center;gap:16px;padding:13px 18px;border-bottom:1px solid var(--line);
+  flex-wrap:wrap;position:relative;z-index:3}
+.brand{font:800 22px/1 Fraunces,Georgia,serif;letter-spacing:-.025em}
+.brand em{font:500 9px Archivo,sans-serif;font-style:normal;color:var(--ink3);margin-left:9px;
+  letter-spacing:.16em;text-transform:uppercase}
+.sp{flex:1}
+.filt{display:flex;gap:14px}
+.filt span{font:600 10px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);
+  border-bottom:2px solid transparent;padding-bottom:3px}
+.filt span.on{color:var(--ink);border-bottom-color:var(--acc)}
+.mhead{display:flex;align-items:baseline;gap:14px;padding:26px 0 12px;flex-wrap:wrap}
+.mtitle{font:600 34px/1 Fraunces,Georgia,serif;margin:0;letter-spacing:-.025em}
+.mtitle span{color:var(--ink3)}
+.mmeta{margin-left:auto;font:500 10px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);text-align:right;line-height:1.9}
+.mmeta b{color:var(--ink2);font-weight:600}
+.dows{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:2px solid var(--line)}
+.dows div{font:600 9px Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);
+  padding:0 7px 7px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);border-top:2px solid var(--line)}
+.cell{border-right:2px solid var(--line);border-bottom:2px solid var(--line);min-height:104px;padding:8px 7px;
+  display:flex;flex-direction:column;gap:4px;overflow:hidden}
+.cell:nth-child(7n){border-right:0}
+.cell.today{box-shadow:inset 0 3px 0 var(--acc2)}
+.dnum{font:600 12px Archivo,sans-serif;color:var(--ink3)}
+.cell.today .dnum{color:var(--acc2)}
+.g{display:grid;grid-template-columns:10px minmax(0,1fr);gap:5px;font:500 11.5px/1.3 Archivo,sans-serif;
+  color:var(--ink2)}
+.g b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.mk{font:700 11px JetBrains Mono,monospace;color:var(--line2);text-align:center}
+.g.hot{color:var(--ink)}.g.hot .mk{color:var(--acc)}
+.g.aaa{color:var(--ink)}.g.aaa b{font-weight:600}.g.aaa .mk{color:var(--acc2)}
+.fc{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;padding:16px 0 0;margin-top:14px;
+  border-top:1px solid var(--line)}
+.fc img{width:96px;aspect-ratio:3/4;object-fit:cover;border-radius:2px;display:block;background:var(--surf3)}
+.fc h4{margin:0 0 5px;font:600 21px/1.1 Fraunces,Georgia,serif;letter-spacing:-.015em}
+.fc .mkb{font:700 10px JetBrains Mono,monospace;color:var(--acc2);letter-spacing:.1em;display:block;
+  margin-bottom:4px}
+.meta{font:500 10px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+
+/* ============ 1. GRANA — rumore generato, nessuna immagine ============== */
+/* Il rumore viene da un filtro SVG scritto nel foglio: non e' un file, non c'e'
+   niente da scaricare, e non cambia mai. A questa opacita' non sposta il
+   contrasto di nulla: si sente come carta, non si vede come sfondo. */
+.sfondo-grana .demo::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ============ 2. FASCE — sfondo solo dove non si legge ================== */
+/* La macchia sta dietro l'intestazione del mese e sotto il pie' di pagina,
+   dove non c'e' testo piccolo. La griglia resta su fondo piatto, che e' la
+   ragione per cui si legge. */
+.sfondo-fasce .demo::before{content:"";position:absolute;inset:0 0 auto;height:190px;z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(720px 260px at 12% -40%,rgba(111,210,255,.16),transparent 70%),
+    radial-gradient(520px 220px at 88% -30%,rgba(255,200,97,.11),transparent 70%)}
+.sfondo-fasce .demo::after{content:"";position:absolute;inset:auto 0 0;height:150px;z-index:1;
+  pointer-events:none;
+  background:radial-gradient(640px 200px at 70% 140%,rgba(255,133,116,.12),transparent 70%)}
+
+/* ============ 3. COPERTINA — l'artwork del titolo di punta ============== */
+/* L'immagine e' la copertina del gioco piu' atteso del mese, sfocata e
+   scurita. Cambia da se' ogni mese, e questo e' insieme il pregio e il rischio:
+   non si sceglie che immagine arriva. */
+.sfondo-cover .demo .bg{position:absolute;inset:0 0 auto;height:330px;z-index:1;pointer-events:none;
+  background-size:cover;background-position:center 28%;filter:blur(42px) saturate(1.35);
+  transform:scale(1.15);opacity:.5}
+.sfondo-cover .demo .velo{position:absolute;inset:0 0 auto;height:330px;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(19,18,23,.52) 0%,rgba(19,18,23,.88) 58%,var(--paper) 100%)}
+.nota{margin:16px 18px 20px;padding:12px 14px;border-left:2px solid var(--line2);color:var(--ink3);
+  font-size:12.5px;line-height:1.6}
+.err{padding:40px;color:var(--acc3)}
+</style></head><body>
+<div class="page">
+<h1>Tre modi di mettere uno sfondo</h1>
+<p class="intro">Stessi componenti, stessi dati veri, stessa veste. La veste editoriale è costruita
+sull’assenza di sfondo — regge sui filetti e sul fondo piatto — quindi la domanda non è quale immagine
+mettere, ma quanto può entrare senza togliere leggibilità. Le tre opzioni rispondono in modo diverso.</p>
+<div id="out"><p class="intro">Carico i dati…</p></div>
+</div>
+<script>
+(function(){
+"use strict";
+var IMG="https://images.igdb.com/igdb/image/upload/";
+var PLAT={pc:"PC",switch2:"Switch 2",ps5:"PS5",xbox:"Xbox"};
+var MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+var DOWS=["Lun","Mar","Mer","Gio","Ven","Sab","Dom"];
+var AAA=70,REL=50;
+function esc(v){return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function mark(g){return g.hype>=AAA?"★":g.hype>=REL?"▸":"·";}
+function cls(g){return g.hype>=AAA?"aaa":g.hype>=REL?"hot":"";}
+
+var OPZ=[
+ {k:"grana",nome:"1 · Grana",verdetto:"consigliata",vc:"v-si",
+  nota:"Rumore generato da un filtro SVG scritto nel foglio di stile: nessun file da scaricare, nessuna immagine che possa invecchiare o sparire. Al 5,5% di opacità non sposta il contrasto di niente — la pagina guadagna una materia da carta e non perde una riga di leggibilità. È l’unica delle tre che si può applicare senza compromessi.",
+  extra:"Costo: zero byte, zero richieste. Rischio di leggibilità: nessuno."},
+ {k:"fasce",nome:"2 · Fasce vuote",verdetto:"sicura",vc:"v-si",
+  nota:"La macchia di colore sta solo dietro l’intestazione del mese e sotto il piè di pagina, cioè dove non c’è testo piccolo da leggere. La griglia resta su fondo piatto, che è la ragione per cui si legge. Dà respiro e un po’ di colore senza entrare in conflitto con niente.",
+  extra:"Costo: zero byte, è solo un gradiente. Rischio: nessuno sul testo, ma l’effetto è discreto — se cerchi impatto, non è questa."},
+ {k:"cover",nome:"3 · Copertina sfocata",verdetto:"bella ma incontrollabile",vc:"v-forse",
+  nota:"L’artwork del titolo più atteso, sfocato e scurito sotto un velo. È la più viva delle tre e cambia da sé ogni mese. Il rovescio è che non scegli l’immagine: dipende da quale gioco è in testa, e con 42 copertine possibili all’anno prima o poi arriva quella sbagliata — troppo chiara, troppo satura, o semplicemente brutta. Il velo sopra è già al 52-88% per tenere il testo leggibile, e aumentarlo ancora significa annullare l’immagine.",
+  extra:"Costo: una copertina già scaricata dalla pagina, quindi nessuna richiesta in più. Rischio: dipende dal gioco del mese, e non si controlla."}
+];
+
+function campione(o,giorni,star,oggi){
+  var cal=giorni.map(function(x){
+    var righe=x.lista.slice(0,3).map(function(g){
+      return '<span class="g '+cls(g)+'"><span class="mk">'+mark(g)+'</span><b>'+esc(g.t)+'</b></span>';
+    }).join("");
+    var d=new Date(x.ds.slice(0,4),+x.ds.slice(5,7)-1,+x.ds.slice(8,10));
+    return '<div class="cell'+(x.ds===oggi?" today":"")+'"><span class="dnum">'+d.getDate()+'</span>'+righe+'</div>';
+  }).join("");
+  var im=star&&star.cov?IMG+"t_cover_big/"+star.cov+".jpg":"";
+  var sfondo=o.k==="cover"
+    ? '<div class="bg" style="background-image:url('+im+')"></div><div class="velo"></div>' : "";
+  var quando=star&&star.date
+    ? (function(){var d=new Date(star.date.slice(0,4),+star.date.slice(5,7)-1,+star.date.slice(8,10));
+        return d.getDate()+" "+MESI[d.getMonth()]+" "+d.getFullYear();})()
+    : (star?star.vague:"");
+  return '<div class="demo">'+sfondo+
+    '<div class="bar"><span class="brand">Drop Date<em>pc · switch 2 · ps5 · xbox</em></span>'+
+      '<span class="sp"></span><span class="filt">'+
+      Object.keys(PLAT).map(function(p,i){return '<span class="'+(i<3?"on":"")+'">'+PLAT[p]+'</span>';}).join("")+
+      '</span></div>'+
+    '<div class="demo-in">'+
+      '<div class="mhead"><h2 class="mtitle">Novembre <span>2026</span></h2>'+
+        '<div class="mmeta"><b>275</b> in evidenza<br><b>1.312</b> uscite</div></div>'+
+      '<div class="dows">'+DOWS.map(function(d){return "<div>"+d+"</div>";}).join("")+'</div>'+
+      '<div class="grid">'+cal+'</div>'+
+      (star?'<article class="fc"><img src="'+im+'" alt="" loading="lazy">'+
+        '<div><span class="mkb">★ TRIPLA A</span><h4>'+esc(star.t)+'</h4>'+
+        '<div class="meta">'+esc(quando)+' · '+star.plat.map(function(p){return PLAT[p];}).join(" · ")+
+        ' · attesa '+star.hype+'</div></div></article>':"")+
+    '</div></div>';
+}
+
+fetch("../../data.json",{cache:"no-store"}).then(function(r){
+  if(!r.ok)throw new Error("data.json non raggiungibile ("+r.status+")");
+  return r.json();
+}).then(function(d){
+  var oggi=iso(new Date()),giochi=d.games||[];
+  var byDay={};
+  giochi.forEach(function(g){if(g.date){(byDay[g.date]=byDay[g.date]||[]).push(g);}});
+  Object.keys(byDay).forEach(function(k){byDay[k].sort(function(a,b){return b.hype-a.hype;});});
+  var giorni=[];
+  for(var i=0;i<7;i++){
+    var dt=new Date();dt.setDate(dt.getDate()+i);
+    giorni.push({ds:iso(dt),lista:byDay[iso(dt)]||[]});
+  }
+  var futuri=giochi.filter(function(g){return (!g.date||g.date>=oggi)&&g.cov;});
+  futuri.sort(function(a,b){return b.hype-a.hype;});
+  var star=futuri[0];
+  document.getElementById("out").innerHTML=OPZ.map(function(o){
+    return '<section class="opt sfondo-'+o.k+'">'+
+      '<div class="opt-h"><b>'+o.nome+'</b><p>'+o.nota+'</p>'+
+      '<span class="verdetto '+o.vc+'">'+o.verdetto+'</span></div>'+
+      campione(o,giorni,star,oggi)+
+      '<p class="nota">'+o.extra+'</p></section>';
+  }).join("");
+}).catch(function(e){
+  document.getElementById("out").innerHTML='<p class="err">Non riesco a caricare i dati: '+esc(e.message)+'</p>';
+});
+})();
+</script>
+</body></html>
