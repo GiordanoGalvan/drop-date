@@ -202,27 +202,36 @@ a.lk{color:var(--ink2)}
 /* ---- pannello giorno ---- */
 .panel{min-width:0}
 @media (min-width:1000px){
+  /* Su schermo largo la colonna e' separata dal calendario da un filetto, non da
+     una cornice: una scatola accanto a una tavola a filetti stona. */
   .panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);max-height:calc(100vh - 110px);
-    display:flex;flex-direction:column;background:var(--surf);border:2px solid var(--line2);
-    box-shadow:none}
+    display:flex;flex-direction:column;background:none;border:0;border-left:2px solid var(--line)}
+  .panel-head{padding-left:20px;padding-right:4px;background:var(--bg)}
+  .panel-body{padding-left:20px;padding-right:12px}
 }
 @media (max-width:999px){
-  .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--surf);
+  .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--bg);
     display:flex;flex-direction:column;transform:translateY(0);animation:sheet .22s ease-out}
   @keyframes sheet{from{transform:translateY(14%);opacity:.4}to{transform:translateY(0);opacity:1}}
-  .panel-head{padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .panel-head{padding-top:calc(12px + env(safe-area-inset-top,0px));background:var(--bg)}
+  /* I margini del pannello seguono quelli della pagina: su cellulare il pannello
+     e' a tutto schermo, e se il suo contenuto rientra di una misura diversa
+     l'occhio legge due impaginati distinti. */
+  .panel-head,.panel-body{padding-left:max(16px,env(safe-area-inset-left,0px));
+    padding-right:max(16px,env(safe-area-inset-right,0px))}
 }
 .panel[hidden]{display:none!important}
-.panel-head{display:flex;align-items:flex-start;gap:10px;padding:16px 0 10px;border-bottom:1px solid var(--line);
-  background:var(--surf2);position:sticky;top:0;z-index:2}
+.panel-head{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;
+  border-bottom:1px solid var(--line);background:var(--surf);position:sticky;top:0;z-index:2}
 .panel-head h2{font-family:var(--f-ser);font-weight:600;font-size:23px;margin:0;line-height:1.1;
   letter-spacing:-.02em;text-transform:capitalize}
 .panel-head p{margin:5px 0 0;font-family:var(--f-body);font-weight:600;font-size:10px;color:var(--ink3);
   letter-spacing:.11em;text-transform:uppercase}
-.panel-x{width:30px;height:30px;flex:none;margin-left:auto;display:grid;place-items:center;border-radius:2px;
-  background:var(--surf3);border:2px solid var(--line2);font-family:var(--f-px);font-size:11px;color:var(--ink2)}
-.panel-body{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:16px;flex:1;
-  padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.panel-x{width:32px;height:32px;flex:none;margin-left:auto;display:grid;place-items:center;border-radius:2px;
+  background:none;border:1px solid var(--line2);font-family:var(--f-px);font-size:13px;color:var(--ink3)}
+.panel-x:hover{color:var(--ink);border-color:var(--ink3)}
+.panel-body{overflow-y:auto;padding:4px 14px 16px;display:flex;flex-direction:column;gap:16px;flex:1;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));scrollbar-gutter:stable}
 .blk-h{display:flex;align-items:center;gap:8px;margin-bottom:9px}
 .blk-h h3{font-family:var(--f-body);font-weight:600;font-size:10px;margin:0;text-transform:uppercase;
   letter-spacing:.11em;color:var(--ink3)}
@@ -230,26 +239,44 @@ a.lk{color:var(--ink2)}
 .blk-h .rule{flex:1;height:1px;border:0;background:var(--line)}
 
 /* card in evidenza */
-.feat{display:flex;flex-direction:column;gap:10px}
+.feat{display:flex;flex-direction:column;gap:0}
 .fcard{display:grid;grid-template-columns:72px minmax(0,1fr);gap:13px;background:none;
-  border:2px solid var(--line);padding:8px}
+  border:0;border-bottom:1px solid var(--line);padding:13px 0}
 .cov{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border:0;border-radius:2px;
   background:var(--surf3);max-width:100%}
 .cov.gen{image-rendering:pixelated}
 .fcard .cov{width:72px}
-.fcard.t1{grid-template-columns:140px minmax(0,1fr);gap:14px;padding:14px;
-  border-color:var(--line3);box-shadow:none}
+.fcard.t1{grid-template-columns:140px minmax(0,1fr);gap:16px;padding:16px 0}
 .fcard.t1 .cov{width:140px}
 .fcard.t1 .gt{font-size:27px;line-height:1.05}
-.fcard.t2{grid-template-columns:104px minmax(0,1fr);gap:12px;padding:11px}
+.fcard.t2{grid-template-columns:104px minmax(0,1fr);gap:14px;padding:15px 0}
 .fcard.t2 .cov{width:104px}
 .fcard.t2 .gt{font-size:22px}
+/* Aprendo un giorno su cellulare la scala saltava: in calendario i titoli stanno
+   a 10,5px e nel pannello il titolo grande arrivava a 27, cioe' due volte e
+   mezzo. Le tre taglie restano distinte fra loro ma su un intervallo piu'
+   stretto, cosi' passando da una vista all'altra non cambia il mondo. */
+@media (max-width:999px){
+  .panel-head h2{font-size:21px}
+  .fcard{grid-template-columns:62px minmax(0,1fr);gap:11px;padding:11px 0}
+  .fcard .cov{width:62px}
+  .gt{font-size:16px}
+  .fcard.t1{grid-template-columns:96px minmax(0,1fr);gap:13px;padding:13px 0}
+  .fcard.t1 .cov{width:96px}
+  .fcard.t1 .gt{font-size:20px}
+  .fcard.t2{grid-template-columns:78px minmax(0,1fr);gap:12px;padding:12px 0}
+  .fcard.t2 .cov{width:78px}
+  .fcard.t2 .gt{font-size:18px}
+}
 @media (max-width:420px){
-  .fcard.t1{grid-template-columns:104px minmax(0,1fr)}
-  .fcard.t1 .cov{width:104px}
-  .fcard.t1 .gt{font-size:19px}
-  .fcard.t2{grid-template-columns:84px minmax(0,1fr)}
-  .fcard.t2 .cov{width:84px}
+  .fcard.t1{grid-template-columns:84px minmax(0,1fr)}
+  .fcard.t1 .cov{width:84px}
+  .fcard.t1 .gt{font-size:18px}
+  .fcard.t2{grid-template-columns:70px minmax(0,1fr)}
+  .fcard.t2 .cov{width:70px}
+  .fcard.t2 .gt{font-size:17px}
+  .fcard{grid-template-columns:56px minmax(0,1fr)}
+  .fcard .cov{width:56px}
 }
 .fc-b{min-width:0;display:flex;flex-direction:column;gap:6px}
 .gt{font-family:var(--f-ser);font-weight:600;font-size:18px;line-height:1.14;margin:0;letter-spacing:-.015em;
