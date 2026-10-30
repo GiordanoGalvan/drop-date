@@ -22,6 +22,12 @@
   --pc:#e8e03c; --sw:#ff8574; --ps:#86b4ff; --xb:#5fd98f;
   --ok:#63d3bd; --warnc:#ffc861;
   --shadow:transparent;
+  /* Canali sciolti per le trasparenze. color-mix(in srgb, X, transparent) non
+     serve: `transparent` e' nero trasparente, quindi quel mix tira il colore
+     verso il nero invece di abbassare la sola opacita'. Era la fascia nera in
+     cima alla pagina, e i fine settimana piu' scuri del fondo anziche' piu'
+     chiari. */
+  --bg-rgb:19,18,23; --surf2-rgb:29,28,34;
   --f-px:"JetBrains Mono",ui-monospace,"Courier New",monospace;
   --f-body:"Archivo",system-ui,-apple-system,sans-serif;
   --f-nar:"Archivo",system-ui,sans-serif;
@@ -100,9 +106,9 @@ a.lk{color:var(--ink2)}
   transform:scale(1.16);opacity:.3}
 .bgart:not([style*="url"]){display:none}
 .bgvelo{background:linear-gradient(180deg,
-  color-mix(in srgb,var(--bg) 78%,transparent) 0%,
-  color-mix(in srgb,var(--bg) 90%,transparent) 62%,
-  var(--bg) 100%)}
+  rgba(var(--bg-rgb),.78) 0%,
+  rgba(var(--bg-rgb),.90) 62%,
+  rgb(var(--bg-rgb)) 100%)}
 /* Il contenuto sta sopra i due strati, altrimenti la sfocatura gli finirebbe
    davanti e nessun velo basterebbe. */
 .mhead,.main,.sec,.foot{position:relative;z-index:1}
@@ -159,7 +165,7 @@ a.lk{color:var(--ink2)}
 .cell:nth-child(7n){border-right:0}
 .cell:hover{background:var(--surf2);z-index:2}
 .cell.out{opacity:.38}
-.cell.wknd{background:color-mix(in srgb,var(--surf2) 55%,transparent)}
+.cell.wknd{background:rgba(var(--surf2-rgb),.55)}
 .cell.sel{background:var(--surf3);box-shadow:inset 0 0 0 1px var(--line2)}
 .cell.today{box-shadow:inset 0 3px 0 var(--amber-sol)}
 .cell.today.sel{box-shadow:inset 0 3px 0 var(--amber-sol),inset 0 0 0 1px var(--line2)}
