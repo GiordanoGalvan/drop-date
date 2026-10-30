@@ -36,6 +36,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0}
+body{position:relative}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
   -webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
@@ -61,7 +62,12 @@ a.lk{color:var(--ink2)}
 .frame{background:none;border:0}
 
 /* ---- toolbar ---- */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);
+/* Traslucida con sfocatura dietro: in cima lascia vedere l'immagine, e appena il
+   calendario le scorre sotto lo appanna invece di coprirlo di netto. Dove
+   backdrop-filter non c'e' resta il fondo al 72%, che tiene il testo leggibile:
+   misurato sul caso peggiore, 4,86 per l'etichetta piu' debole. */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
+  background:rgba(var(--bg-rgb),.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid var(--line)}
 .bar-in{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;
@@ -101,7 +107,10 @@ a.lk{color:var(--ink2)}
    il testo sopra l'immagine perderebbe contrasto proprio dove serve. */
 .wrap{position:relative;max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
-.bgart,.bgvelo{position:absolute;left:0;right:0;top:0;height:330px;pointer-events:none;z-index:0}
+/* Gli strati partono dal bordo della pagina e passano anche sotto la barra: dentro
+   .wrap cominciavano sotto di essa, e la barra restava sul fondo piatto leggendo
+   come una striscia nera contro il bagliore sottostante. */
+.bgart,.bgvelo{position:absolute;left:0;right:0;top:0;height:420px;pointer-events:none;z-index:0}
 .bgart{background-size:cover;background-position:center 26%;filter:blur(44px) saturate(1.4);
   transform:scale(1.16);opacity:.3}
 .bgart:not([style*="url"]){display:none}
@@ -111,6 +120,7 @@ a.lk{color:var(--ink2)}
   rgb(var(--bg-rgb)) 100%)}
 /* Il contenuto sta sopra i due strati, altrimenti la sfocatura gli finirebbe
    davanti e nessun velo basterebbe. */
+.wrap{z-index:1}
 .mhead,.main,.sec,.foot{position:relative;z-index:1}
 /* Le frecce stavano in fondo alla riga mentre il mese e' alto quaranta pixel:
    allineate al centro restano in asse col nome. */
@@ -509,6 +519,8 @@ a.lk{color:var(--ink2)}
 .sweep{display:none}
 </style>
 
+<div class="bgart" id="bgart" aria-hidden="true"></div>
+<div class="bgvelo" aria-hidden="true"></div>
 <div class="bar">
   <div class="bar-in">
     <div class="brand">
@@ -545,8 +557,6 @@ a.lk{color:var(--ink2)}
 </div>
 
 <div class="wrap">
-  <div class="bgart" id="bgart" aria-hidden="true"></div>
-  <div class="bgvelo" aria-hidden="true"></div>
   <div class="mhead">
     <div class="mnav">
       <button type="button" id="prev" aria-label="Mese precedente">
