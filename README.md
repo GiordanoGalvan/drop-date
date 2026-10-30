@@ -182,6 +182,20 @@ in `t_cover_big` — a quella misura una `t_cover_small`, che ha il lato lungo d
 sgrana sugli schermi a densità doppia. Le date da definire crescono in proporzione, a
 44px.
 
+**Su cellulare le due viste occupano lo stesso spazio.** Calendario e vista
+giornaliera riempiono entrambi lo schermo: la griglia arriva ai bordi annullando il
+margine laterale della pagina, e le sei righe si dividono l'altezza che resta invece di
+lasciare una fascia vuota in fondo. Era quella differenza di area utile a far sembrare la
+vista giornaliera un'altra pagina. L'unità è `dvh` e non `vh`: su iOS `vh` conta anche la
+barra del browser, quindi `100vh` sborda sempre di una cinquantina di pixel. Il minimo di
+64px per cella copre gli schermi molto bassi, dove dividere in sei lascerebbe celle
+illeggibili.
+
+**Lo zoom è disattivato** (`maximum-scale=1, user-scalable=no`) su richiesta esplicita.
+Va saputo che è una perdita di accessibilità reale: chi ha bisogno di ingrandire non può
+più, e le linee guida WCAG lo considerano un fallimento del criterio 1.4.4. Si riattiva
+togliendo i due parametri dal `meta viewport`.
+
 **Su mobile la barra è rimpicciolita di un gradino, non sfoltita.** Nessun comando
 scompare: si riducono padding, corpi e icone, e si nascondono le due etichette
 decorative. "Badge" via del tutto, perché il gruppo ha già il suo `aria-label`; "Genere"

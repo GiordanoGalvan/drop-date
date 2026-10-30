@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Drop Date</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -210,6 +210,22 @@ a.lk{color:var(--ink2)}
   .panel-body{padding-left:20px;padding-right:12px}
 }
 @media (max-width:999px){
+  /* Entrambe le viste occupano lo schermo intero, cosi' passando dall'una
+     all'altra l'area utile non cambia: era quello a far sembrare la vista
+     giornaliera un'altra pagina.
+
+     La griglia arriva ai bordi, annullando il margine laterale della pagina, e
+     le sei righe si dividono l'altezza che resta invece di lasciare una fascia
+     vuota in fondo. L'unita' e' dvh e non vh: su iOS vh conta anche la barra del
+     browser, quindi 100vh sborda sempre di una cinquantina di pixel. Il minimo
+     di 64px tiene in piedi il caso degli schermi molto bassi, dove dividere in
+     sei lascerebbe celle illeggibili. */
+  .calcol{margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));
+    margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)))}
+  .grid{grid-auto-rows:minmax(max(64px,calc((100dvh - 200px) / 6)),auto)}
+  .cell{min-height:0}
+  .wrap{padding-block:10px 40px}
+  .panel{height:100dvh}
   .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--bg);
     display:flex;flex-direction:column;transform:translateY(0);animation:sheet .22s ease-out}
   @keyframes sheet{from{transform:translateY(14%);opacity:.4}to{transform:translateY(0);opacity:1}}
