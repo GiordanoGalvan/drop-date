@@ -546,7 +546,7 @@ a.lk{color:var(--ink2)}
   </section>
 
   <div class="foot">
-    <p>Dati: <span id="datasrc">—</span><br>I link portano alla pagina store o al sito ufficiale quando IGDB li ha; dove mancano, aprono la ricerca sullo store &mdash; l’etichetta del link dice sempre quale dei due. "Attesa" è il percentile del titolo fra quelli non ancora usciti, calcolato sui dati di popolarità IGDB.<br>Copertine da IGDB. Dove IGDB non ne ha una, la pagina disegna un segnaposto a pixel, riconoscibile come tale.</p>
+    <p id="datasrc">—</p>
     <div class="legend">
       <span class="lgi"><b style="color:var(--amber-sol)">&#9733;</b>uscita tripla A</span>
       <span class="lgi"><b style="color:var(--violet)">&#9656;</b>in evidenza</span>
@@ -568,6 +568,12 @@ a.lk{color:var(--ink2)}
 /* ---------------- util ---------------- */
 function h32(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
 function mul(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+var MESI_LUNGHI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto",
+  "settembre","ottobre","novembre","dicembre"];
+function dataLunga(s){
+  var p=s.split("-");
+  return (+p[2])+" "+MESI_LUNGHI[+p[1]-1]+" "+p[0];
+}
 function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function pdate(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
 function addD(s,n){var d=pdate(s);d.setDate(d.getDate()+n);return iso(d);}
@@ -889,7 +895,7 @@ function linksFor(t,plat){
   L.push({k:"globe",u:"https://en.wikipedia.org/w/index.php?search="+q(t+" video game"),n:"Scheda informativa"});
   return L;
 }
-var GAMES=[],DATA_SRC="snapshot incorporato";
+var GAMES=[],DATA_SRC="";
 /* snapshot di riserva: usato solo se data.json non è raggiungibile */
 function fallbackRows(){
   var r=[];
@@ -1737,10 +1743,10 @@ Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
   if(d&&d.games&&d.games.length){
     buildGames(d.games,hist);
     ALLTIME=d.allTime||[];
-    DATA_SRC=(d.source||"IGDB")+" · aggiornato "+(d.generated||"—");
+    DATA_SRC=d.generated?"Aggiornato il "+dataLunga(d.generated):"";
   }else{
     buildGames(fallbackRows(),hist);
-    DATA_SRC="snapshot incorporato del 29 ottobre 2026 — data.json non raggiungibile";
+    DATA_SRC="Dati non aggiornati: la pagina sta usando lo snapshot incorporato.";
   }
   apriOggi();
   paint();
