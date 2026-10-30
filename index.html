@@ -62,9 +62,16 @@ a.lk{color:var(--ink2)}
   display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:9px;min-width:0}
 .brand-mark{width:26px;height:26px;flex:none}
-.brand-txt{font-family:var(--f-ser);font-weight:800;font-size:25px;line-height:1;letter-spacing:-.025em}
-.brand-txt em{display:inline;font-style:normal;font-family:var(--f-body);font-weight:500;font-size:10px;
-  color:var(--ink3);margin-left:10px;letter-spacing:.16em;text-transform:uppercase}
+/* Il gradiente passa dal rosso all'ambra: l'ambra e' la stessa del giorno di oggi
+   e dell'anno, quindi il marchio chiude la scala di colore invece di aggiungerne
+   una. Il `color` sotto non e' decorativo: se background-clip non viene applicato
+   — vecchi browser, modalita' a contrasto forzato — resta quello, e la parola si
+   legge comunque. */
+.brand-txt{font-family:var(--f-ser);font-weight:800;font-size:27px;line-height:1;letter-spacing:-.03em;
+  color:var(--amber-sol);
+  background-image:linear-gradient(96deg,#ff2d00 0%,#ff6a00 34%,#ffa417 66%,var(--amber-sol) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+@media (forced-colors:active){.brand-txt{-webkit-text-fill-color:currentColor;background-image:none}}
 /* Il marchio a pixel apparteneva alla veste precedente: qui la parola in serif
    basta da sola, e un'icona a pixel accanto a un serif stona. */
 .brand-mark{display:none}
@@ -82,17 +89,35 @@ a.lk{color:var(--ink2)}
 .lab{font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
 
 /* ---- intestazione mese ---- */
-.wrap{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
+/* Lo sfondo e' la copertina del titolo piu' atteso, sfocata sotto un velo. Sta
+   dentro .wrap e non fisso a schermo, cosi' scorre con la pagina e non combatte
+   con la barra, che e' sticky e opaca. Il velo arriva al fondo pieno: senza quello
+   il testo sopra l'immagine perderebbe contrasto proprio dove serve. */
+.wrap{position:relative;max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
-.mhead{display:flex;align-items:flex-end;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.bgart,.bgvelo{position:absolute;left:0;right:0;top:0;height:330px;pointer-events:none;z-index:0}
+.bgart{background-size:cover;background-position:center 26%;filter:blur(44px) saturate(1.4);
+  transform:scale(1.16);opacity:.3}
+.bgart:not([style*="url"]){display:none}
+.bgvelo{background:linear-gradient(180deg,
+  color-mix(in srgb,var(--bg) 78%,transparent) 0%,
+  color-mix(in srgb,var(--bg) 90%,transparent) 62%,
+  var(--bg) 100%)}
+/* Il contenuto sta sopra i due strati, altrimenti la sfocatura gli finirebbe
+   davanti e nessun velo basterebbe. */
+.mhead,.main,.sec,.foot{position:relative;z-index:1}
+/* Le frecce stavano in fondo alla riga mentre il mese e' alto quaranta pixel:
+   allineate al centro restano in asse col nome. */
+.mhead{display:flex;align-items:center;gap:12px;padding:26px 0 20px;margin-bottom:0;flex-wrap:wrap}
 .mnav{display:flex;gap:6px}
-.mnav button{width:32px;height:32px;display:grid;place-items:center;background:none;border-radius:2px;
+.mnav button svg{width:18px;height:18px}
+.mnav button{width:34px;height:34px;display:grid;place-items:center;background:none;border-radius:2px;
   border:2px solid var(--line2);box-shadow:none;color:var(--ink2)}
 .mnav button:active{transform:translate(2px,2px);box-shadow:none}
 .mnav svg{width:12px;height:12px}
 .mtitle{font-family:var(--f-ser);font-weight:600;font-size:clamp(26px,6vw,40px);line-height:1;margin:0;
   letter-spacing:-.025em;text-transform:capitalize}
-.mtitle span{color:var(--ink3)}
+.mtitle span{color:var(--amber-sol)}
 .mmeta{font-family:var(--f-body);font-weight:500;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
   color:var(--ink3);margin-left:auto;text-align:right;line-height:1.9}
 .mmeta b{color:var(--ink2);font-weight:600}
@@ -126,9 +151,11 @@ a.lk{color:var(--ink2)}
    filetti: due pixel, perche' a uno su fondo scuro la struttura si perde. Oggi
    porta una barra ambra sul bordo alto, la selezione un fondo piu' chiaro. Il
    tripla A non tocca la cella: sta nel marcatore del titolo. */
-.cell{position:relative;min-height:124px;background:transparent;border:0;
+/* Fondo pieno e non trasparente: la griglia e' l'unico posto della pagina con
+   testo a dodici pixel, e l'immagine non deve passarci sotto. */
+.cell{position:relative;min-height:124px;background:var(--bg);border:0;
   border-right:2px solid var(--line);border-bottom:2px solid var(--line);
-  padding:9px 8px;display:flex;flex-direction:column;gap:5px;text-align:left;overflow:hidden}
+  padding:9px 8px 24px;display:flex;flex-direction:column;gap:5px;text-align:left;overflow:hidden}
 .cell:nth-child(7n){border-right:0}
 .cell:hover{background:var(--surf2);z-index:2}
 .cell.out{opacity:.38}
@@ -150,11 +177,19 @@ a.lk{color:var(--ink2)}
 .chip.aaa{color:var(--ink)}
 .chip.aaa span.t{font-weight:600}
 .chip.aaa .mk{color:var(--amber-sol)}
-.dnum{font-family:var(--f-body);font-weight:600;font-size:13px;color:var(--ink3);align-self:flex-start;
-  display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+/* La fascia percorre la cella per intero: i margini negativi pareggiano il
+   padding della cella, cosi' il nastro arriva ai filetti invece di fermarsi
+   attorno alla cifra. */
+.dnum{font-family:var(--f-body);font-weight:600;font-size:13px;color:var(--ink3);
+  display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums;
+  margin:-9px -8px 3px;padding:5px 8px;background:var(--surf2)}
 .cell.today .dnum{color:var(--amber-sol)}
 .cell.today .dnum::after{content:"oggi";font-size:9px;letter-spacing:.1em;text-transform:uppercase}
-.chips{display:flex;flex-direction:column;gap:3px;min-width:0}
+/* Il conteggio sta in basso a destra in posizione assoluta, e i titoli ci
+   finivano sotto. La cella riserva una striscia in fondo e l'elenco dei titoli
+   si taglia al proprio bordo: quello che non ci sta sparisce invece di
+   sovrapporsi a un numero. */
+.chips{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1 1 auto;overflow:hidden}
 .badge{position:absolute;right:7px;bottom:6px;font-family:var(--f-body);font-weight:600;font-size:10px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
 .badge.two{color:var(--ink3)}
@@ -163,8 +198,7 @@ a.lk{color:var(--ink2)}
 @media (max-width:720px){
   .bar-in{gap:8px;padding-block:7px}
   .brand{gap:7px}
-  .brand-txt{font-size:19px}
-  .brand-txt em{font-size:8px;margin-left:7px;letter-spacing:.1em}
+  .brand-txt{font-size:21px}
   .bar-sp{flex-basis:0}
   .qin{font-size:12px;padding:5px 7px;width:150px;max-width:46vw}
   .pf{gap:4px}
@@ -224,7 +258,8 @@ a.lk{color:var(--ink2)}
   .mhead,.sec,.foot{padding-left:max(16px,env(safe-area-inset-left,0px));
     padding-right:max(16px,env(safe-area-inset-right,0px))}
   .grid{grid-auto-rows:minmax(max(64px,calc((100dvh - 200px) / 6)),auto)}
-  .cell{min-height:0}
+  .cell{min-height:0;padding:5px 4px 20px}
+  .dnum{margin:-5px -4px 2px;padding:4px 5px}
   .wrap{padding-block:10px 40px}
   .panel{height:100dvh}
   .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--bg);
@@ -479,7 +514,7 @@ a.lk{color:var(--ink2)}
         <rect x="4" y="10" width="2" height="2" fill="var(--line2)"/><rect x="7" y="10" width="2" height="2" fill="var(--line2)"/>
         <rect x="10" y="10" width="2" height="2" fill="var(--line2)"/>
       </svg>
-      <span class="brand-txt">DROP DATE<em>pc · switch 2 · ps5 · xbox</em></span>
+      <span class="brand-txt">Drop Date</span>
     </div>
     <div class="bar-sp"></div>
     <div class="srch">
@@ -504,13 +539,15 @@ a.lk{color:var(--ink2)}
 </div>
 
 <div class="wrap">
+  <div class="bgart" id="bgart" aria-hidden="true"></div>
+  <div class="bgvelo" aria-hidden="true"></div>
   <div class="mhead">
     <div class="mnav">
       <button type="button" id="prev" aria-label="Mese precedente">
-        <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="2" height="8" fill="currentColor"/><rect x="3" y="1" width="2" height="6" fill="currentColor"/><rect x="1" y="3" width="2" height="2" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
       <button type="button" id="next" aria-label="Mese successivo">
-        <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="0" width="2" height="8" fill="currentColor"/><rect x="3" y="1" width="2" height="6" fill="currentColor"/><rect x="5" y="3" width="2" height="2" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
     <h1 class="mtitle" id="mtitle">—</h1>
@@ -1782,6 +1819,26 @@ function paint(){
 function grab(u){
   return fetch(u,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
 }
+/* Lo sfondo e' la copertina del titolo piu' atteso fra quelli non ancora usciti.
+   Si sceglie una volta al caricamento e non a ogni cambio di mese: se cambiasse
+   scorrendo i mesi, l'immagine diventerebbe un effetto invece di un'identita'.
+   Senza copertine disponibili lo strato resta nascosto, e la pagina torna al
+   fondo piatto senza che si noti un buco. */
+function sfondoDiPunta(){
+  var el=document.getElementById("bgart");
+  if(!el)return;
+  var meglio=null;
+  for(var i=0;i<GAMES.length;i++){
+    var g=GAMES[i];
+    if(!g.cov)continue;
+    if(g.date&&g.date<TODAY)continue;
+    if(!meglio||g.hype>meglio.hype)meglio=g;
+  }
+  if(!meglio)return;
+  el.style.backgroundImage='url("'+IGDB_IMG+'t_cover_big/'+meglio.cov+'.jpg")';
+  el.setAttribute("data-t",meglio.t);
+}
+
 Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
   var d=res[0],hist=res[1]||null;
   if(d&&d.games&&d.games.length){
@@ -1792,6 +1849,7 @@ Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
     buildGames(fallbackRows(),hist);
     DATA_SRC="Dati non aggiornati: la pagina sta usando lo snapshot incorporato.";
   }
+  sfondoDiPunta();
   apriOggi();
   paint();
   allaMezzanotte();
