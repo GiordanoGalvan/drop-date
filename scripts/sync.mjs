@@ -463,7 +463,11 @@ async function main() {
     cov: g.cover?.image_id || null,
     score: Math.round(g.aggregated_rating),
     scoreN: g.aggregated_rating_count,
-    platName: (g.platforms || []).slice(0, 2).map((p) => p.name).join(" \u00b7 ") || "\u2014",
+    /* IGDB scrive "PC (Microsoft Windows)", "Super Nintendo Entertainment System
+       (SNES)" e simili: la parte fra parentesi e' una precisazione che in una riga
+       di classifica occupa spazio senza aggiungere niente. */
+    platName: (g.platforms || []).slice(0, 2)
+      .map((p) => p.name.replace(/\s*\([^)]*\)\s*$/, "")).join(" \u00b7 ") || "\u2014",
     year: g.first_release_date ? new Date(g.first_release_date * 1000).getUTCFullYear() : null,
     genres: (g.genres || []).map((x) => GENERE_IT[x.name] || x.name),
   }));
