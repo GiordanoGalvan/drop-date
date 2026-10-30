@@ -36,7 +36,6 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{position:relative}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
   -webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
@@ -62,12 +61,7 @@ a.lk{color:var(--ink2)}
 .frame{background:none;border:0}
 
 /* ---- toolbar ---- */
-/* Traslucida con sfocatura dietro: in cima lascia vedere l'immagine, e appena il
-   calendario le scorre sotto lo appanna invece di coprirlo di netto. Dove
-   backdrop-filter non c'e' resta il fondo al 72%, che tiene il testo leggibile:
-   misurato sul caso peggiore, 4,86 per l'etichetta piu' debole. */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
-  background:rgba(var(--bg-rgb),.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);
   border-bottom:1px solid var(--line)}
 .bar-in{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;
@@ -101,27 +95,8 @@ a.lk{color:var(--ink2)}
 .lab{font-family:var(--f-px);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
 
 /* ---- intestazione mese ---- */
-/* Lo sfondo e' la copertina del titolo piu' atteso, sfocata sotto un velo. Sta
-   dentro .wrap e non fisso a schermo, cosi' scorre con la pagina e non combatte
-   con la barra, che e' sticky e opaca. Il velo arriva al fondo pieno: senza quello
-   il testo sopra l'immagine perderebbe contrasto proprio dove serve. */
 .wrap{position:relative;max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
-/* Gli strati partono dal bordo della pagina e passano anche sotto la barra: dentro
-   .wrap cominciavano sotto di essa, e la barra restava sul fondo piatto leggendo
-   come una striscia nera contro il bagliore sottostante. */
-.bgart,.bgvelo{position:absolute;left:0;right:0;top:0;height:420px;pointer-events:none;z-index:0}
-.bgart{background-size:cover;background-position:center 26%;filter:blur(44px) saturate(1.4);
-  transform:scale(1.16);opacity:.3}
-.bgart:not([style*="url"]){display:none}
-.bgvelo{background:linear-gradient(180deg,
-  rgba(var(--bg-rgb),.78) 0%,
-  rgba(var(--bg-rgb),.90) 62%,
-  rgb(var(--bg-rgb)) 100%)}
-/* Il contenuto sta sopra i due strati, altrimenti la sfocatura gli finirebbe
-   davanti e nessun velo basterebbe. */
-.wrap{z-index:1}
-.mhead,.main,.sec,.foot{position:relative;z-index:1}
 /* Le frecce stavano in fondo alla riga mentre il mese e' alto quaranta pixel:
    allineate al centro restano in asse col nome. */
 .mhead{display:flex;align-items:center;gap:12px;padding:26px 0 20px;margin-bottom:0;flex-wrap:wrap}
@@ -167,8 +142,8 @@ a.lk{color:var(--ink2)}
    filetti: due pixel, perche' a uno su fondo scuro la struttura si perde. Oggi
    porta una barra ambra sul bordo alto, la selezione un fondo piu' chiaro. Il
    tripla A non tocca la cella: sta nel marcatore del titolo. */
-/* Fondo pieno e non trasparente: la griglia e' l'unico posto della pagina con
-   testo a dodici pixel, e l'immagine non deve passarci sotto. */
+/* Fondo pieno: la griglia e' l'unico posto della pagina con testo a dodici
+   pixel, e nessuno sfondo deve passarci sotto. */
 .cell{position:relative;min-height:124px;background:var(--bg);border:0;
   border-right:2px solid var(--line);border-bottom:2px solid var(--line);
   padding:9px 8px 24px;display:flex;flex-direction:column;gap:5px;text-align:left;overflow:hidden}
@@ -519,8 +494,6 @@ a.lk{color:var(--ink2)}
 .sweep{display:none}
 </style>
 
-<div class="bgart" id="bgart" aria-hidden="true"></div>
-<div class="bgvelo" aria-hidden="true"></div>
 <div class="bar">
   <div class="bar-in">
     <div class="brand">
@@ -1835,26 +1808,6 @@ function paint(){
 function grab(u){
   return fetch(u,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
 }
-/* Lo sfondo e' la copertina del titolo piu' atteso fra quelli non ancora usciti.
-   Si sceglie una volta al caricamento e non a ogni cambio di mese: se cambiasse
-   scorrendo i mesi, l'immagine diventerebbe un effetto invece di un'identita'.
-   Senza copertine disponibili lo strato resta nascosto, e la pagina torna al
-   fondo piatto senza che si noti un buco. */
-function sfondoDiPunta(){
-  var el=document.getElementById("bgart");
-  if(!el)return;
-  var meglio=null;
-  for(var i=0;i<GAMES.length;i++){
-    var g=GAMES[i];
-    if(!g.cov)continue;
-    if(g.date&&g.date<TODAY)continue;
-    if(!meglio||g.hype>meglio.hype)meglio=g;
-  }
-  if(!meglio)return;
-  el.style.backgroundImage='url("'+IGDB_IMG+'t_cover_big/'+meglio.cov+'.jpg")';
-  el.setAttribute("data-t",meglio.t);
-}
-
 Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
   var d=res[0],hist=res[1]||null;
   if(d&&d.games&&d.games.length){
@@ -1865,7 +1818,6 @@ Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
     buildGames(fallbackRows(),hist);
     DATA_SRC="Dati non aggiornati: la pagina sta usando lo snapshot incorporato.";
   }
-  sfondoDiPunta();
   apriOggi();
   paint();
   allaMezzanotte();
