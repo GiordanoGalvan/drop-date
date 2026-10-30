@@ -58,14 +58,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* ---------------- impaginato ---------------- */
 .main{display:grid;grid-template-columns:minmax(0,1fr);gap:26px;padding-bottom:50px}
-@media(min-width:1040px){.main.open{grid-template-columns:minmax(0,1fr) 380px}}
+@media(min-width:1040px){.main.open{grid-template-columns:minmax(0,1fr) 404px}}
 
 /* ---------------- calendario ---------------- */
-.dows{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--rule)}
+.dows{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:2px solid var(--rule)}
 .dows div{font:600 10px Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink3);padding:0 8px 8px}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--rule)}
-.cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-height:124px;
+.grid{display:grid;grid-template-columns:repeat(7,1fr);border-top:2px solid var(--rule)}
+.cell{border-right:2px solid var(--rule);border-bottom:2px solid var(--rule);min-height:124px;
   padding:9px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden;text-align:left;
   background:none;width:100%}
 .cell:nth-child(7n){border-right:0}
@@ -93,8 +93,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   margin-top:auto;padding-top:4px}
 
 /* ---------------- pannello del giorno ---------------- */
-.panel{border-top:1px solid var(--rule)}
-@media(min-width:1040px){.panel{border-top:0;border-left:1px solid var(--rule);padding-left:22px;
+.panel{border-top:2px solid var(--rule)}
+/* La colonna ha una barra di scorrimento propria, e senza margine a destra i
+   numeri dell'attesa ci finivano sotto. scrollbar-gutter riserva lo spazio anche
+   quando la barra non c'e', cosi' il contenuto non salta quando compare. */
+@media(min-width:1040px){.panel{border-top:0;border-left:2px solid var(--rule);
+  padding-left:22px;padding-right:16px;scrollbar-gutter:stable;
   position:sticky;top:76px;max-height:calc(100vh - 100px);overflow-y:auto}}
 .ph{display:flex;align-items:baseline;gap:10px;padding:16px 0 4px}
 .ph h2{font:600 23px/1.1 Fraunces,Georgia,serif;margin:0}
@@ -149,7 +153,32 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sc i{display:block;font:700 21px JetBrains Mono,monospace;font-style:normal;color:var(--ink)}
 .sc em{display:block;font:600 9px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;
   color:var(--ink3);font-style:normal;margin-top:2px}
-.foot{border-top:1px solid var(--rule);margin-top:44px;padding:22px 0 60px;color:var(--ink3);font-size:13px}
+/* Segnalati */
+.scards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0 30px}
+.scard{display:grid;grid-template-columns:62px minmax(0,1fr);gap:13px;padding:14px 0;
+  border-bottom:1px solid var(--rule)}
+.scard img{width:62px;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px;background:var(--paper3)}
+.scard h4{margin:0 0 4px;font:600 16px/1.15 Fraunces,Georgia,serif}
+.cresc{font:700 19px JetBrains Mono,monospace;color:var(--acc)}
+.spark{display:flex;align-items:flex-end;gap:2px;height:22px;margin:7px 0 5px}
+.spark i{flex:1;background:var(--rule2);min-height:2px}
+.spark i.last{background:var(--acc)}
+.attesa-box{border:2px solid var(--rule);padding:30px 18px;text-align:center}
+.attesa-box b{display:block;font:600 46px/1 Fraunces,Georgia,serif;color:var(--acc2)}
+.attesa-box span{display:block;font:600 10px Archivo,sans-serif;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink3);margin-top:10px}
+/* Date da definire */
+.tba{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px}
+.tbai{display:grid;grid-template-columns:11px 40px minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--rule)}
+.tbai img{width:40px;aspect-ratio:3/4;object-fit:cover;display:block;border-radius:2px;background:var(--paper3)}
+.tbai span.t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px}
+.tbad{font:600 10px Archivo,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acc2)}
+.piu{font:600 11px Archivo,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);
+  border:1px solid var(--rule2);border-radius:3px;padding:7px 13px;margin-top:16px}
+.piu:hover{color:var(--ink);border-color:var(--ink3)}
+.conta{font:600 10px Archivo,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.foot{border-top:2px solid var(--rule);margin-top:44px;padding:22px 0 60px;color:var(--ink3);font-size:13px}
 .leg{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font:500 11px Archivo,sans-serif;
   letter-spacing:.07em;text-transform:uppercase}
 .leg span{display:flex;align-items:center;gap:7px}
@@ -193,6 +222,24 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <div class="sech"><h2>Top 50 ever</h2></div>
     <p class="secp">I titoli col voto stampa più alto di sempre, su qualsiasi console.</p>
     <div class="rank" id="ever"></div>
+    <button class="piu" id="everbtn" hidden></button>
+  </section>
+
+  <section class="sec">
+    <div class="sech"><h2>Segnalati</h2></div>
+    <p class="secp">Giochi già usciti negli ultimi quattro mesi che stanno impennando:
+      è il posto dove un titolo sconosciuto si fa notare.</p>
+    <div id="segn"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sech"><h2>Annunciati</h2>
+      <span class="conta" id="tbacount">—</span>
+      <div class="seg"><button id="tbabtn" aria-pressed="false">Apri</button></div>
+    </div>
+    <p class="secp">Titoli con finestra vaga, dal più chiacchierato al meno.</p>
+    <div class="tba" id="tba" hidden></div>
+    <button class="piu" id="tbamore" hidden></button>
   </section>
 
   <div class="foot">
@@ -227,7 +274,8 @@ function cov(g,size){return g.cov?IMG+size+"/"+g.cov+".jpg":"";}
 function mark(g){return g.hype>=AAA?"★":g.hype>=REL?"▸":"·";}
 function cls(g){return g.hype>=AAA?"aaa":g.hype>=REL?"hot":"";}
 
-var TODAY=iso(new Date()),GAMES=[],byDay={},EVER=[],SRC="";
+var TODAY=iso(new Date()),GAMES=[],byDay={},EVER=[],HIST=null,SRC="";
+var everAperto=false,tbaAperto=false,tbaTutti=false;
 var oggiD=pdate(TODAY);
 var st={y:oggiD.getFullYear(),m:oggiD.getMonth(),sel:null,best:7,
   filt:{pc:true,switch2:true,ps5:true,xbox:true}};
@@ -330,11 +378,113 @@ function renderBest(){
     : '<p class="vuoto">Nessun titolo con voto della stampa nel periodo.</p>';
 }
 function renderEver(){
-  document.getElementById("ever").innerHTML=EVER.slice(0,12).map(function(g,i){
+  var l=everAperto?EVER:EVER.slice(0,12);
+  document.getElementById("ever").innerHTML=l.map(function(g,i){
     return rigaRank(g,i,g.score,g.year+" · "+(g.platName||""));
   }).join("");
+  var b=document.getElementById("everbtn");
+  b.hidden=EVER.length<=12;
+  b.textContent=everAperto?"Mostra solo i primi 12":"Mostra tutti e "+EVER.length;
+}
+
+/* ---------------- Segnalati ----------------
+   Si confrontano solo punti misurati con la stessa metrica: quando un gioco esce
+   il numero seguito cambia, e paragonare i due inventerebbe un'impennata proprio
+   il giorno dell'uscita. */
+var METRICA={3:"chi ci gioca",5:"picco 24h",1:"visite",2:"lo vogliono",0:"attese"};
+function histRun(h){
+  if(!h||!h.length)return [];
+  var m=h[h.length-1].m,i=h.length-1;
+  while(i>0&&h[i-1].m===m)i--;
+  return h.slice(i);
+}
+function histSpan(h){
+  var r=histRun(h);
+  if(r.length<2)return 0;
+  return Math.round((pdate(r[r.length-1].d)-pdate(r[0].d))/86400000);
+}
+function crescita(h,W){
+  var r=histRun(h);
+  if(r.length<2)return null;
+  var last=r[r.length-1],taglio=iso(new Date(pdate(last.d).getTime()-W*86400000)),prev=null;
+  for(var i=r.length-2;i>=0;i--){if(r[i].d<=taglio){prev=r[i];break;}}
+  if(!prev||!prev.f)return null;
+  return{pct:(last.f-prev.f)/prev.f*100,prev:prev.f,last:last.f,m:last.m};
+}
+function perc(arr,v){
+  if(!arr||!arr.length)return 0;
+  var lo=0,hi=arr.length;
+  while(lo<hi){var mid=(lo+hi)>>1;if(arr[mid]<v)lo=mid+1;else hi=mid;}
+  return Math.round(lo/arr.length*100);
+}
+function spark(h,W){
+  var r=histRun(h),taglio=iso(new Date(pdate(r[r.length-1].d).getTime()-W*86400000));
+  var seg=r.filter(function(e){return e.d>=taglio;});
+  if(seg.length<2)seg=r.slice(-2);
+  var v=seg.map(function(e){return e.f;});
+  var mx=Math.max.apply(null,v),mn=Math.min.apply(null,v),sp=Math.max(1e-12,mx-mn);
+  return '<span class="spark">'+v.map(function(x,i){
+    return '<i class="'+(i===v.length-1?"last":"")+'" style="height:'+(Math.round((x-mn)/sp*86)+14)+'%"></i>';
+  }).join("")+'</span>';
+}
+var W_SEG=7,PERC_MIN=25;
+function renderSegnalati(){
+  var el=document.getElementById("segn");
+  if(!HIST){el.innerHTML='<p class="vuoto">history.json non raggiungibile.</p>';return;}
+  var cand=GAMES.filter(function(g){
+    var h=HIST[String(g.igdb)];
+    return g.date&&g.date<TODAY&&h&&h.length>=2&&visibile(g);
+  });
+  var pronti=cand.map(function(g){var r=crescita(HIST[String(g.igdb)],W_SEG);return r?{g:g,r:r}:null;})
+    .filter(Boolean);
+  var dist={};
+  pronti.forEach(function(o){(dist[o.r.m]=dist[o.r.m]||[]).push(o.r.last);});
+  Object.keys(dist).forEach(function(m){dist[m].sort(function(a,b){return a-b;});});
+  pronti.forEach(function(o){o.pPrev=perc(dist[o.r.m],o.r.prev);o.pLast=perc(dist[o.r.m],o.r.last);});
+  pronti=pronti.filter(function(o){return o.pPrev>=PERC_MIN;});
+  pronti.sort(function(a,b){return b.r.pct-a.r.pct;});
+  if(!pronti.length){
+    /* Il primo dato arriva quando una serie copre la finestra: quel che manca e'
+       la finestra meno lo storico piu' lungo gia' raccolto. */
+    var piu=0;
+    cand.forEach(function(g){var s=histSpan(HIST[String(g.igdb)]);if(s>piu)piu=s;});
+    var restano=Math.max(0,W_SEG-piu);
+    el.innerHTML='<div class="attesa-box"><b>'+restano+'</b><span>'+
+      (restano===1?"giorno al primo dato":"giorni al primo dato")+'</span></div>';
+    return;
+  }
+  el.innerHTML='<div class="scards">'+pronti.slice(0,9).map(function(o){
+    var g=o.g,r=o.r;
+    return '<article class="scard"><img src="'+cov(g,"t_cover_small")+'" alt="" loading="lazy">'+
+      '<div><h4>'+esc(g.t)+'</h4>'+
+      '<span class="cresc">+'+r.pct.toFixed(r.pct<10?1:0).replace(".",",")+'%</span>'+
+      spark(HIST[String(g.igdb)],W_SEG)+
+      '<div class="meta">'+o.pPrev+'° → '+o.pLast+'° percentile · '+(METRICA[r.m]||"popolarità")+'</div>'+
+      '</div></article>';
+  }).join("")+'</div>';
+}
+
+/* ---------------- Annunciati ---------------- */
+var TBA_PASSO=48;
+function renderTba(){
+  var l=GAMES.filter(function(g){return g.vague&&visibile(g);})
+    .sort(function(a,b){return b.hype-a.hype;});
+  var el=document.getElementById("tba"),btn=document.getElementById("tbabtn"),piu=document.getElementById("tbamore");
+  document.getElementById("tbacount").textContent=l.length+(l.length===1?" titolo":" titoli");
+  btn.textContent=tbaAperto?"Chiudi":"Apri";
+  btn.setAttribute("aria-pressed",tbaAperto?"true":"false");
+  el.hidden=!tbaAperto;piu.hidden=true;
+  if(!tbaAperto){el.innerHTML="";return;}
+  var mostra=tbaTutti?l:l.slice(0,TBA_PASSO);
+  el.innerHTML=mostra.map(function(g){
+    return '<a class="tbai"><span class="mk">'+mark(g)+'</span>'+
+      '<img src="'+cov(g,"t_cover_small")+'" alt="" loading="lazy">'+
+      '<span class="t">'+esc(g.t)+'</span><span class="tbad">'+esc(g.vague)+'</span></a>';
+  }).join("");
+  if(!tbaTutti&&l.length>TBA_PASSO){piu.hidden=false;piu.textContent="Mostra tutti e "+l.length;}
 }
 function dipingi(){renderFiltri();renderGriglia();renderPannello();renderBest();renderEver();
+  renderSegnalati();renderTba();
   document.getElementById("src").textContent=SRC;}
 
 document.getElementById("grid").addEventListener("click",function(e){
@@ -352,14 +502,21 @@ document.getElementById("seg").addEventListener("click",function(e){
   [].forEach.call(this.children,function(x){x.setAttribute("aria-pressed",x===b);});
   renderBest();
 });
+document.getElementById("everbtn").addEventListener("click",function(){everAperto=!everAperto;renderEver();});
+document.getElementById("tbabtn").addEventListener("click",function(){
+  tbaAperto=!tbaAperto;if(!tbaAperto)tbaTutti=false;renderTba();});
+document.getElementById("tbamore").addEventListener("click",function(){tbaTutti=true;renderTba();});
 document.getElementById("prev").addEventListener("click",function(){st.m--;if(st.m<0){st.m=11;st.y--;}renderGriglia();});
 document.getElementById("next").addEventListener("click",function(){st.m++;if(st.m>11){st.m=0;st.y++;}renderGriglia();});
 
 renderDows();
-fetch("../../data.json",{cache:"no-store"}).then(function(r){
-  if(!r.ok)throw new Error("data.json non raggiungibile ("+r.status+")");
-  return r.json();
-}).then(function(d){
+function prendi(u){
+  return fetch(u,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;})
+    .catch(function(){return null;});
+}
+Promise.all([prendi("../../data.json"),prendi("../../history.json")]).then(function(res){
+  var d=res[0];HIST=res[1];
+  if(!d)throw new Error("data.json non raggiungibile");
   GAMES=(d.games||[]).map(function(g){return g;});
   EVER=d.allTime||[];
   SRC=(d.source||"IGDB")+" · aggiornato "+(d.generated||"—")+" · "+GAMES.length+" titoli";
