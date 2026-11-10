@@ -1,7 +1,11 @@
-# Drop Date
+# Playrain
 
 Calendario delle uscite videogiochi per **PC, Switch 2, PS5 e Xbox Series X|S**, con vista giornaliera,
-tracciamento degli slittamenti e classifica dei titoli in crescita.
+tracciamento degli slittamenti, classifiche e titoli che si fanno notare.
+
+Si chiamava *Drop Date*, nome gia' usato da un noto sito di sneaker. *Playrain* —
+"pioggia di giochi" — e' risultato libero da giochi, studi e siti del settore alla
+verifica del 10 novembre 2026; restano da controllare dominio e registro marchi (TMview).
 
 Un file HTML autosufficiente più due file di dati. Nessun framework, nessuna build,
 nessuna dipendenza da installare.
@@ -21,16 +25,24 @@ stanno in `bozze/`.
 
 ```
 index.html      la pagina: calendario, pannello giorno, classifiche, top 50 ever,
-                crescita, date da definire
-data.json       uscite correnti — riscritto a ogni giro del cron
+                segnalati, date da definire
+data.json       uscite, classifica di sempre, palette del giorno — riscritto a ogni giro
 history.json    serie storica della popolarità — solo accodato, mai riscritto
+manifest.webmanifest, icons/  icona del sito e installazione sulla schermata home
+fonts/          caratteri ospitati dal sito, con le licenze SIL OFL
 scripts/sync.mjs            scarica da IGDB e aggiorna i due JSON
+scripts/palette.mjs         colori dominanti delle copertine, per lo sfondo del giorno
+scripts/vendor/             decoder JPEG in JavaScript puro (jpeg-js, BSD-3-Clause)
+scripts/snapshot.mjs        rigenera lo snapshot di riserva dentro index.html
 .github/workflows/sync.yml  cron notturno che esegue il sync e committa
 ```
 
 La pagina carica `data.json` a runtime. Se non lo trova — aperta da sola, senza rete,
-in anteprima — ripiega su uno snapshot incorporato del 29 ottobre 2026 e lo dichiara nel
-piè di pagina. Non si rompe mai, al massimo mostra dati vecchi dicendolo.
+in anteprima — ripiega su uno snapshot incorporato e lo dichiara nel piè di pagina, con
+la data. Non si rompe mai, al massimo mostra dati vecchi dicendolo. Lo snapshot è un
+estratto dei dati IGDB (uscite vicine, date da definire più attese, migliori dell'anno,
+i 50 di sempre) e si rigenera con `node scripts/snapshot.mjs`. Il primo snapshot era
+compilato a mano dalle testate; è stato sostituito, così l'unica fonte del sito è IGDB.
 
 ## Attivazione
 
@@ -57,7 +69,7 @@ Nel repository, *Settings → Secrets and variables → Actions → New reposito
 *Actions → Sync IGDB → Run workflow*. Da lì in poi parte da solo ogni notte alle 04:23 UTC.
 
 Il primo giro riempie `data.json` con i dati veri e crea `history.json` con un solo punto
-per titolo. La sezione "In crescita" resta vuota per circa due settimane: serve lo storico,
+per titolo. La sezione "Segnalati" resta vuota per circa due settimane: serve lo storico,
 e lo storico si accumula un giorno alla volta. È previsto, non è un guasto.
 
 ### 4. Pubblicazione
@@ -316,6 +328,12 @@ giorno prima e, se una data è cambiata, scrive la precedente nel campo `was`. �
 momento in cui quel dato esiste: IGDB espone la data corrente, non la storia delle date.
 Per questo il `data.json` va committato e non rigenerato da zero.
 
+Fino al 10 novembre lo slittamento restava visibile **un giorno solo**: il giro dopo le
+due date coincidevano, il confronto non trovava niente e il segno spariva. Ogni giorno
+si vedevano soltanto gli slittamenti delle ultime 24 ore (14, quel giorno). Ora `was`
+si eredita da un giro all'altro insieme a `wasOn`, la data della scoperta, e scade
+dopo 60 giorni (`SLITTAMENTO_GIORNI`).
+
 **I voti vengono da IGDB, non da Metacritic.** IGDB espone `aggregated_rating`, la media
 delle testate, nella stessa chiamata del resto: nessuna seconda API, nessuna credenziale
 in più. Metacritic non ha API pubblica e OpenCritic ne richiederebbe una a parte.
@@ -328,8 +346,8 @@ qualsiasi console: restringerla alle quattro piattaforme del sito taglierebbe me
 Ocarina of Time assente da una classifica di sempre è un errore, non una scelta di campo.
 Il filtro generi invece si applica. La lista la costruisce IGDB con `game_type = 0`,
 che tiene fuori DLC, espansioni, port e riedizioni — altrimenti la classifica si
-riempie di doppioni dello stesso gioco. Senza `data.json` la sezione resta vuota e lo
-dichiara: non esiste una classifica di scorta incorporata nella pagina.
+riempie di doppioni dello stesso gioco. Senza `data.json` la classifica viene dallo
+snapshot di riserva, che la include.
 
 **La soglia di recensioni era irrealistica, e la classifica usciva vuota.**
 `aggregated_rating_count >= 40` corrisponde a **un solo gioco in tutto IGDB**. A 10 i
@@ -346,17 +364,84 @@ primi venticinque, resto) e non il voto grezzo: con soglie fisse sul voto contra
 l'ordinamento bayesiano, e il terzo in classifica usciva nel colore piu' spento mentre
 il sesto era dorato. Due scale nella stessa colonna si leggono come un errore.
 
-**I generi arrivano da IGDB, tradotti.** Nello snapshot ne sono compilati circa 135 su 330,
-quelli riconoscibili a mano; col primo giro del cron li hanno tutti. Un titolo senza genere
-sparisce quando il filtro è attivo — è il comportamento giusto, ma spiega perché oggi
-filtrando si vede meno del previsto.
+**I generi arrivano da IGDB, tradotti.** Un titolo senza genere sparisce quando il
+filtro è attivo: è il comportamento giusto, ma spiega perché filtrando a volte si vede
+meno del previsto.
 
 **`history.json` non è ricostruibile.** Le date di uscita si riallineano quando si vuole,
 la popolarità di ieri no. Lo script lo legge, accoda e pota a 120 giorni; se il file risulta
 illeggibile si ferma invece di sovrascriverlo.
 
+**"Segnalati" ordina per quanto un movimento è netto, non per la percentuale.** Sui
+dati veri del 10 novembre i nove titoli in cima erano tutti misurati con *Visits* e quasi
+tutti partivano dallo stesso valore minimo: +330%, +264%, +231% ripetuti identici, cioè
+il passaggio da una a quattro visite. Il pavimento al 25° percentile non li fermava,
+perché su queste metriche il valore minimo sta già al 57° percentile: metà del catalogo
+vive a una o due unità. Due dei primi tre erano titoli per adulti.
+
+I valori di `popularity_primitives` sono quote quantizzate: il più piccolo osservato per
+metrica è un'unità (per *Playing* l'86% dei valori ne è un multiplo intero). Contando
+in unità, un movimento da *a* a *b* si giudica come un conteggio: serve una base di
+almeno 10 unità (`BASE_MIN`) e una crescita che superi di 2,5 volte lo scarto atteso
+per caso, √(a+b) (`Z_MIN`). Si ordina per quel rapporto; la percentuale resta scritta
+nella card, ma non decide più l'ordine. Il prezzo è onesto: certe settimane i titoli
+sono pochi, e quando nessuno si distingue la sezione lo dice invece di riempirsi di
+rumore. Le card ora sono link, come tutte le altre del sito.
+
+**I titoli erotici restano fuori.** IGDB li marca col tema *Erotic*: `sync.mjs` li
+scarta dal calendario, dallo storico, dalla classifica di sempre e dalla palette. Non è
+una scelta morale ma di vetrina: raccolgono visite per curiosità, e *Segnalati* li
+metteva in cima. Si riammettono mettendo `ESCLUDI_EROTICI = false`; la pagina non
+cambia.
+
+**Palette del giorno.** Lo sfondo prende i colori del gioco col voto stampa più alto
+uscito in questa data, in qualsiasi anno e su qualsiasi console — un "accadde oggi" dei
+videogiochi, con una riga nel piè di pagina che dice quale. Il vincitore di ogni
+giorno si sceglie con la stessa media bayesiana della classifica di sempre (minimo 5
+recensioni). `scripts/palette.mjs` scarica la copertina, ne estrae quattro colori con
+un k-means che pesa i pixel per vivacità (un fondo nero occupa metà delle copertine e
+non dice niente del gioco) e **in `data.json` finiscono solo i colori**: la copertina
+non arriva mai nella pagina. I giochi del passato non cambiano, quindi ogni giro riusa
+i colori del giro prima e ricalcola solo i giorni il cui vincitore è cambiato.
+
+Il colore sta solo dove non c'è testo piccolo: dietro barra e titolo del mese, sotto il
+piè di pagina. Le celle hanno fondo pieno, quindi la griglia resta piatta. È la lezione
+della bozza con la copertina sfocata, bella ma ingovernabile perché passava sotto a
+tutto. Con meno di due colori vivi, o senza palette per la data, si usano i colori del
+marchio. Tutto il blocco è protetto: una palette mancata non impedisce mai di scrivere
+lo storico. Il decoder JPEG sta in `scripts/vendor/` invece che fra le dipendenze, così
+il workflow non deve installare niente.
+
+**Crediti e questioni legali.** *Questo è un riepilogo, non una consulenza legale.*
+
+- **IGDB va citato.** Le sue FAQ chiedono un'attribuzione visibile in un punto fisso
+  del sito: è nel piè di pagina, con il link. È l'unico credito obbligatorio, e lo è per
+  contratto, non per legge. Per un uso **commerciale** (pubblicità, affiliazioni,
+  funzioni a pagamento) IGDB va contattato prima, a partner@igdb.com.
+- **Citare le fonti non è un obbligo di legge, e non rende lecita una copia.** L'obbligo
+  di menzione vale quando si cita o riproduce un'opera protetta (art. 70 L. 633/1941). Date,
+  titoli e piattaforme sono fatti. Protette sono le banche dati nel loro insieme (art.
+  102-bis): per questo i dati vengono da IGDB tramite la sua API, alle sue condizioni, e lo
+  snapshot compilato dalle testate è stato tolto.
+- **Le copertine sono opere degli editori.** Arrivano dal server immagini di IGDB, coperte
+  dalla stessa attribuzione; la palette del giorno ne usa solo i colori.
+- **Font ospitati dal sito.** Prima arrivavano da Google Fonts: ogni visitatore mandava
+  il proprio IP a Google senza averlo scelto, ed è ciò per cui nel 2022 il tribunale di
+  Monaco ha condannato il gestore di un sito (GDPR). Ora sono in `fonts/`, licenza SIL OFL.
+
+**Icona.** Una goccia con dentro il simbolo play — *play* + *rain* — nei colori del
+logo, su quadrato scuro: si legge su schede chiare e scure, anche a 16 px. File in
+`icons/`: SVG per i browser moderni, PNG 32 per i vecchi, 180 per iPhone (a tutto campo,
+gli angoli li arrotonda iOS), 192 e 512 per Android, più una versione *maskable* con il
+disegno nell'80% centrale. Il manifest permette di aggiungere il sito alla schermata home.
+
 ## Da fare
 
 - Soglia dei rilevanti da ritarare quando si vedono i volumi veri di IGDB.
+- Rinominare il repository da `drop-date` a `playrain`: cambia anche l'indirizzo di
+  GitHub Pages, e il vecchio indirizzo smette di funzionare (GitHub reindirizza i link
+  al repository, non quelli delle Pages).
+- Prima di un lancio pubblico: dominio, ricerca su TMview, e se ci saranno guadagni
+  l'accordo con IGDB e la privacy policy.
 - Se i voti IGDB risultassero troppo radi, OpenCritic ha un'API vera via RapidAPI:
   si aggancia come seconda fonte di `score` senza toccare il resto della pipeline.

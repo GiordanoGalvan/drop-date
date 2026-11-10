@@ -1,7 +1,28 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Drop Date</title>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Playrain</title><meta name="description" content="Playrain: il calendario delle uscite dei videogiochi per PC, Switch 2, PS5 e Xbox, con slittamenti, classifiche e titoli che si fanno notare."><meta name="theme-color" content="#131217"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="icons/icon-180.png"><link rel="manifest" href="manifest.webmanifest"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#131217;color:#f1ede5}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>
+/* Font ospitati dal sito stesso. Prima arrivavano da fonts.googleapis.com: ogni
+   visitatore mandava il proprio indirizzo IP a Google senza averlo scelto, ed e'
+   esattamente cio' per cui nel 2022 il tribunale di Monaco ha condannato il
+   gestore di un sito. Licenze SIL OFL in fonts/. */
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:400;src:url(fonts/archivo-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:400;src:url(fonts/archivo-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:500;src:url(fonts/archivo-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:500;src:url(fonts/archivo-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:600;src:url(fonts/archivo-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:600;src:url(fonts/archivo-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:700;src:url(fonts/archivo-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:700;src:url(fonts/archivo-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:400;src:url(fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:400;src:url(fonts/jetbrains-mono-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:500;src:url(fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:500;src:url(fonts/jetbrains-mono-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:700;src:url(fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-display:swap;font-weight:700;src:url(fonts/jetbrains-mono-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Fraunces";font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/fraunces-latin-standard-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Fraunces";font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/fraunces-latin-ext-standard-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+</style>
+</head><body>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* Layout: banda pixel sticky in alto; desktop = griglia mese fluida + pannello giorno 380px affiancato; "In crescita" sotto; mobile = colonna singola, pannello giorno come bottom sheet a tutto schermo. */
 :root{
@@ -61,8 +82,15 @@ a.lk{color:var(--ink2)}
 .frame{background:none;border:0}
 
 /* ---- toolbar ---- */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);
+/* Barra velata invece che piena: lascia passare il colore del giorno in cima alla
+   pagina e, scorrendo, sfoca quello che le passa sotto. Dove backdrop-filter non
+   esiste resta comunque un fondo scuro all'82%, leggibile. */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(var(--bg-rgb),.82);
+  -webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15);
   border-bottom:1px solid var(--line)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .bar{background:rgba(var(--bg-rgb),.58)}
+}
 .bar-in{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;
   display:flex;align-items:center;gap:14px;flex-wrap:wrap}
@@ -374,13 +402,29 @@ a.lk{color:var(--ink2)}
 .sech{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .sech h2{font-family:var(--f-ser);font-weight:600;font-size:27px;margin:0;letter-spacing:-.02em;
   text-transform:capitalize}
-.sech .tag{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.1em;padding:0;
-  background:none;color:var(--ink3);
-  text-transform:uppercase}
+/* Un'etichetta sola per tutte le sezioni: prima ognuna aveva la sua — gialla,
+   grigia su grigio quasi illeggibile, testo semplice — e lo stesso ruolo sembrava
+   quattro cose diverse. Ora sono tutte come "usciti". */
+.sech .tag{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.1em;line-height:1.5;
+  padding:1px 6px;border-radius:2px;background:var(--amber-sol);color:var(--amber-ink);
+  text-transform:uppercase;white-space:nowrap}
+/* Pulsante accanto all'etichetta, non in fondo alla riga: se sta lontano dal titolo
+   non si capisce piu' cosa apre. */
+.sech .open-b{font-family:var(--f-body);font-weight:600;font-size:10.5px;letter-spacing:.1em;line-height:1.5;
+  text-transform:uppercase;padding:1px 9px;border:1px solid var(--line3);border-radius:2px;color:var(--ink2);
+  background:none}
+.sech .open-b:hover{color:var(--ink);border-color:var(--ink3)}
+/* Etichetta e pulsante vanno a capo insieme: su cellulare il titolo e' lungo, e
+   da soli il pulsante finiva sulla riga sotto, staccato da cio' che apre. */
+.sech-meta{display:inline-flex;align-items:center;gap:10px}
+.sech .open-b[aria-expanded="true"]{color:var(--amber-sol);border-color:var(--amber-sol)}
 .secp{font-family:var(--f-body);font-size:14px;color:var(--ink2);margin:0 0 18px;max-width:68ch}
 .gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:12px}
 .gcard{background:var(--surf);border:2px solid var(--line2);box-shadow:none;padding:10px;
   display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;align-items:start}
+/* Le card dei Segnalati erano le sole senza link: ora portano al gioco come tutte. */
+a.gcard{text-decoration:none;color:inherit}
+a.gcard:hover{background:var(--surf2);border-color:var(--line3)}
 .gcard .cov{width:54px}
 .gr{display:flex;align-items:baseline;gap:5px}
 .gr .pc-up{font-family:var(--f-px);font-weight:700;font-size:19px;color:var(--violet)}
@@ -448,7 +492,10 @@ a.lk{color:var(--ink2)}
 .rtx{min-width:0}
 .rtx b{display:block;font-family:var(--f-body);font-weight:600;font-size:16px;line-height:1.2;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rmeta{font-family:var(--f-body);font-weight:500;font-size:10.5px;letter-spacing:.09em;
+/* display:block perche' il troncamento con i puntini funzioni: su uno span in
+   linea overflow non ha effetto, e su cellulare la riga allargava la pagina di
+   26 pixel, con lo scorrimento orizzontale che ne segue. */
+.rmeta{display:block;font-family:var(--f-body);font-weight:500;font-size:10.5px;letter-spacing:.09em;
   text-transform:uppercase;color:var(--ink3);margin-top:4px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sbox{text-align:center;flex:none}
@@ -481,9 +528,44 @@ a.lk{color:var(--ink2)}
 .tbad{font-family:var(--f-body);font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--amber-sol);background:none;padding:0;
   margin-left:auto;white-space:nowrap}
-.foot{margin-top:40px;border-top:3px dotted var(--line2);padding-top:14px;display:flex;gap:16px;
-  flex-wrap:wrap;align-items:center}
+.foot{position:relative;isolation:isolate;margin-top:40px;border-top:3px dotted var(--line2);padding-top:14px;
+  display:flex;gap:16px 28px;flex-wrap:wrap;align-items:flex-start}
 .foot p{font-family:var(--f-body);font-size:12.5px;color:var(--ink3);margin:0;line-height:1.7}
+.foot .credits{display:flex;flex-direction:column;gap:6px;max-width:72ch;flex:1 1 420px}
+.foot .credits a{color:var(--ink2);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:2px}
+.foot .credits a:hover{color:var(--ink)}
+.foot .igdb{color:var(--ink2)}
+.foot #palsrc i{font-style:normal;color:var(--ink2)}
+.foot #palsrc .sw{display:inline-flex;gap:3px;vertical-align:-1px;margin-right:6px}
+.foot #palsrc .sw b{width:10px;height:10px;border-radius:50%;display:block}
+
+/* ---- palette del giorno ----
+   Lo sfondo prende i colori del gioco col voto piu' alto uscito in questa data,
+   in qualsiasi anno. Il colore sta solo dove non c'e' testo piccolo da leggere:
+   dietro la barra e il titolo del mese in alto, sotto il pie' di pagina in fondo.
+   Le celle del calendario hanno fondo pieno, quindi la griglia resta piatta e
+   leggibile come prima: e' la lezione della bozza con la copertina sfocata, bella
+   ma ingovernabile proprio perche' passava sotto a tutto. Qui non c'e' nessuna
+   immagine, solo sfumature generate da quattro colori. Se la data non ha una
+   palette si usano i colori del marchio, gli stessi del logo. */
+:root{--sky-a:rgba(255,45,0,.30);--sky-b:rgba(255,164,23,.22);--sky-c:rgba(111,210,255,.18);--sky-d:rgba(255,133,116,.14)}
+.sky{position:absolute;top:0;left:0;right:0;height:640px;z-index:0;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(58% 72% at 10% 0%,var(--sky-a) 0%,transparent 70%),
+    radial-gradient(42% 60% at 46% 6%,var(--sky-b) 0%,transparent 72%),
+    radial-gradient(52% 78% at 90% 0%,var(--sky-c) 0%,transparent 70%),
+    radial-gradient(36% 46% at 70% 32%,var(--sky-d) 0%,transparent 76%);
+  -webkit-mask-image:linear-gradient(#000 0%,#000 30%,transparent 100%);
+          mask-image:linear-gradient(#000 0%,#000 30%,transparent 100%);
+  animation:skyIn .9s ease-out both}
+@keyframes skyIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.sky{animation:none}}
+.wrap{z-index:1}
+.foot::before{content:"";position:absolute;left:0;right:0;top:-60px;bottom:-56px;z-index:-1;
+  pointer-events:none;opacity:.55;
+  background:
+    radial-gradient(45% 90% at 15% 100%,var(--sky-a) 0%,transparent 72%),
+    radial-gradient(40% 90% at 85% 100%,var(--sky-c) 0%,transparent 72%)}
 .legend{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
 .lgi{display:flex;align-items:center;gap:6px;font-family:var(--f-body);font-weight:500;font-size:11px;
   letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
@@ -494,6 +576,7 @@ a.lk{color:var(--ink2)}
 .sweep{display:none}
 </style>
 
+<div class="sky" id="sky" aria-hidden="true"></div>
 <div class="bar">
   <div class="bar-in">
     <div class="brand">
@@ -505,7 +588,7 @@ a.lk{color:var(--ink2)}
         <rect x="4" y="10" width="2" height="2" fill="var(--line2)"/><rect x="7" y="10" width="2" height="2" fill="var(--line2)"/>
         <rect x="10" y="10" width="2" height="2" fill="var(--line2)"/>
       </svg>
-      <span class="brand-txt">Drop Date</span>
+      <span class="brand-txt">Playrain</span>
     </div>
     <div class="bar-sp"></div>
     <div class="srch">
@@ -560,7 +643,7 @@ a.lk{color:var(--ink2)}
   <section class="sec" id="best">
     <div class="sech">
       <h2>I MIGLIORI</h2>
-      <span class="tag" style="background:var(--amber-sol);color:var(--amber-ink)">usciti</span>
+      <span class="tag">usciti</span>
       <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
         <span class="lab">Periodo</span>
         <div class="seg" id="bestseg" role="group" aria-label="Periodo classifica">
@@ -576,7 +659,7 @@ a.lk{color:var(--ink2)}
   <section class="sec" id="alltime">
     <div class="sech">
       <h2>TOP 50 EVER</h2>
-      <span class="tag" style="background:var(--ink2)">ogni console</span>
+      <span class="tag">ogni console</span>
       <div style="margin-left:auto">
         <button type="button" class="pf-b" id="allbtn" style="text-transform:uppercase">Mostra tutti e 50</button>
       </div>
@@ -597,26 +680,34 @@ a.lk{color:var(--ink2)}
         </div>
       </div>
     </div>
-    <p class="secp">Giochi gi&agrave; usciti negli ultimi quattro mesi che stanno impennando:
-      &Egrave; il posto dove un titolo sconosciuto si fa notare!</p>
+    <p class="secp">Giochi usciti negli ultimi quattro mesi che si stanno facendo notare: &egrave; il posto
+      dove un titolo sconosciuto viene a galla. Contano solo i movimenti netti &mdash; passare da una
+      a quattro visite non &egrave; un&rsquo;impennata &mdash; quindi certe settimane i titoli saranno pochi.</p>
     <div id="growthbody"></div>
   </section>
 
   <section class="sec" id="tba">
     <div class="sech">
       <h2>DATE DA DEFINIRE</h2>
-      <span class="tag" id="tbacount">—</span>
-      <div style="margin-left:auto">
-        <button type="button" class="pf-b" id="tbabtn" aria-expanded="false" aria-controls="tbalist"
-                style="text-transform:uppercase">Apri</button>
-      </div>
+      <span class="sech-meta"><span class="tag" id="tbacount">—</span>
+        <button type="button" class="open-b" id="tbabtn" aria-expanded="false" aria-controls="tbalist">Apri</button></span>
     </div>
     <p class="secp">Titoli con finestra vaga, dal pi&ugrave; chiacchierato al meno.</p>
     <div class="tba" id="tbalist" hidden></div>
   </section>
 
   <div class="foot">
-    <p id="datasrc">—</p>
+    <div class="credits">
+      <p id="datasrc">—</p>
+      <p id="palsrc" hidden></p>
+      <!-- Attribuzione richiesta da IGDB: visibile, fissa, con collegamento. -->
+      <p class="igdb">Dati, copertine e voti forniti da
+        <a href="https://www.igdb.com" target="_blank" rel="noopener">IGDB.com</a> &mdash; grazie a IGDB e alla sua
+        comunit&agrave;, che tengono aggiornato il catalogo da cui nasce questo sito.</p>
+      <p>Playrain non &egrave; affiliato a IGDB, Twitch, agli store collegati n&eacute; agli editori: nomi, marchi e
+        copertine dei giochi appartengono ai rispettivi proprietari. Caratteri Archivo, Fraunces e
+        JetBrains Mono, licenza SIL Open Font License.</p>
+    </div>
     <div class="legend">
       <span class="lgi"><b style="color:var(--amber-sol)">&#9733;</b>uscita tripla A</span>
       <span class="lgi"><b style="color:var(--violet)">&#9656;</b>in evidenza</span>
@@ -760,196 +851,15 @@ var ICO={
 };
 function svg(k,cls){return '<svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'>'+ICO[k]+'</svg>';}
 
-/* ---------------- dati reali — istantanea 29 ottobre 2026 ----------------
-   Fonti: GamesRadar+ e Video Games Chronicle (calendari uscite).
-   Formato: [titolo, data ISO, piattaforme (C=PC N=Switch2 P=PS5), attesa 0-100, data precedente].
-   "Attesa" è una stima redazionale, non un dato di follower: in fase 2 la sostituisce l'hype IGDB. */
-var DATED=[
- ["Gears of War: E-Day","2026-10-01","C",82],["End of Abyss","2026-10-01","CP",55],["Dynasty Warriors 3: Complete Edition Remastered","2026-10-01","CNP",50],["Monsters & Memories","2026-10-01","C",38],["Retrospace","2026-10-01","CNP",33],["Ghost of Yotei: Complete Edition","2026-10-01","P",76],["Octopath Traveler","2026-10-01","N",52],["Octopath Traveler II","2026-10-01","N",54],["Moros Protocol","2026-10-01","NP",30],
- ["Ace Combat 8: Wings of Theve","2026-10-02","CP",74],["Ace Combat Zero: The Belkan War","2026-10-02","CP",48],
- ["Aion 2","2026-10-05","C",57],
- ["Star Wars: Galactic Racer","2026-10-06","CP",61],["Epic Mickey: Rebrushed","2026-10-06","N",45],
- ["Spam","2026-10-07","C",22],["Deep Rock Galactic: Survivor","2026-10-07","NP",49],
- ["Clive Barker's Hellraiser: Revival","2026-10-08","CNP",56],["Silver Pines","2026-10-08","CNP",34],["Order of the Sinking Star","2026-10-08","CNP",31],["Forever Ago","2026-10-08","CNP",32],["Echo Weaver","2026-10-08","CNP",29],["Afterbeat","2026-10-08","C",24],["Neon Abyss 2","2026-10-08","CP",47],["Mafia III","2026-10-08","P",42],["Kingdom Hearts III","2026-10-08","NP",63],["Hell is Us","2026-10-08","N",51],["The Crew: Motorfest","2026-10-08","N",44],["Once Upon a Katamari","2026-10-08","N",46],["Deck of Haunts","2026-10-08","NP",28],
- ["Permafrost","2026-10-09","C",26],["Paperhead","2026-10-09","CP",27],["Dragon's Dogma II","2026-10-09","N",66],
- ["Colorbound","2026-10-12","CNP",25],["Battleplan","2026-10-12","C",21],
- ["Valor Mortis","2026-10-13","CP",58],["Planet Zoo 2","2026-10-13","CP",64],
- ["Warhammer 40,000: Boltgun 2","2026-10-14","CP",53],["The Witch's Bakery","2026-10-14","CNP",30],["Among the Trolls","2026-10-14","C",35],
- ["Castlevania: Belmont's Curse","2026-10-15","CP",69],["Enshrouded","2026-10-15","CP",59],["Ratatan","2026-10-15","CNP",50],["Toy Story 3: Complete Edition","2026-10-15","CNP",40],["It Takes Two","2026-10-15","N",55],["Tormented Souls II","2026-10-15","N",36],["House Flipper 2","2026-10-15","N",38],["Chained Beasts","2026-10-15","CP",23],
- ["Call of Duty: Modern Warfare 4","2026-10-16","CNP",90],["Tenebris Somnia","2026-10-16","CNP",37],["Tales of Eternia: Remastered","2026-10-16","CNP",43],["Resident Evil 2","2026-10-16","N",62],["Resident Evil 3","2026-10-16","N",57],["Resident Evil 4","2026-10-16","N",68],["LEGO Harry Potter Collection","2026-10-16","N",41],
- ["BeamNG.drive","2026-10-19","P",60],
- ["We Were Here Tomorrow","2026-10-20","CP",39],["Mycopunk","2026-10-20","CP",42],["I Am Your Beast","2026-10-20","N",33],
- ["Stupid Never Dies","2026-10-21","CP",31],["The Killing Stone","2026-10-21","CP",28],
- ["Final Fantasy Resonance","2026-10-22","CNP",79],["Nintendo Switch Sports Resort","2026-10-22","N",58],["Hitman: Absolution","2026-10-22","N",35],["Cult of the Lamb","2026-10-22","N",54],["Peak","2026-10-22","NP",52],["Darkest Dungeon II","2026-10-22","N",44],["Fatal Fury: City of the Wolves","2026-10-22","N",48],["Back to the Dawn","2026-10-22","P",34],
- ["Tape to Tape","2026-10-23","CP",26],["One Piece: Grand Gourmet","2026-10-23","CN",51],
- ["Reka","2026-10-26","C",29],["Hunter's Moon","2026-10-26","P",24],
- ["Remothered: Red Nun's Legacy","2026-10-27","CP",36],["Northgard Battlegrounds","2026-10-27","C",32],["The Séance of Blake Manor","2026-10-27","NP",30],
- ["Sulfur","2026-10-28","CNP",45],["Anomalith","2026-10-28","CNP",27],
- ["Phantom Blade Zero","2026-10-29","CP",83],["The Wolf Among Us Remastered","2026-10-29","CP",49],["Terrible Lizards","2026-10-29","CP",25],["Curse of Resthaven","2026-10-29","CP",23],["Metro 2033 Redux","2026-10-29","P",40],["Metro: Last Light Redux","2026-10-29","P",39],["Sword of the Sea","2026-10-29","N",46],["Steins;Gate Re:Boot","2026-10-29","N",43],["Demon Slayer: The Hinokami Chronicles 2","2026-10-29","N",56],
- ["Queen's Domain","2026-10-30","CNP",28],["Look Outside","2026-10-30","NP",26],
- ["Baptiste","2026-10-31","CNP",22],
+/* ---------------- snapshot di riserva ----------------
+   Si usa solo se data.json non e' raggiungibile: pagina aperta da sola, anteprima,
+   rete assente. E' un estratto dei dati IGDB del giorno in cui e' stato generato —
+   uscite vicine, date da definire piu' attese, migliori dell'anno, i 50 di sempre —
+   cosi' anche nel caso peggiore il sito mostra solo dati di IGDB. Il vecchio
+   snapshot compilato a mano dalle testate e' stato tolto: ora l'unica fonte e' una.
+   Per rigenerarlo si rilancia lo script indicato nel README. */
+var FALLBACK={"generated":"2026-11-10","games":[{"igdb":52189,"t":"Grand Theft Auto VI","plat":["ps5","xbox"],"hype":100,"date":"2026-11-19","genres":["Sparatutto","Corse","Avventura"],"cov":"cocv1v"},{"igdb":287849,"t":"Epic Mickey: Rebrushed","plat":["switch2"],"hype":68,"date":"2026-10-06","genres":["Platform","Avventura"],"score":81,"scoreN":5,"scoreKind":"stampa","cov":"co8jx5"},{"igdb":399408,"t":"Crymelight","plat":["pc","switch2","ps5"],"hype":42,"date":"2026-11-05","genres":["GDR","Avventura","Indie"],"cov":"cobz5q"},{"igdb":381248,"t":"Star Wars: Galactic Racer","plat":["pc","ps5","xbox"],"hype":75,"date":"2026-10-06","genres":["Corse","Sport","Avventura"],"score":89,"scoreN":4,"scoreKind":"stampa","cov":"cobihx"},{"igdb":309799,"t":"Truckful","plat":["pc","ps5"],"hype":57,"date":"2026-10-09","genres":["Avventura","Indie"],"cov":"co8qbv"},{"igdb":402959,"t":"Planet Zoo 2","plat":["pc","ps5","xbox"],"hype":57,"date":"2026-10-13","genres":["Simulazione","Strategia"],"cov":"coc5at"},{"igdb":127894,"t":"Wild Life","plat":["pc"],"hype":41,"date":"2027-02-08","genres":["GDR","Avventura","Indie"],"cov":"coc4w9"},{"igdb":313597,"t":"Silver Pines","plat":["pc","switch2","ps5","xbox"],"hype":68,"date":"2026-10-08","genres":["Puzzle","Avventura","Indie"],"cov":"cod2rg"},{"igdb":404006,"t":"Toy Story: Retro Roundup!","plat":["pc","switch2","ps5","xbox"],"hype":49,"date":"2026-10-15","genres":["Platform","Corse","Avventura"],"cov":"coc5v8"},{"igdb":404035,"t":"Toy Story 3: Complete Edition","plat":["pc","switch2","ps5","xbox"],"hype":53,"date":"2026-10-15","genres":["Platform","Avventura"],"cov":"coc5v1"},{"igdb":381235,"t":"Tomb Raider: Legacy of Atlantis","plat":["pc","switch2","ps5","xbox"],"hype":78,"date":"2027-02-12","genres":["Platform","Puzzle","Avventura"],"cov":"cob1kg"},{"igdb":250618,"t":"Phantom Blade Zero","plat":["pc","ps5"],"hype":93,"date":"2026-10-29","genres":["GDR","Azione","Avventura"],"cov":"cococe"},{"igdb":325599,"t":"Stranger Than Heaven","plat":["pc","ps5","xbox"],"hype":72,"date":"2027-01-15","genres":["Picchiaduro","Puzzle","GDR","Avventura"],"cov":"cobu6l"},{"igdb":216692,"t":"Tenebris Somnia","plat":["pc","switch2","ps5","xbox"],"hype":61,"date":"2026-10-16","genres":["Avventura","Indie"],"cov":"codc2n"},{"igdb":404939,"t":"Godzilla: Destroy All Monsters Melee Remastered","plat":["pc","switch2","ps5","xbox"],"hype":47,"date":"2026-11-03","genres":["Picchiaduro"],"cov":"coctec"},{"igdb":92550,"t":"Fable","plat":["pc","ps5","xbox"],"hype":90,"date":"2027-02-18","genres":["GDR","Avventura"],"cov":"cobc6d"},{"igdb":348210,"t":"Persona 4 Revival","plat":["pc","switch2","ps5","xbox"],"hype":69,"date":"2027-02-18","genres":["GDR","Avventura"],"cov":"coc7iu"},{"igdb":389434,"t":"Castlevania: Belmont's Curse","plat":["pc","ps5","xbox"],"hype":75,"date":"2026-10-15","genres":["Platform","GDR","Avventura"],"cov":"cod5fk"},{"igdb":136299,"t":"Forever Ago","plat":["pc","switch2","ps5","xbox"],"hype":61,"date":"2026-10-08","genres":["Avventura","Indie"],"cov":"coc78v"},{"igdb":405433,"t":"Dragon's Dogma II: Dark Arisen Expansion","plat":["pc","switch2","ps5","xbox"],"hype":47,"date":"2026-10-09","genres":["GDR","Avventura"],"cov":"coccmx"},{"igdb":405435,"t":"One Piece: Grand Gourmet","plat":["pc","switch2"],"hype":44,"date":"2026-10-23","genres":["Simulazione"],"cov":"coc7mu"},{"igdb":405454,"t":"Final Fantasy Resonance","plat":["pc","switch2","ps5","xbox"],"hype":67,"date":"2026-10-22","genres":["GDR","Avventura"],"score":89,"scoreN":5,"scoreKind":"stampa","cov":"coc7q4"},{"igdb":405458,"t":"Tales of Eternia: Remastered","plat":["pc","switch2","ps5","xbox"],"hype":51,"date":"2026-10-16","genres":["GDR","Avventura"],"cov":"coc7n7"},{"igdb":26602,"t":"Metaphor: ReFantazio","plat":["switch2"],"hype":80,"date":"2026-11-12","genres":["GDR","Strategia a turni","Avventura"],"score":94,"scoreN":7,"scoreKind":"stampa","cov":"co8d9t"},{"igdb":405451,"t":"Nintendo Switch Sports Resort","plat":["switch2"],"hype":50,"date":"2026-10-22","genres":["Sport"],"cov":"coc7mb"},{"igdb":27283,"t":"Earth Defense Force 5","plat":["switch2"],"hype":51,"date":"2026-10-08","genres":["Sparatutto","Strategia"],"score":67,"scoreN":9,"scoreKind":"stampa","cov":"co4kwx"},{"igdb":27979,"t":"Kingdom Hearts HD 1.5 + 2.5 Remix","plat":["switch2","ps5","xbox"],"hype":72,"date":"2026-10-08","genres":["GDR","Avventura"],"score":85,"scoreN":9,"scoreKind":"stampa","cov":"cocb23"},{"igdb":14159,"t":"Kingdom Hearts HD 2.8 Final Chapter Prologue","plat":["switch2","ps5","xbox"],"hype":68,"date":"2026-10-08","genres":["GDR","Avventura"],"score":78,"scoreN":18,"scoreKind":"stampa","cov":"cocb24"},{"igdb":306474,"t":"Kingdom Hearts III + Re Mind","plat":["switch2","ps5","xbox"],"hype":65,"date":"2026-10-08","genres":["GDR","Azione","Avventura"],"cov":"cocb25"},{"igdb":212758,"t":"Kingdom Hearts Final Mix","plat":["switch2","ps5","xbox"],"hype":41,"date":"2026-10-08","genres":["GDR","Avventura"],"score":71,"scoreN":26,"scoreKind":"utenti","cov":"co8m1o"},{"igdb":221998,"t":"Kingdom Hearts II Final Mix","plat":["switch2","ps5","xbox"],"hype":40,"date":"2026-10-08","genres":["Sparatutto","Platform","GDR","Azione","Avventura"],"score":84,"scoreN":24,"scoreKind":"utenti","cov":"co8m1s"},{"igdb":221997,"t":"Kingdom Hearts Birth by Sleep Final Mix","plat":["switch2","ps5","xbox"],"hype":40,"date":"2026-10-08","genres":["GDR"],"cov":"co8m1t"},{"igdb":117525,"t":"Kingdom Hearts Dream Drop Distance HD","plat":["switch2","ps5","xbox"],"hype":46,"date":"2026-10-08","genres":["Picchiaduro","GDR","Azione","Avventura"],"score":73,"scoreN":42,"scoreKind":"utenti","cov":"co8m1w"},{"igdb":26676,"t":"Kingdom Hearts 0.2: Birth by Sleep - A Fragmentary Passage","plat":["switch2","ps5","xbox"],"hype":44,"date":"2026-10-08","genres":["GDR","Azione"],"score":79,"scoreN":45,"scoreKind":"utenti","cov":"co8m20"},{"igdb":2933,"t":"Kingdom Hearts III","plat":["switch2","ps5","xbox"],"hype":80,"date":"2026-10-08","genres":["GDR","Azione","Avventura"],"score":90,"scoreN":10,"scoreKind":"stampa","cov":"co1tpy"},{"igdb":117778,"t":"Kingdom Hearts III: Re Mind","plat":["switch2","ps5","xbox"],"hype":49,"date":"2026-10-08","genres":["GDR","Azione","Avventura"],"score":73,"scoreN":7,"scoreKind":"stampa","cov":"co1xdl"},{"igdb":361833,"t":"Valor Mortis","plat":["pc","ps5","xbox"],"hype":77,"date":"2026-10-13","genres":["Sparatutto","GDR","Avventura"],"cov":"coaazc"},{"igdb":356552,"t":"Clive Barker's Hellraiser: Revival","plat":["pc","switch2","ps5","xbox"],"hype":71,"date":"2026-10-08","genres":["Avventura"],"cov":"coa5o9"},{"igdb":134587,"t":"Destruction AllStars","plat":["ps5"],"hype":40,"date":"2026-11-25","genres":["Corse","Sport"],"score":67,"scoreN":7,"scoreKind":"stampa","cov":"co2gw6"},{"igdb":248643,"t":"Enshrouded","plat":["pc","ps5"],"hype":76,"date":"2026-10-15","genres":["GDR","Avventura"],"score":77,"scoreN":73,"scoreKind":"utenti","cov":"cod12a"},{"igdb":115060,"t":"Dragon's Dogma II","plat":["switch2"],"hype":82,"date":"2026-10-09","genres":["GDR","Avventura"],"score":91,"scoreN":6,"scoreKind":"stampa","cov":"co833w"},{"igdb":336152,"t":"Frosthaven","plat":["pc"],"hype":47,"date":"2026-10-15","genres":["GDR","Strategia"],"cov":"co9k1c"},{"igdb":144040,"t":"Final Fantasy VII: Ever Crisis","plat":["pc"],"hype":47,"date":"2026-10-06","genres":["GDR","Avventura"],"score":53,"scoreN":20,"scoreKind":"utenti","cov":"co6x3j"},{"igdb":234256,"t":"The Crew: Motorfest","plat":["switch2"],"hype":63,"date":"2026-10-08","genres":["Corse","Avventura"],"score":78,"scoreN":6,"scoreKind":"stampa","cov":"co6pe2"},{"igdb":259339,"t":"Ratatan","plat":["pc","switch2","ps5","xbox"],"hype":60,"date":"2026-10-15","genres":["Musicale","GDR","Strategia","Avventura","Indie"],"cov":"cob22x"},{"igdb":290107,"t":"Echo Weaver","plat":["pc","switch2","ps5","xbox"],"hype":44,"date":"2026-10-08","genres":["Platform","Puzzle","Avventura","Indie"],"cov":"cod3qs"},{"igdb":276028,"t":"Paperhead","plat":["pc","ps5","xbox"],"hype":53,"date":"2026-10-09","genres":["Sparatutto","Indie"],"cov":"cocz72"},{"igdb":381212,"t":"Stupid Never Dies","plat":["pc","ps5"],"hype":60,"date":"2026-10-21","genres":["GDR","Avventura"],"cov":"coc8br"},{"igdb":278824,"t":"The Witch's Bakery","plat":["pc","switch2","ps5","xbox"],"hype":54,"date":"2026-10-14","genres":["Puzzle","GDR","Simulazione","Avventura","Indie"],"cov":"co8tks"},{"igdb":404715,"t":"Attack on Titan 3","plat":["pc","switch2","ps5","xbox"],"hype":48,"date":"2026-12-10","genres":["Azione"],"cov":"cocn7y"},{"igdb":277935,"t":"Allogloom","plat":["pc"],"hype":41,"date":"2026-10-13","genres":["Punta e clicca","Avventura","Indie"],"cov":"cocze4"},{"igdb":358369,"t":"Silicone Heart","plat":["pc"],"hype":40,"date":"2026-12-01","genres":["GDR","Simulazione","Avventura","Indie"],"cov":"coa7ax"},{"igdb":135400,"t":"Minecraft","plat":["switch2"],"hype":77,"date":"2026-10-27","genres":["Simulazione","Avventura","Arcade"],"score":81,"scoreN":585,"scoreKind":"utenti","cov":"co8fu7"},{"igdb":340570,"t":"Nomad Drive","plat":["pc","ps5"],"hype":44,"date":"2026-10-20","genres":["Simulazione","Avventura","Indie"],"cov":"coc9al"},{"igdb":329124,"t":"Over the Hill","plat":["pc","switch2","ps5","xbox"],"hype":65,"date":"2026-10-14","genres":["Corse","Simulazione","Sport","Avventura","Indie"],"cov":"co9bpq"},{"igdb":361859,"t":"Warhammer 40,000: Dawn of War IV","plat":["pc"],"hype":60,"date":"2026-11-30","genres":["Strategia"],"cov":"coaaxx"},{"igdb":394670,"t":"Remothered: Red Nun's Legacy","plat":["pc","switch2","ps5","xbox"],"hype":56,"date":"2026-10-27","genres":["Puzzle","Avventura"],"cov":"cobrbr"},{"igdb":414126,"t":"You Are Empty: Absolute Edition","plat":["pc"],"hype":41,"date":"2026-10-27","genres":["Sparatutto"],"cov":"cocswn"},{"igdb":381222,"t":"Order of the Sinking Star","plat":["pc","switch2","ps5"],"hype":61,"date":"2026-10-08","genres":["Puzzle","Avventura"],"cov":"coc954"},{"igdb":344093,"t":"Car Park Capital","plat":["pc"],"hype":48,"date":"2026-10-09","genres":["Simulazione","Strategia","Indie"],"cov":"cocqc5"},{"igdb":404741,"t":"Trine 6: Together in Time","plat":["pc","switch2","ps5","xbox"],"hype":44,"date":"2027-03-04","genres":["Platform","Puzzle","Avventura","Indie"],"cov":"coc6o3"},{"igdb":279621,"t":"Exodus","plat":["pc","ps5","xbox"],"hype":77,"date":"2027-04-07","genres":["GDR","Avventura"],"cov":"coaott"},{"igdb":361840,"t":"Road Kings","plat":["pc","ps5","xbox"],"hype":58,"date":"2027-03-11","genres":["Simulazione","Avventura"],"cov":"coaaxo"},{"igdb":125642,"t":"Path of Exile 2","plat":["pc","ps5","xbox"],"hype":80,"date":"2026-12-11","genres":["GDR","Azione","Avventura"],"score":88,"scoreN":222,"scoreKind":"utenti","cov":"co8ae0"},{"igdb":393269,"t":"Stage Tour","plat":["pc","switch2","ps5","xbox"],"hype":53,"date":"2026-12-10","genres":["Musicale"],"cov":"cocriy"},{"igdb":381208,"t":"TankRat","plat":["pc","ps5"],"hype":56,"date":"2027-01-15","genres":["Avventura"],"cov":"cob0ej"},{"igdb":296564,"t":"Terrible Lizards","plat":["pc","ps5","xbox"],"hype":44,"date":"2026-10-29","genres":["Platform","Avventura","Indie"],"cov":"coboiu"},{"igdb":405102,"t":"Star Trek: Outposts Unknown","plat":["pc"],"hype":42,"date":"2026-10-20","genres":["Strategia"],"cov":"coc74n"},{"igdb":344669,"t":"Warhammer 40,000: Boltgun 2","plat":["pc","switch2","ps5","xbox"],"hype":57,"date":"2026-10-14","genres":["Sparatutto","Indie"],"cov":"cod57o"},{"igdb":382400,"t":"Trees Hate You","plat":["pc"],"hype":50,"date":"2026-11-16","genres":["Avventura","Indie"],"cov":"coda4h"},{"igdb":388377,"t":"We Are So Cooked","plat":["pc"],"hype":48,"date":"2026-10-15","genres":["Indie"],"cov":"cobgud"},{"igdb":321579,"t":"Danchi Days","plat":["pc"],"hype":44,"date":"2026-10-29","genres":["GDR","Avventura","Indie"],"cov":"cockrk"},{"igdb":298680,"t":"Deep Dish Dungeon","plat":["pc","xbox"],"hype":54,"date":"2026-10-13","genres":["GDR","Strategia","Indie"],"cov":"co9fh8"},{"igdb":378225,"t":"Armatus","plat":["pc","switch2","ps5","xbox"],"hype":58,"date":"2027-01-07","genres":["GDR","Avventura"],"cov":"coave0"},{"igdb":404716,"t":"The Wolf Among Us Remastered","plat":["pc","ps5"],"hype":64,"date":"2026-10-29","genres":["Punta e clicca","GDR","Avventura"],"cov":"coc6r3"},{"igdb":292419,"t":"Cat Secretary","plat":["pc"],"hype":41,"date":"2026-11-04","genres":["GDR","Avventura","Indie"],"cov":"coby6w"},{"igdb":262712,"t":"Ananta","plat":["pc","ps5"],"hype":70,"date":"2027-01-15","genres":["GDR","Avventura"],"cov":"cocrlo"},{"igdb":362040,"t":"Tropico 7","plat":["pc","switch2","ps5","xbox"],"hype":45,"date":"2027-01-28","genres":["Simulazione","Strategia"],"cov":"coab61"},{"igdb":305180,"t":"I Am Your Beast","plat":["switch2"],"hype":59,"date":"2026-10-20","genres":["Sparatutto","Tattico","Indie","Arcade"],"cov":"co8bqn"},{"igdb":301031,"t":"13Z: The Zodiac Trials","plat":["pc","switch2","ps5","xbox"],"hype":42,"date":"2027-01-14","genres":["Azione","Avventura","Indie"],"cov":"cocszg"},{"igdb":412520,"t":"Warrior Cats: Clans of the Forest","plat":["pc","switch2","ps5","xbox"],"hype":50,"date":"2026-10-23","genres":["GDR","Avventura"],"cov":"cocmt9"},{"igdb":402530,"t":"Anomalith","plat":["pc","switch2","ps5"],"hype":44,"date":"2026-10-28","genres":["Sparatutto","GDR","Avventura"],"cov":"coc3jf"},{"igdb":398225,"t":"Metro 2039","plat":["pc","ps5","xbox"],"hype":74,"date":"2027-02-04","genres":["Sparatutto","Avventura"],"cov":"cobxor"},{"igdb":404690,"t":"Gundam Rogue Orbit","plat":["pc","ps5","xbox"],"hype":56,"date":"2027-03-05","genres":["Sparatutto","Avventura"],"cov":"coc6ls"},{"igdb":404058,"t":"Until Dawn 2","plat":["ps5"],"hype":59,"date":"2027-01-28","genres":["Avventura"],"cov":"cocvjf"},{"igdb":404721,"t":"Final Fantasy VII Revelation","plat":["pc","switch2","ps5","xbox"],"hype":67,"date":"2027-04-07","genres":["GDR","Avventura"],"cov":"cocbgb"},{"igdb":142911,"t":"Fate/Extra Record","plat":["pc","ps5"],"hype":43,"date":"2027-01-28","genres":["GDR","Avventura"],"cov":"coctkz"},{"igdb":385308,"t":"Milki Delivery","plat":["pc"],"hype":48,"date":"2026-11-17","genres":["Simulazione","Avventura","Indie"],"cov":"coblsh"},{"igdb":329692,"t":"Am I Nima","plat":["pc"],"hype":50,"date":"2026-11-27","genres":["Punta e clicca","Avventura","Indie","Visual novel"],"cov":"co9y2g"},{"igdb":405457,"t":"Atelier Karia: The Night Kingdom & the Guide of Memories","plat":["pc","switch2","ps5","xbox"],"hype":40,"date":"2027-02-25","genres":["GDR","Avventura"],"cov":"cod1q5"},{"igdb":405460,"t":"The Legend of Zelda: Ocarina of Time","plat":["switch2"],"hype":76,"date":"2026-11-05","genres":["Puzzle","Avventura"],"cov":"cocv5r"},{"igdb":236665,"t":"Professor Layton and the New World of Steam","plat":["pc","switch2","ps5"],"hype":55,"date":"2026-12-10","genres":["Puzzle","Avventura"],"cov":"co66va"},{"igdb":366895,"t":"Danganronpa 2x2","plat":["pc","switch2","ps5","xbox"],"hype":55,"date":"2027-01-14","genres":["Avventura","Visual novel"],"cov":"cocv93"},{"igdb":408719,"t":"Metroid Ravenous","plat":["switch2"],"hype":48,"date":"2027-01-28","genres":["Sparatutto","Platform","Avventura"],"cov":"cocvge"},{"igdb":260321,"t":"Fatal Fury: City of the Wolves","plat":["switch2"],"hype":57,"date":"2026-10-22","genres":["Picchiaduro"],"score":82,"scoreN":4,"scoreKind":"stampa","cov":"co8jjb"},{"igdb":314449,"t":"Hela: Of Mice & Magic","plat":["pc","switch2","ps5","xbox"],"hype":65,"date":"2026-12-01","genres":["Avventura"],"cov":"cod34q"},{"igdb":279661,"t":"Monster Hunter Wilds","plat":["switch2"],"hype":77,"date":"2026-12-04","genres":["GDR","Azione","Avventura"],"score":87,"scoreN":6,"scoreKind":"stampa","cov":"co904o"},{"igdb":115115,"t":"Resident Evil 3","plat":["switch2"],"hype":85,"date":"2026-10-16","genres":["Sparatutto","Avventura"],"score":79,"scoreN":12,"scoreKind":"stampa","cov":"cocw1u"},{"igdb":191797,"t":"House Flipper 2","plat":["switch2"],"hype":66,"date":"2026-10-15","genres":["Simulazione","Indie"],"score":84,"scoreN":5,"scoreKind":"stampa","cov":"coab4g"},{"igdb":305107,"t":"Eriksholm: The Stolen Dream","plat":["switch2"],"hype":67,"date":"2026-12-03","genres":["Strategia","Avventura"],"score":82,"scoreN":5,"scoreKind":"stampa","cov":"coa5u5"},{"igdb":135243,"t":"It Takes Two","plat":["switch2"],"hype":86,"date":"2026-10-15","genres":["Platform","Puzzle","Avventura"],"score":90,"scoreN":15,"scoreKind":"stampa","cov":"cob22v"},{"igdb":152249,"t":"Marvel's Guardians of the Galaxy","plat":["switch2"],"hype":81,"date":"2026-11-05","genres":["Sparatutto","GDR","Avventura"],"score":81,"scoreN":10,"scoreKind":"stampa","cov":"co39pu"},{"igdb":337907,"t":"Demon Slayer: Kimetsu no Yaiba - The Hinokami Chronicles 2","plat":["switch2"],"hype":42,"date":"2026-10-29","genres":["Picchiaduro","Avventura"],"cov":"coa6vz"},{"igdb":132181,"t":"Resident Evil 4","plat":["switch2"],"hype":89,"date":"2026-10-16","genres":["Sparatutto","Puzzle","Avventura"],"score":95,"scoreN":6,"scoreKind":"stampa","cov":"co6bo0"},{"igdb":266717,"t":"Resident Evil 4: Separate Ways","plat":["switch2"],"hype":55,"date":"2026-10-16","genres":["Avventura"],"score":86,"scoreN":64,"scoreKind":"utenti","cov":"co7lar"},{"igdb":19686,"t":"Resident Evil 2","plat":["switch2"],"hype":88,"date":"2026-10-16","genres":["Sparatutto","Avventura"],"score":93,"scoreN":12,"scoreKind":"stampa","cov":"co1ir3"},{"igdb":405445,"t":"Muramasa: Revenant Blades","plat":["pc","switch2","ps5"],"hype":46,"date":"2027-02-04","genres":["GDR","Azione","Avventura"],"cov":"cocvj5"},{"igdb":359277,"t":"Invokyr","plat":["pc"],"hype":44,"date":"2026-10-08","genres":["Avventura","Indie"],"cov":"cocukz"},{"igdb":347850,"t":"Colorbound","plat":["pc","switch2","ps5","xbox"],"hype":42,"date":"2026-10-12","genres":["Platform","Puzzle","Avventura","Indie"],"cov":"cod5it"},{"igdb":211347,"t":"Reka","plat":["pc"],"hype":63,"date":"2026-10-26","genres":["GDR","Avventura","Indie"],"cov":"co5m78"},{"igdb":406477,"t":"Trash Day","plat":["pc"],"hype":46,"date":"2026-10-13","genres":["Puzzle","Avventura"],"cov":"coca6x"},{"igdb":412177,"t":"Probably Stolen","plat":["pc"],"hype":57,"date":"2026-10-28","genres":["GDR","Simulazione","Strategia","Indie"],"cov":"cocm5l"},{"igdb":404044,"t":"Rayman Legends Retold","plat":["pc","switch2","ps5","xbox"],"hype":66,"date":"2026-12-03","genres":["Platform","Avventura"],"cov":"coc5tb"},{"igdb":144971,"t":"Worship","plat":["pc","ps5"],"hype":47,"date":"2026-11-04","genres":["Strategia","Avventura","Indie"],"cov":"co2vzc"},{"igdb":405070,"t":"Wo Long 2: Wings of Ember","plat":["pc","switch2","ps5","xbox"],"hype":53,"date":"2027-03-04","genres":["GDR","Avventura"],"cov":"cocjkb"},{"igdb":414224,"t":"Terranigma","plat":["pc","switch2","ps5","xbox"],"hype":40,"date":"2027-01-14","genres":["GDR","Avventura"],"cov":"cocr8n"},{"igdb":202129,"t":"Athanasia","plat":["pc"],"hype":42,"date":"2026-10-19","genres":["Sparatutto","Indie"],"cov":"co9wni"},{"igdb":347898,"t":"Hope in the City","plat":["pc","xbox"],"hype":40,"date":"2026-11-10","genres":["Puzzle","Avventura","Indie"],"cov":"co9y32"},{"igdb":416605,"t":"Thank You Bus Driver","plat":["pc"],"hype":44,"date":"2026-10-14","genres":["Corse","Simulazione","Indie","Arcade"],"cov":"cocxej"},{"igdb":415180,"t":"Escape from Playtime","plat":["pc"],"hype":44,"date":"2026-10-21","genres":["Avventura","Indie"],"cov":"cocrrk"},{"igdb":314389,"t":"Let's Build a Dungeon","plat":["pc","xbox"],"hype":46,"date":"2027-02-11","genres":["GDR","Simulazione","Strategia","Indie"],"cov":"co8plm"},{"igdb":393015,"t":"We Were Here Tomorrow","plat":["pc","ps5","xbox"],"hype":58,"date":"2026-10-20","genres":["Puzzle","Avventura","Indie"],"cov":"cobwi7"},{"igdb":325279,"t":"Neon Abyss 2","plat":["pc","ps5","xbox"],"hype":51,"date":"2026-10-08","genres":["GDR","Avventura","Indie"],"cov":"co954c"},{"igdb":381077,"t":"Virtue and a Sledgehammer","plat":["pc"],"hype":44,"date":"2026-10-27","genres":["Avventura"],"cov":"cob00e"},{"igdb":342011,"t":"Mycopunk","plat":["pc","ps5"],"hype":58,"date":"2026-10-20","genres":["Sparatutto","Tattico","Indie"],"cov":"co9qrc"},{"igdb":394023,"t":"Cozy Game Restoration","plat":["pc"],"hype":55,"date":"2026-11-04","genres":["Simulazione"],"cov":"cobsd7"},{"igdb":261146,"t":"Titan Quest II","plat":["pc","ps5","xbox"],"hype":67,"date":"2027-01-19","genres":["GDR","Azione","Avventura"],"cov":"co6x9v"},{"igdb":286340,"t":"The House of Tesla: Definitive Edition","plat":["ps5"],"hype":47,"date":"2026-11-19","genres":["Punta e clicca","Puzzle","Strategia","Avventura","Indie"],"cov":"co8tow"},{"igdb":345447,"t":"No Such Place","plat":["pc"],"hype":40,"date":"2026-10-14","genres":["Sparatutto","Avventura","Indie"],"cov":"cod656"},{"igdb":320726,"t":"Deck of Haunts","plat":["switch2","ps5","xbox"],"hype":47,"date":"2026-10-08","genres":["Puzzle","Simulazione","Strategia","Avventura","Indie"],"cov":"co8z8a"},{"igdb":265267,"t":"Tom the Postgirl","plat":["pc"],"hype":48,"date":"2026-10-29","genres":["Avventura","Indie","Visual novel"],"cov":"cod73g"},{"igdb":236547,"t":"Thronefall","plat":["ps5","xbox"],"hype":58,"date":"2026-11-11","genres":["Picchiaduro","Strategia","Tattico","Avventura","Indie","Arcade"],"score":78,"scoreN":29,"scoreKind":"utenti","cov":"co8ydi"},{"igdb":310336,"t":"Nocturnal 2","plat":["pc"],"hype":44,"date":"2026-11-10","genres":["Avventura","Indie"],"cov":"codama"},{"igdb":258341,"t":"Neo Junk City","plat":["pc"],"hype":42,"date":"2026-11-09","genres":["Punta e clicca","GDR","Avventura","Indie"],"cov":"co8usa"},{"igdb":420601,"t":"Crack","plat":["pc"],"hype":43,"date":"2026-10-26","genres":["Simulazione","Avventura"],"cov":"cod0c2"},{"igdb":378896,"t":"Lost Host","plat":["pc","ps5"],"hype":42,"date":"2026-11-04","genres":["Avventura","Indie"],"cov":"cob3bs"},{"igdb":278965,"t":"Odd Town","plat":["pc"],"hype":41,"date":"2026-10-15","genres":["Simulazione","Avventura","Indie"],"cov":"cod0el"},{"igdb":303382,"t":"Burn With Me","plat":["pc"],"hype":40,"date":"2026-10-12","genres":["Puzzle","Strategia","Indie","Carte e tavolo"],"cov":"coc4t8"},{"igdb":240556,"t":"Deep Rock Galactic: Survivor","plat":["switch2","ps5"],"hype":65,"date":"2026-10-07","genres":["Sparatutto"],"score":72,"scoreN":45,"scoreKind":"utenti","cov":"co68ah"},{"igdb":324950,"t":"Muri: Wildwoods","plat":["pc"],"hype":46,"date":"2026-12-07","genres":["Platform","Puzzle","Simulazione","Avventura","Indie"],"cov":"co94sn"},{"igdb":315367,"t":"LEGO Harry Potter Collection","plat":["switch2"],"hype":58,"date":"2026-10-16","genres":["Avventura"],"cov":"co8s8o"},{"igdb":86391,"t":"Asylum","plat":["ps5","xbox"],"hype":47,"date":"2026-10-30","genres":["Punta e clicca","Puzzle","Avventura","Indie"],"cov":"co9ph6"},{"igdb":251059,"t":"Grave Seasons","plat":["pc","ps5","xbox"],"hype":63,"date":"2027-03-09","genres":["GDR","Simulazione","Indie"],"cov":"cobtwq"},{"igdb":258775,"t":"Queen's Domain","plat":["pc","switch2","ps5","xbox"],"hype":57,"date":"2026-10-30","genres":["GDR","Avventura","Indie"],"cov":"coda8t"},{"igdb":416102,"t":"Crimson Desert: Charting the Unknown","plat":["pc","ps5","xbox"],"hype":41,"date":"2026-10-29","genres":["Avventura"],"cov":"coctot"},{"igdb":190169,"t":"Moadra","plat":["pc","ps5","xbox"],"hype":44,"date":"2026-10-22","genres":["Avventura","Indie"],"cov":"co5lgk"},{"igdb":365273,"t":"The Mailroom","plat":["pc"],"hype":42,"date":"2026-10-26","genres":["Puzzle","Simulazione","Indie"],"cov":"cobqfv"},{"igdb":269263,"t":"Divine Frequency","plat":["pc"],"hype":42,"date":"2026-10-27","genres":["Sparatutto","GDR","Avventura","Indie"],"cov":"co79k2"},{"igdb":403155,"t":"Online: 404","plat":["pc"],"hype":43,"date":"2026-10-16","genres":["Simulazione","Avventura","Indie"],"cov":"coc4iv"},{"igdb":201754,"t":"Among the Trolls","plat":["pc"],"hype":50,"date":"2026-10-14","genres":["Simulazione","Avventura","Indie"],"cov":"cobmji"},{"igdb":302147,"t":"Permafrost","plat":["pc"],"hype":59,"date":"2026-10-09","genres":["GDR","Simulazione","Avventura"],"cov":"cod570"},{"igdb":414942,"t":"Elta: Defy All Gods","plat":["pc","ps5","xbox"],"hype":49,"date":"2027-02-02","genres":["Platform","Avventura","Indie"],"cov":"cocrge"},{"igdb":339626,"t":"Void/Breaker","plat":["pc","ps5","xbox"],"hype":57,"date":"2026-11-04","genres":["Sparatutto","GDR","Simulazione","Sport","Avventura","Indie"],"cov":"co9nls"},{"igdb":80853,"t":"Metro 2033 Redux","plat":["ps5","xbox"],"hype":68,"date":"2026-10-29","genres":["Sparatutto","GDR","Avventura"],"score":79,"scoreN":378,"scoreKind":"utenti","cov":"coar0z"},{"igdb":50199,"t":"Metro: Last Light Redux","plat":["ps5","xbox"],"hype":76,"date":"2026-10-29","genres":["Sparatutto","GDR","Avventura"],"score":80,"scoreN":283,"scoreKind":"utenti","cov":"coar10"},{"igdb":6880,"t":"Metro Redux","plat":["ps5","xbox"],"hype":79,"date":"2026-10-29","genres":["Sparatutto","GDR","Avventura"],"score":83,"scoreN":10,"scoreKind":"stampa","cov":"co4b2q"},{"igdb":239002,"t":"Beyond These Stars","plat":["pc"],"hype":44,"date":"2026-10-16","genres":["Simulazione","Strategia"],"cov":"co7ozj"},{"igdb":354409,"t":"Penguin Colony","plat":["pc","ps5"],"hype":48,"date":"2026-10-16","genres":["Platform","Avventura","Indie"],"cov":"cod6o5"},{"igdb":347168,"t":"Legion Was Here","plat":["pc"],"hype":41,"date":"2026-10-13","genres":["Puzzle","GDR","Simulazione","Avventura","Indie"],"cov":"coayzh"},{"igdb":123764,"t":"The Slormancer","plat":["ps5","xbox"],"hype":51,"date":"2026-11-05","genres":["GDR","Avventura","Indie","Arcade"],"cov":"co9ohn"},{"igdb":376145,"t":"Warhammer Survivors","plat":["pc","switch2","ps5","xbox"],"hype":54,"date":"2026-11-10","genres":["GDR","Indie","Arcade"],"cov":"coasoa"},{"igdb":20688,"t":"Highway Blossoms","plat":["ps5"],"hype":41,"date":"2026-10-07","genres":["Avventura","Indie","Visual novel"],"cov":"co2h7p"},{"igdb":248673,"t":"Dungeons & Degenerate Gamblers","plat":["ps5"],"hype":57,"date":"2026-10-09","genres":["GDR","Strategia","Indie"],"cov":"co8l2d"},{"igdb":269682,"t":"Prison of Husks","plat":["pc","ps5"],"hype":50,"date":"2027-01-27","genres":["Azione","Avventura","Indie"],"cov":"coc3yw"},{"igdb":404707,"t":"Among Us Story: On Guard","plat":["pc","switch2"],"hype":44,"date":"2027-02-17","genres":["Avventura","Indie","Visual novel"],"cov":"coc6ma"},{"igdb":291446,"t":"Outward 2","plat":["pc"],"hype":55,"date":"2027-02-08","genres":["GDR","Avventura"],"cov":"cocu3m"},{"igdb":394666,"t":"ReVamp","plat":["pc"],"hype":52,"date":"2027-03-25","genres":["Strategia"],"cov":"cobrbl"},{"igdb":399414,"t":"Drunken Goddess Reflux","plat":["pc"],"hype":43,"date":"2026-12-08","genres":["Simulazione","Strategia","Avventura","Indie"],"cov":"cobz6d"},{"igdb":355613,"t":"Trainwatch","plat":["pc"],"hype":41,"date":"2027-03-10","genres":["Simulazione","Avventura","Indie"],"cov":"coa51x"},{"igdb":397819,"t":"Risk of Rain 2: Hallowed Concepts","plat":["pc","ps5","xbox"],"hype":40,"date":"2026-10-08","genres":["Indie"],"cov":"cod46q"},{"igdb":233970,"t":"Sulfur","plat":["pc","switch2","ps5","xbox"],"hype":61,"date":"2026-10-28","genres":["Sparatutto","GDR","Simulazione","Avventura","Indie"],"cov":"co6a6w"},{"igdb":134073,"t":"Mafia III: Definitive Edition","plat":["ps5","xbox"],"hype":57,"date":"2026-10-08","genres":["Sparatutto","Avventura"],"score":69,"scoreN":43,"scoreKind":"utenti","cov":"co26zj"},{"igdb":11492,"t":"Mafia III","plat":["ps5","xbox"],"hype":78,"date":"2026-10-08","genres":["Sparatutto","Corse","Avventura"],"score":68,"scoreN":23,"scoreKind":"stampa","cov":"co2mll"},{"igdb":361053,"t":"The Road of Dust and Sorrow","plat":["pc","switch2","ps5","xbox"],"hype":50,"date":"2026-12-03","genres":["Puzzle","Avventura","Indie"],"cov":"cob3pt"},{"igdb":167750,"t":"HyperViolent","plat":["ps5","xbox"],"hype":54,"date":"2026-10-29","genres":["Sparatutto","GDR","Indie"],"cov":"coahmz"},{"igdb":321166,"t":"Pit of Goblin","plat":["pc","ps5","xbox"],"hype":41,"date":"2026-11-03","genres":["Avventura","Indie"],"cov":"codbjj"},{"igdb":196954,"t":"Hell Is Us","plat":["switch2"],"hype":85,"date":"2026-10-08","genres":["Picchiaduro","GDR","Avventura"],"score":77,"scoreN":39,"scoreKind":"utenti","cov":"co9vum"},{"igdb":319399,"t":"Carry The Glass","plat":["ps5","xbox"],"hype":48,"date":"2026-10-23","genres":["Platform","Puzzle","Simulazione","Avventura","Indie"],"cov":"coaa4e"},{"igdb":243924,"t":"Primal Planet","plat":["ps5","xbox"],"hype":52,"date":"2026-10-28","genres":["Platform","GDR","Avventura","Indie"],"cov":"coa6u1"},{"igdb":423053,"t":"Moon Sweepers","plat":["pc"],"hype":47,"date":"2026-10-23","genres":["Simulazione","Strategia","Avventura","Indie"],"cov":"cod4af"},{"igdb":361830,"t":"He-Man and the Masters of the Universe: Dragon Pearl of Destruction","plat":["pc","ps5","xbox"],"hype":51,"date":"2027-02-04","genres":["Azione","Arcade"],"cov":"coaax5"},{"igdb":279615,"t":"Usual June","plat":["pc","xbox"],"hype":50,"date":"2027-01-20","genres":["Azione"],"cov":"co7h9e"},{"igdb":335684,"t":"Phase Zero","plat":["pc"],"hype":52,"date":"2027-03-11","genres":["Avventura"],"cov":"cocanl"},{"igdb":148700,"t":"Mortal Sin","plat":["ps5","xbox"],"hype":60,"date":"2026-10-21","genres":["GDR","Azione","Avventura","Indie"],"cov":"coa8i5"},{"igdb":201752,"t":"Antonblast","plat":["ps5"],"hype":57,"date":"2026-10-15","genres":["Platform","Puzzle","Avventura","Indie"],"cov":"co8txh"},{"igdb":346482,"t":"Hubert","plat":["pc","ps5"],"hype":42,"date":"2026-10-14","genres":["Avventura","Indie"],"cov":"cocu2t"},{"igdb":399078,"t":"Reshine","plat":["pc","ps5"],"hype":41,"date":"2026-11-26","genres":["Simulazione","Indie"],"cov":"cobylu"},{"igdb":418295,"t":"Scam With Your Friends","plat":["pc"],"hype":52,"date":"2026-10-15","genres":["Simulazione","Indie"],"cov":"coczo2"},{"igdb":327218,"t":"County of Fortune","plat":["pc"],"hype":43,"date":"2026-11-05","genres":["Simulazione","Strategia","Indie"],"cov":"co996b"},{"igdb":530,"t":"Hitman: Absolution","plat":["switch2"],"hype":76,"date":"2026-10-22","genres":["Sparatutto","Tattico","Avventura"],"score":72,"scoreN":16,"scoreKind":"stampa","cov":"co1qrc"},{"igdb":333201,"t":"Edge of Memories","plat":["pc","ps5","xbox"],"hype":50,"date":"2026-12-03","genres":["GDR","Avventura"],"cov":"co9gem"},{"igdb":305550,"t":"Acts of Blood","plat":["pc","ps5","xbox"],"hype":63,"date":"2026-12-04","genres":["Picchiaduro","Azione","Avventura","Indie"],"cov":"coc6oq"},{"igdb":404896,"t":"Arizona Sunshine","plat":["pc","switch2","ps5","xbox"],"hype":45,"date":"2027-01-21","genres":["Sparatutto","Avventura"],"cov":"coc6va"},{"igdb":10032,"t":"Ancestors: The Humankind Odyssey","plat":["switch2","ps5","xbox"],"hype":71,"date":"2026-12-08","genres":["GDR","Avventura","Indie"],"score":65,"scoreN":12,"scoreKind":"stampa","cov":"co1rg8"},{"igdb":408607,"t":"Guns of Eschaton","plat":["pc","ps5","xbox"],"hype":54,"date":"2026-12-08","genres":["Sparatutto"],"cov":"cocrqy"},{"igdb":349524,"t":"Peak","plat":["switch2","ps5","xbox"],"hype":76,"date":"2026-10-22","genres":["Platform","Avventura","Indie"],"score":79,"scoreN":156,"scoreKind":"utenti","cov":"cocokj"},{"igdb":244677,"t":"Atmosfar","plat":["pc"],"hype":55,"date":"2026-10-29","genres":["Avventura","Indie"],"cov":"cod5l5"},{"igdb":8794,"t":"A Bird Story","plat":["ps5","xbox"],"hype":57,"date":"2026-10-15","genres":["Avventura","Indie"],"score":75,"scoreN":95,"scoreKind":"utenti","cov":"co3wiy"},{"igdb":124209,"t":"Shadow of the Road","plat":["pc"],"hype":55,"date":"2027-03-10","genres":["GDR","Strategia","Strategia a turni","Tattico","Indie"],"cov":"co9wp1"},{"igdb":112074,"t":"The Eternal Castle: Remastered","plat":["xbox"],"hype":41,"date":"2026-12-01","genres":["Platform","Avventura","Indie","Arcade"],"score":60,"scoreN":4,"scoreKind":"stampa","cov":"co3gai"},{"igdb":190280,"t":"Tape to Tape","plat":["pc","ps5","xbox"],"hype":50,"date":"2026-10-23","genres":["Sport","Indie"],"cov":"cod4xt"},{"igdb":183657,"t":"Cop Bastard","plat":["pc"],"hype":40,"date":"2026-10-29","genres":["Sparatutto","Indie"],"cov":"cod97i"},{"igdb":360263,"t":"Casualties: Unknown","plat":["pc"],"hype":49,"date":"2026-11-09","genres":["Simulazione","Avventura","Indie"],"cov":"cocbi7"},{"igdb":17131,"t":"BeamNG.drive","plat":["ps5"],"hype":72,"date":"2026-10-19","genres":["Corse","Simulazione"],"score":75,"scoreN":101,"scoreKind":"utenti","cov":"co1sym"},{"igdb":404859,"t":"Moomin Midsummer Madness","plat":["pc","switch2"],"hype":41,"date":"2026-11-12","genres":["Puzzle","Avventura","Indie"],"cov":"coc6tu"},{"igdb":404738,"t":"Apple Crumble","plat":["pc"],"hype":42,"date":"2026-12-03","genres":["Avventura","Indie"],"cov":"coc6nw"},{"igdb":424208,"t":"Shrek 2 Remastered","plat":["pc","ps5","xbox"],"hype":42,"date":"2026-11-10","genres":["Platform","Avventura"],"cov":"cod6wd"},{"igdb":280931,"t":"Arctic Eggs","plat":["xbox"],"hype":54,"date":"2026-10-20","genres":["Simulazione","Avventura","Indie"],"cov":"co9cfd"},{"igdb":264410,"t":"Mouthwashing","plat":["ps5","xbox"],"hype":72,"date":"2026-10-29","genres":["Avventura","Indie"],"score":82,"scoreN":122,"scoreKind":"utenti","cov":"co70oi"},{"igdb":380980,"t":"Scramble Knights Online","plat":["pc","xbox"],"hype":41,"date":"2026-10-26","genres":["Avventura","Indie"],"cov":"cocjj4"},{"igdb":415120,"t":"Dumpster Gang","plat":["pc","switch2","ps5","xbox"],"hype":43,"date":"2026-12-03","genres":["Simulazione","Indie"],"cov":"cocrop"},{"igdb":138766,"t":"Riders Republic","plat":["switch2"],"hype":62,"date":"2026-12-09","genres":["Corse","Simulazione","Sport"],"score":77,"scoreN":6,"scoreKind":"stampa","cov":"cod5xy"},{"igdb":389458,"t":"Underkeep","plat":["pc"],"hype":42,"date":"2026-11-05","genres":["Puzzle","GDR","Avventura","Indie"],"cov":"cobnk9"},{"igdb":211637,"t":"Pocket Mirror: GoldenerTraum","plat":["ps5"],"hype":57,"date":"2026-10-21","genres":["Puzzle","GDR","Avventura","Indie"],"cov":"cod7ai"},{"igdb":293035,"t":"Luma Island","plat":["ps5","xbox"],"hype":60,"date":"2026-12-02","genres":["GDR","Avventura","Indie"],"cov":"co8xa9"},{"igdb":123051,"t":"Shadow of the Tomb Raider: Definitive Edition","plat":["switch2"],"hype":52,"date":"2026-10-22","genres":["Sparatutto","Avventura"],"score":76,"scoreN":23,"scoreKind":"utenti","cov":"co1t7w"},{"igdb":115425,"t":"Darkest Dungeon II","plat":["switch2"],"hype":71,"date":"2026-10-22","genres":["GDR","Strategia","Strategia a turni","Tattico","Avventura","Indie"],"score":83,"scoreN":5,"scoreKind":"stampa","cov":"co6grp"},{"igdb":325202,"t":"The Dark Queen of Mortholme","plat":["ps5","xbox"],"hype":52,"date":"2026-12-03","genres":["GDR","Indie"],"score":75,"scoreN":22,"scoreKind":"utenti","cov":"co9ck1"},{"igdb":328140,"t":"Look Outside","plat":["switch2","ps5"],"hype":65,"date":"2026-10-30","genres":["GDR","Strategia","Strategia a turni","Avventura","Indie"],"score":83,"scoreN":26,"scoreKind":"utenti","cov":"co9k8n"},{"igdb":117170,"t":"Stellar Blade","plat":["switch2"],"hype":86,"date":"2026-11-05","genres":["GDR","Azione","Avventura"],"score":86,"scoreN":8,"scoreKind":"stampa","cov":"co9s0t"},{"igdb":257450,"t":"Airframe Ultra","plat":["pc"],"hype":48,"date":"2026-11-05","genres":["Corse","Indie"],"cov":"co9wpu"},{"igdb":347671,"t":"Escape Academy 2: Back 2 School","plat":["pc","ps5","xbox"],"hype":48,"date":"2026-11-05","genres":["Puzzle","Avventura"],"cov":"co9xhl"},{"igdb":349765,"t":"Euro Truck Simulator 2: Iceland","plat":["pc"],"hype":46,"date":"2026-11-10","genres":["Simulazione","Indie"],"cov":"co9zml"},{"igdb":165351,"t":"Cult of the Lamb","plat":["switch2"],"hype":83,"date":"2026-10-22","genres":["GDR","Simulazione","Strategia","Azione","Avventura","Indie"],"score":89,"scoreN":6,"scoreKind":"stampa","cov":"cobbwj"},{"igdb":250620,"t":"Sword of the Sea","plat":["switch2","xbox"],"hype":70,"date":"2026-10-29","genres":["Avventura","Indie"],"score":76,"scoreN":41,"scoreKind":"utenti","cov":"co9xx2"},{"igdb":272981,"t":"Emberville","plat":["pc"],"hype":60,"date":"2027-01-07","genres":["GDR","Avventura","Indie"],"cov":"cocjzu"},{"igdb":295657,"t":"Stygian: Outer Gods","plat":["pc"],"hype":54,"date":"2026-10-26","genres":["GDR","Indie"],"cov":"co95mf"},{"igdb":172023,"t":"My Friendly Neighborhood","plat":["switch2"],"hype":55,"date":"2026-10-22","genres":["Sparatutto","Avventura","Indie"],"cov":"coa9c2"},{"igdb":317622,"t":"ArcheAge Chronicles","plat":["pc","ps5","xbox"],"hype":61,"date":"2026-11-03","genres":["GDR","Avventura"],"cov":"co8xgc"},{"igdb":116014,"t":"Hard West 2","plat":["ps5","xbox"],"hype":60,"date":"2026-11-10","genres":["GDR","Strategia","Strategia a turni","Tattico"],"score":88,"scoreN":4,"scoreKind":"stampa","cov":"co4nqk"},{"igdb":67195,"t":"Witchbrook","plat":["pc","switch2","ps5","xbox"],"hype":72,"date":"2027-01-28","genres":["GDR","Simulazione","Indie"],"cov":"cocce4"},{"igdb":317817,"t":"Tanuki: Pon's Summer","plat":["pc","switch2","ps5","xbox"],"hype":52,"date":"2026-11-10","genres":["Simulazione","Indie"],"cov":"co8uyz"},{"igdb":305031,"t":"Petal Runner","plat":["pc","switch2"],"hype":47,"date":"2027-03-08","genres":["GDR","Avventura"],"cov":"co8bj0"},{"igdb":336502,"t":"Spirit Crossing","plat":["pc","switch2"],"hype":44,"date":"2026-11-16","genres":["GDR","Simulazione"],"cov":"coa8e3"},{"igdb":314090,"t":"Deadly Days: Roadtrip","plat":["pc","ps5","xbox"],"hype":42,"date":"2026-10-29","genres":["Azione","Indie"],"cov":"coaiyz"},{"igdb":368311,"t":"Arkheron","plat":["pc","xbox"],"hype":49,"date":"2026-11-27","genres":["Tattico"],"cov":"cod9ru"},{"igdb":343335,"t":"Silver Palace","plat":["pc","ps5"],"hype":70,"date":"2026-12-14","genres":["GDR","Avventura"],"cov":"cocikv"},{"igdb":127165,"t":"The Outlast Trials","plat":["switch2"],"hype":72,"date":"2026-10-27","genres":["Avventura","Indie"],"score":78,"scoreN":5,"scoreKind":"stampa","cov":"coce2f"},{"igdb":349790,"t":"Euro Truck Simulator 2: Coaches","plat":["pc"],"hype":49,"date":"2026-11-12","genres":["Simulazione","Indie"],"cov":"co9znr"},{"igdb":370095,"t":"Petit Planet","plat":["pc","switch2"],"hype":45,"date":"2026-12-04","genres":["GDR","Simulazione","Avventura"],"cov":"coak1r"},{"igdb":405156,"t":"Thief: The Dark Project Remastered","plat":["pc","switch2","ps5","xbox"],"hype":51,"date":"2026-12-03","genres":["Simulazione","Avventura"],"cov":"coc78b"},{"igdb":163456,"t":"Lightyear Frontier","plat":["pc","xbox"],"hype":64,"date":"2026-11-03","genres":["Simulazione","Avventura","Indie"],"cov":"co7x0f"},{"igdb":227320,"t":"Truck World: Australia","plat":["pc","xbox"],"hype":48,"date":"2026-11-05","genres":["Corse","Simulazione","Avventura"],"cov":"co8t6c"},{"igdb":347841,"t":"There Are No Ghosts at the Grand","plat":["pc"],"hype":61,"date":"2026-12-16","genres":["Musicale","Puzzle","GDR","Simulazione","Avventura","Indie"],"cov":"co9xx1"},{"igdb":253387,"t":"Toy Shire","plat":["pc"],"hype":49,"date":"2026-10-06","genres":["Strategia","Tattico","Indie"],"cov":"co6yuo"},{"igdb":415859,"t":"Find The Needle","plat":["pc"],"hype":40,"date":"2026-11-06","genres":["Simulazione","Indie"],"cov":"cocszx"},{"igdb":371514,"t":"Main Sequence","plat":["pc"],"hype":40,"date":"2026-11-12","genres":["Simulazione","Strategia","Indie"],"cov":"coc4lw"},{"igdb":305188,"t":"Stormforge","plat":["pc"],"hype":43,"date":"2026-11-10","genres":["GDR","Strategia","Avventura","Indie"],"cov":"co8bux"},{"igdb":204511,"t":"Usagi Shima","plat":["pc"],"hype":43,"date":"2026-10-29","genres":["Simulazione","Indie","Arcade"],"cov":"co4uyi"},{"igdb":340334,"t":"Dreadmoor","plat":["pc"],"hype":57,"date":"2026-11-09","genres":["GDR","Simulazione","Avventura","Indie"],"cov":"cod2dx"},{"igdb":344655,"t":"Warhammer 40,000: Dark Heresy","plat":["pc","ps5","xbox"],"hype":58,"date":"2027-01-28","genres":["GDR","Strategia","Strategia a turni","Tattico","Avventura"],"cov":"coa03o"},{"igdb":81249,"t":"The Elder Scrolls VI: Sentinel","plat":["pc","xbox"],"hype":92,"vague":"TBA","cov":"codako"},{"igdb":279051,"t":"Inzoi","plat":["ps5"],"hype":88,"vague":"Q1 2027","genres":["Simulazione","Avventura"],"score":51,"scoreN":33,"scoreKind":"utenti","cov":"co8pfe"},{"igdb":370112,"t":"PUBG: Black Budget","plat":["pc"],"hype":87,"vague":"TBA","cov":"coavdk"},{"igdb":298526,"t":"Kingdom Come: Deliverance II","plat":["switch2"],"hype":84,"vague":"2027","genres":["GDR","Simulazione","Avventura"],"score":93,"scoreN":4,"scoreKind":"stampa","cov":"co8qmv"},{"igdb":301298,"t":"Deadlock","plat":["pc"],"hype":83,"vague":"TBA","cov":"cobc7s"},{"igdb":185252,"t":"Warhammer 40,000: Space Marine II","plat":["switch2"],"hype":79,"vague":"Q4 2026","genres":["Sparatutto","GDR","Avventura"],"score":79,"scoreN":6,"scoreKind":"stampa","cov":"co5vab"},{"igdb":209643,"t":"Soulframe","plat":["pc"],"hype":79,"vague":"TBA","cov":"coc6dw"},{"igdb":51523,"t":"The Wolf Among Us 2","plat":["pc","switch2","ps5","xbox"],"hype":78,"vague":"2027","genres":["Punta e clicca","Avventura"],"cov":"co4ha1"},{"igdb":279627,"t":"No Rest for the Wicked","plat":["pc","ps5"],"hype":78,"vague":"mar 2027","genres":["GDR","Avventura"],"score":80,"scoreN":45,"scoreKind":"utenti","cov":"co7h9r"},{"igdb":142520,"t":"Ill","plat":["pc","ps5","xbox"],"hype":77,"vague":"2027","genres":["Sparatutto","Avventura"],"cov":"co9xio"},{"igdb":332780,"t":"R.E.P.O.","plat":["switch2"],"hype":77,"vague":"2027","genres":["Strategia","Indie"],"score":72,"scoreN":168,"scoreKind":"utenti","cov":"co9lxz"},{"igdb":404673,"t":"Resident Evil Veronica","plat":["pc","switch2","ps5","xbox"],"hype":75,"vague":"2027","genres":["Sparatutto","Puzzle","Avventura"],"cov":"cocsoe"},{"igdb":252840,"t":"Clockwork Revolution","plat":["pc","xbox"],"hype":75,"vague":"2027","genres":["GDR"],"cov":"co9xwq"},{"igdb":1936,"t":"Beyond Good & Evil 2","plat":["pc"],"hype":75,"vague":"TBA","cov":"co2pjv"},{"igdb":228527,"t":"Judas","plat":["pc","ps5","xbox"],"hype":75,"vague":"TBA","cov":"coacvh"},{"igdb":124448,"t":"Craftopia","plat":["pc","xbox"],"hype":74,"vague":"2027","genres":["GDR","Azione","Avventura","Indie"],"cov":"co28g1"},{"igdb":279655,"t":"Light No Fire","plat":["pc"],"hype":74,"vague":"TBA","cov":"co7h94"},{"igdb":132516,"t":"Phasmophobia","plat":["switch2"],"hype":73,"vague":"2026","genres":["Puzzle","Tattico","Indie"],"score":68,"scoreN":250,"scoreKind":"utenti","cov":"coamcz"},{"igdb":18285,"t":"The Last Night","plat":["pc"],"hype":73,"vague":"TBA","cov":"co22iw"},{"igdb":278790,"t":"Captain & Company","plat":["pc"],"hype":73,"vague":"TBA","cov":"co7fwn"},{"igdb":331212,"t":"Tides of Annihilation","plat":["pc","ps5","xbox"],"hype":73,"vague":"TBA","cov":"cocs8o"},{"igdb":240009,"t":"Elden Ring: Shadow of the Erdtree","plat":["switch2"],"hype":72,"vague":"2026","genres":["GDR","Avventura"],"score":97,"scoreN":8,"scoreKind":"stampa","cov":"co7sly"},{"igdb":381205,"t":"No Law","plat":["pc","ps5","xbox"],"hype":72,"vague":"2027","genres":["Sparatutto","GDR","Avventura"],"cov":"cocrjj"},{"igdb":325611,"t":"Intergalactic: The Heretic Prophet","plat":["ps5"],"hype":70,"vague":"2027","genres":["Azione","Avventura"],"cov":"co95gc"},{"igdb":381219,"t":"Ontos","plat":["pc","ps5","xbox"],"hype":70,"vague":"2027","genres":["Puzzle","Avventura","Indie"],"cov":"cob0f5"},{"igdb":316987,"t":"No, I'm Not A Human","plat":["ps5","xbox"],"hype":70,"vague":"2027","genres":["Simulazione","Indie"],"score":75,"scoreN":51,"scoreKind":"utenti","cov":"coajvh"},{"igdb":9687,"t":"Little Devil Inside","plat":["pc","ps5","xbox"],"hype":70,"vague":"TBA","cov":"co2jfa"},{"igdb":135993,"t":"State of Decay 3","plat":["pc","ps5","xbox"],"hype":69,"vague":"2027","genres":["Avventura"],"cov":"coc77x"},{"igdb":152243,"t":"Slime Rancher 2","plat":["switch2"],"hype":69,"vague":"gen 2027","genres":["Sparatutto","Simulazione","Avventura","Indie"],"score":68,"scoreN":34,"scoreKind":"utenti","cov":"co5bbt"},{"igdb":141444,"t":"Chrono Odyssey","plat":["pc","ps5","xbox"],"hype":69,"vague":"TBA","cov":"coa7dc"},{"igdb":322131,"t":"Escaping Agent","plat":["pc"],"hype":69,"vague":"TBA","cov":"co91h2"},{"igdb":28029,"t":"Half-Life 3","plat":["pc"],"hype":68,"vague":"TBA","cov":"co1t0u"},{"igdb":347639,"t":"Atomic Heart II","plat":["pc","ps5","xbox"],"hype":68,"vague":"TBA","cov":"co9xgn"},{"igdb":354865,"t":"Godforge","plat":["pc"],"hype":68,"vague":"TBA","cov":"coa4is"},{"igdb":317124,"t":"Fate Trigger","plat":["pc","ps5"],"hype":67,"vague":"2026","genres":["Sparatutto","Tattico","Avventura","MOBA"],"cov":"cociz7"},{"igdb":2117,"t":"DayZ","plat":["switch2"],"hype":67,"vague":"2026","genres":["Sparatutto","GDR","Simulazione","Tattico","Avventura","Indie"],"score":52,"scoreN":185,"scoreKind":"utenti","cov":"coaaqs"},{"igdb":165432,"t":"Spine","plat":["pc","ps5","xbox"],"hype":67,"vague":"Q3 2027","genres":["Sparatutto","Azione","Avventura"],"cov":"cocrsi"},{"igdb":403150,"t":"The Witcher 3: Wild Hunt - Songs of the Past","plat":["pc","switch2","ps5","xbox"],"hype":66,"vague":"2027","genres":["GDR","Avventura"],"cov":"coc4hk"},{"igdb":211470,"t":"Blight: Survival","plat":["pc","ps5","xbox"],"hype":66,"vague":"TBA","cov":"co5bpa"},{"igdb":246417,"t":"Unrecord","plat":["pc"],"hype":66,"vague":"TBA","cov":"co6es1"},{"igdb":312274,"t":"The Eternal Life of Goldman","plat":["pc","ps5","xbox"],"hype":66,"vague":"TBA","cov":"coblro"},{"igdb":381211,"t":"Bradley the Badger","plat":["pc"],"hype":66,"vague":"TBA","cov":"cob0el"},{"igdb":216315,"t":"Marvel 1943: Rise of Hydra","plat":["pc","ps5","xbox"],"hype":65,"vague":"2027","genres":["Avventura"],"cov":"coa1rh"},{"igdb":339608,"t":"Neverway","plat":["pc"],"hype":65,"vague":"2027","genres":["GDR","Avventura","Indie"],"cov":"co9nlq"},{"igdb":19128,"t":"Squadron 42","plat":["pc"],"hype":65,"vague":"Q2 2027","genres":["Sparatutto","Simulazione","Avventura","Indie"],"cov":"cod3pg"},{"igdb":306919,"t":"Alkahest","plat":["pc","ps5"],"hype":65,"vague":"TBA","cov":"co8gw8"},{"igdb":319082,"t":"Alien: Isolation 2","plat":["pc","switch2","ps5","xbox"],"hype":65,"vague":"TBA","cov":"coc6n1"},{"igdb":325596,"t":"Blackfrost: The Long Dark 2","plat":["pc"],"hype":64,"vague":"2026","genres":["Simulazione","Strategia","Indie"],"cov":"co95g5"},{"igdb":208417,"t":"Ravenswatch","plat":["switch2"],"hype":64,"vague":"Q4 2026","genres":["GDR","Azione","Avventura"],"cov":"cocs4b"},{"igdb":113107,"t":"Sayonara Wild Hearts","plat":["switch2"],"hype":64,"vague":"2026","genres":["Musicale","Avventura","Indie","Arcade"],"score":81,"scoreN":7,"scoreKind":"stampa","cov":"co2gx1"},{"igdb":279633,"t":"Crazy Taxi: World Tour","plat":["pc","switch2","ps5","xbox"],"hype":64,"vague":"2027","genres":["Corse","Avventura","Arcade"],"cov":"coc77a"},{"igdb":318503,"t":"Lords of the Fallen II","plat":["pc","switch2","ps5","xbox"],"hype":64,"vague":"Q1 2027","genres":["GDR","Avventura"],"cov":"cobc2z"},{"igdb":196761,"t":"Kingdom Hearts IV","plat":["pc","switch2","ps5","xbox"],"hype":64,"vague":"Q4 2027","genres":["GDR","Azione","Avventura"],"cov":"cocp35"},{"igdb":230366,"t":"Into the Dead: Our Darkest Days","plat":["pc","switch2","ps5","xbox"],"hype":64,"vague":"2027","genres":["Simulazione","Strategia","Indie"],"cov":"co7wq3"},{"igdb":229035,"t":"Holstin","plat":["pc","ps5","xbox"],"hype":64,"vague":"2027","genres":["Avventura"],"cov":"cocu3g"},{"igdb":389419,"t":"Kena: Scars of Kosmora","plat":["pc","ps5"],"hype":64,"vague":"2027","genres":["GDR","Avventura"],"cov":"cobny5"},{"igdb":9495,"t":"Squad","plat":["ps5","xbox"],"hype":64,"vague":"2027","genres":["Sparatutto","Simulazione","Strategia","Tattico","Indie"],"score":81,"scoreN":94,"scoreKind":"utenti","cov":"coaasd"},{"igdb":350503,"t":"Blood Message","plat":["pc","ps5"],"hype":64,"vague":"TBA","cov":"coa0oc"},{"igdb":381218,"t":"Coven of the Chicken Foot","plat":["pc"],"hype":64,"vague":"TBA","cov":"cob0ic"},{"igdb":388116,"t":"Warlock: Dungeons & Dragons","plat":["pc","ps5","xbox"],"hype":63,"vague":"2027","genres":["GDR","Avventura"],"cov":"cocu3h"},{"igdb":143761,"t":"Pokémon Infinite Fusion","plat":["pc"],"hype":51,"date":"2026-07-10","genres":["GDR","Avventura","Indie"],"score":98,"scoreN":23,"scoreKind":"utenti","cov":"co7k5u"},{"igdb":415005,"t":"The Witcher 3: Wild Hunt Remastered","plat":["pc","switch2","ps5","xbox"],"hype":52,"date":"2026-09-29","genres":["GDR","Avventura"],"score":98,"scoreN":21,"scoreKind":"utenti","cov":"cocrjd"},{"igdb":165192,"t":"The Elder Scrolls V: Skyrim - Anniversary Edition","plat":["switch2"],"hype":56,"date":"2025-12-09","genres":["GDR","Avventura"],"score":97,"scoreN":78,"scoreKind":"utenti","cov":"coa9tq"},{"igdb":119133,"t":"Elden Ring","plat":["switch2"],"hype":100,"date":"2026-08-28","genres":["GDR","Avventura"],"score":97,"scoreN":10,"scoreKind":"stampa","cov":"co4jni"},{"igdb":26764,"t":"Mario Kart 8 Deluxe","plat":["switch2"],"hype":61,"date":"2026-09-01","genres":["Corse","Arcade"],"score":93,"scoreN":17,"scoreKind":"stampa","cov":"co213p"},{"igdb":103337,"t":"Divinity: Original Sin II - Definitive Edition","plat":["switch2","ps5","xbox"],"hype":64,"date":"2025-12-15","genres":["GDR","Strategia","Avventura"],"score":93,"scoreN":9,"scoreKind":"stampa","cov":"co1y5o"},{"igdb":228525,"t":"Hades II","plat":["ps5","xbox"],"hype":87,"date":"2026-04-14","genres":["GDR","Azione","Avventura","Indie"],"score":93,"scoreN":4,"scoreKind":"stampa","cov":"coaknx"},{"igdb":260737,"t":"Red Dead Redemption","plat":["switch2","ps5","xbox"],"hype":49,"date":"2025-12-02","genres":["Sparatutto","GDR","Avventura"],"score":92,"scoreN":33,"scoreKind":"utenti","cov":"co8y6p"},{"igdb":347633,"t":"Mortal Shell II","plat":["pc","ps5","xbox"],"hype":76,"date":"2026-06-06","genres":["GDR","Avventura"],"score":92,"scoreN":27,"scoreKind":"utenti","cov":"cocqos"},{"igdb":1942,"t":"The Witcher 3: Wild Hunt","plat":["switch2"],"hype":98,"date":"2026-09-29","genres":["GDR","Avventura"],"score":92,"scoreN":26,"scoreKind":"stampa","cov":"coaarl"},{"igdb":144024,"t":"Final Fantasy VII Remake Intergrade","plat":["switch2","xbox"],"hype":77,"date":"2026-01-22","genres":["GDR","Avventura"],"score":92,"scoreN":13,"scoreKind":"stampa","cov":"cob9hh"},{"igdb":228530,"t":"Death Stranding 2: On the Beach","plat":["pc"],"hype":89,"date":"2026-03-19","genres":["Sparatutto","Avventura"],"score":92,"scoreN":6,"scoreKind":"stampa","cov":"co9ipx"},{"igdb":366884,"t":"Dragon Quest VII Reimagined","plat":["pc","switch2","ps5","xbox"],"hype":65,"date":"2026-02-03","genres":["GDR","Avventura"],"score":92,"scoreN":5,"scoreKind":"stampa","cov":"cobkan"},{"igdb":8042,"t":"Mewgenics","plat":["pc","switch2","ps5","xbox"],"hype":73,"date":"2026-02-10","genres":["GDR","Simulazione","Strategia","Strategia a turni","Avventura","Indie"],"score":91,"scoreN":43,"scoreKind":"utenti","cov":"co9n5k"},{"igdb":176552,"t":"Animal Crossing: New Horizons - Happy Home Paradise","plat":["switch2"],"hype":40,"date":"2026-01-15","genres":["Simulazione"],"score":91,"scoreN":36,"scoreKind":"utenti","cov":"cob95a"},{"igdb":17000,"t":"Stardew Valley","plat":["switch2"],"hype":85,"date":"2025-12-25","genres":["GDR","Simulazione","Strategia","Avventura","Indie"],"score":91,"scoreN":13,"scoreKind":"stampa","cov":"coa93h"},{"igdb":14593,"t":"Hollow Knight","plat":["switch2","ps5","xbox"],"hype":94,"date":"2026-02-05","genres":["Platform","Avventura","Indie"],"score":91,"scoreN":8,"scoreKind":"stampa","cov":"cobfzp"},{"igdb":112412,"t":"Final Fantasy XIV: Shadowbringers","plat":["switch2"],"hype":49,"date":"2026-08-04","genres":["GDR"],"score":91,"scoreN":8,"scoreKind":"stampa","cov":"cobjge"},{"igdb":347668,"t":"Resident Evil Requiem","plat":["pc","switch2","ps5","xbox"],"hype":98,"date":"2026-02-27","genres":["Sparatutto","Puzzle","Avventura"],"score":91,"scoreN":6,"scoreKind":"stampa","cov":"cobmj0"},{"igdb":251833,"t":"Balatro","plat":["switch2"],"hype":76,"date":"2026-02-25","genres":["Strategia","Strategia a turni","Indie","Carte e tavolo"],"score":91,"scoreN":5,"scoreKind":"stampa","cov":"co9f4g"},{"igdb":149657,"t":"Blue Prince","plat":["switch2"],"hype":79,"date":"2026-03-03","genres":["Puzzle","Strategia","Avventura","Indie"],"score":91,"scoreN":5,"scoreKind":"stampa","cov":"co9mzd"},{"igdb":189781,"t":"Mina the Hollower","plat":["pc","switch2","ps5","xbox"],"hype":72,"date":"2026-05-29","genres":["Platform","GDR","Avventura","Indie"],"score":91,"scoreN":5,"scoreKind":"stampa","cov":"co4g15"},{"igdb":381247,"t":"Ace Combat 8: Wings of Theve","plat":["pc","ps5","xbox"],"hype":70,"date":"2026-09-29","genres":["Sparatutto","Simulazione","Arcade"],"score":91,"scoreN":5,"scoreKind":"stampa","cov":"cob0h1"},{"igdb":340113,"t":"Star Wars Zero Company","plat":["pc","ps5","xbox"],"hype":73,"date":"2026-08-27","genres":["Strategia","Strategia a turni","Tattico"],"score":91,"scoreN":4,"scoreKind":"stampa","cov":"coc7a0"},{"igdb":320140,"t":"Subnautica 2","plat":["pc","xbox"],"hype":80,"date":"2026-05-14","genres":["Avventura"],"score":90,"scoreN":42,"scoreKind":"utenti","cov":"co8yd0"},{"igdb":116794,"t":"Kingdom Come: Deliverance - Royal Edition","plat":["ps5","xbox"],"hype":49,"date":"2026-02-13","genres":["GDR","Avventura"],"score":90,"scoreN":31,"scoreKind":"utenti","cov":"cocwkp"},{"igdb":23322,"t":"The Legend of Heroes: Trails from Zero","plat":["switch2","ps5"],"hype":58,"date":"2026-09-10","genres":["GDR","Strategia a turni"],"score":90,"scoreN":29,"scoreKind":"utenti","cov":"cob8gm"},{"igdb":23323,"t":"The Legend of Heroes: Trails to Azure","plat":["switch2","ps5"],"hype":55,"date":"2026-09-10","genres":["GDR","Strategia a turni"],"score":90,"scoreN":21,"scoreKind":"utenti","cov":"cob8gl"},{"igdb":76253,"t":"Devil May Cry 5","plat":["switch2"],"hype":87,"date":"2026-06-23","genres":["Azione","Avventura"],"score":90,"scoreN":15,"scoreKind":"stampa","cov":"co1rb4"},{"igdb":347123,"t":"Nioh 3","plat":["pc","ps5"],"hype":69,"date":"2026-02-06","genres":["GDR","Azione","Avventura"],"score":90,"scoreN":6,"scoreKind":"stampa","cov":"cobf3x"},{"igdb":110069,"t":"Dragon Quest XI S: Echoes of an Elusive Age - Definitive Edition","plat":["switch2"],"hype":69,"date":"2026-09-24","genres":["GDR","Strategia a turni","Avventura"],"score":90,"scoreN":6,"scoreKind":"stampa","cov":"co1x9f"},{"igdb":348330,"t":"Forza Horizon 6","plat":["pc","ps5","xbox"],"hype":82,"date":"2026-05-15","genres":["Corse","Simulazione","Sport","Arcade"],"score":90,"scoreN":5,"scoreKind":"stampa","cov":"cobc5n"},{"igdb":366893,"t":"Pokémon Pokopia","plat":["switch2"],"hype":57,"date":"2026-03-05","genres":["Simulazione","Avventura"],"score":90,"scoreN":4,"scoreKind":"stampa","cov":"cobbur"},{"igdb":331215,"t":"Saros","plat":["ps5"],"hype":79,"date":"2026-04-28","genres":["Sparatutto"],"score":90,"scoreN":4,"scoreKind":"stampa","cov":"coajye"},{"igdb":191761,"t":"Minishoot' Adventures","plat":["switch2","ps5","xbox"],"hype":58,"date":"2026-03-03","genres":["Sparatutto","GDR","Avventura","Indie"],"score":90,"scoreN":4,"scoreKind":"stampa","cov":"co7udo"}],"allTime":[{"t":"The Legend of Zelda: Breath of the Wild","cov":"co3p2d","score":98,"scoreN":27,"platName":"Wii U · Nintendo Switch","year":2017,"genres":["Puzzle","Avventura"]},{"t":"God of War","cov":"cobkt6","score":96,"scoreN":26,"platName":"PlayStation 4 · PC","year":2018,"genres":["GDR","Azione","Avventura"]},{"t":"Inside","cov":"co2fca","score":92,"scoreN":39,"platName":"PlayStation 4 · PC","year":2016,"genres":["Platform","Puzzle","Avventura","Indie"]},{"t":"Metal Gear Solid V: The Phantom Pain","cov":"co1v85","score":96,"scoreN":19,"platName":"PlayStation 3 · PlayStation 4","year":2015,"genres":["Sparatutto","Tattico","Avventura"]},{"t":"Uncharted 4: A Thief's End","cov":"co1r7h","score":93,"scoreN":25,"platName":"PlayStation 4","year":2016,"genres":["Sparatutto","Avventura"]},{"t":"Super Mario Odyssey","cov":"co1mxf","score":97,"scoreN":17,"platName":"Nintendo Switch 2 · Nintendo Switch","year":2017,"genres":["Platform","Avventura"]},{"t":"Persona 5","cov":"co1r76","score":94,"scoreN":21,"platName":"PlayStation 3 · PlayStation 4","year":2016,"genres":["GDR","Avventura"]},{"t":"The Witcher 3: Wild Hunt","cov":"coaarl","score":92,"scoreN":26,"platName":"Xbox Series X|S · PlayStation 4","year":2015,"genres":["GDR","Avventura"]},{"t":"Monster Hunter: World","cov":"co1rst","score":93,"scoreN":20,"platName":"PlayStation 4 · PC","year":2018,"genres":["GDR","Azione","Avventura"]},{"t":"Red Dead Redemption 2","cov":"co1q1f","score":94,"scoreN":17,"platName":"Google Stadia · PlayStation 4","year":2018,"genres":["Sparatutto","GDR","Avventura"]},{"t":"Hades","cov":"cob9kr","score":94,"scoreN":17,"platName":"Xbox Series X|S · PlayStation 4","year":2020,"genres":["GDR","Azione","Avventura","Indie"]},{"t":"Undertale","cov":"cob1t2","score":96,"scoreN":13,"platName":"PlayStation 4 · Linux","year":2015,"genres":["Puzzle","GDR","Avventura","Indie"]},{"t":"Bayonetta 2","cov":"cob9e9","score":91,"scoreN":21,"platName":"Wii U · Nintendo Switch","year":2014,"genres":["Sparatutto","Azione","Avventura"]},{"t":"Super Mario 3D World","cov":"cob8wi","score":94,"scoreN":14,"platName":"Wii U","year":2013,"genres":["Platform"]},{"t":"Journey","cov":"cob9lk","score":94,"scoreN":14,"platName":"PlayStation 3 · PlayStation 4","year":2012,"genres":["Platform","Avventura","Indie"]},{"t":"God of War Ragnarök","cov":"coba3d","score":95,"scoreN":13,"platName":"PlayStation 4 · PC","year":2022,"genres":["GDR","Azione","Avventura"]},{"t":"Forza Horizon 3","cov":"co2e25","score":89,"scoreN":26,"platName":"PC · Xbox One","year":2016,"genres":["Corse"]},{"t":"Horizon Zero Dawn","cov":"co2una","score":89,"scoreN":26,"platName":"PlayStation 4 · PC","year":2017,"genres":["Sparatutto","GDR","Avventura"]},{"t":"Bloodborne","cov":"cob99l","score":91,"scoreN":18,"platName":"PlayStation 4","year":2015,"genres":["GDR","Avventura"]},{"t":"Overwatch","cov":"co1rcb","score":89,"scoreN":24,"platName":"PlayStation 4 · PC","year":2016,"genres":["Sparatutto","Strategia"]},{"t":"Dark Souls II","cov":"cobysr","score":90,"scoreN":20,"platName":"PlayStation 3 · PC","year":2014,"genres":["GDR","Avventura"]},{"t":"BioShock Infinite","cov":"co2n12","score":93,"scoreN":14,"platName":"PlayStation 3 · PlayStation 4","year":2013,"genres":["Sparatutto","Avventura"]},{"t":"Batman: Arkham Knight","cov":"coagib","score":92,"scoreN":16,"platName":"PlayStation 4 · PC","year":2015,"genres":["Azione","Avventura"]},{"t":"The Legend of Zelda: A Link Between Worlds","cov":"co3p0j","score":92,"scoreN":15,"platName":"Nintendo 3DS","year":2013,"genres":["Puzzle","Avventura"]},{"t":"Elden Ring","cov":"co4jni","score":97,"scoreN":10,"platName":"Xbox Series X|S · PlayStation 4","year":2022,"genres":["GDR","Avventura"]},{"t":"Grand Theft Auto V","cov":"co2lbd","score":88,"scoreN":27,"platName":"Xbox Series X|S · PlayStation 3","year":2013,"genres":["Sparatutto","Corse","Avventura"]},{"t":"Titanfall 2","cov":"fhbeilnghyhhmjqhinqa","score":89,"scoreN":23,"platName":"PlayStation 4 · PC","year":2016,"genres":["Sparatutto","Avventura"]},{"t":"Super Smash Bros. for Wii U","cov":"co213x","score":95,"scoreN":11,"platName":"Wii U","year":2014,"genres":["Picchiaduro","Platform"]},{"t":"The Last of Us Part II","cov":"co5ziw","score":95,"scoreN":11,"platName":"PlayStation 4 · PlayStation 5","year":2020,"genres":["Sparatutto","Avventura"]},{"t":"Returnal","cov":"co3wc1","score":90,"scoreN":19,"platName":"PC · PlayStation 5","year":2021,"genres":["Sparatutto"]},{"t":"Battlefield 1","cov":"co2n9d","score":89,"scoreN":21,"platName":"PlayStation 4 · PC","year":2016,"genres":["Sparatutto"]},{"t":"Nex Machina","cov":"co1twn","score":91,"scoreN":16,"platName":"PlayStation 4 · PC","year":2017,"genres":["Sparatutto","Indie","Arcade"]},{"t":"Forza Horizon 5","cov":"co3ofx","score":94,"scoreN":11,"platName":"Xbox Series X|S · PC","year":2021,"genres":["Corse"]},{"t":"Bayonetta","cov":"co8nf4","score":91,"scoreN":15,"platName":"PlayStation 3 · PC","year":2009,"genres":["Sparatutto","Azione","Avventura"]},{"t":"Doom","cov":"co1nc7","score":87,"scoreN":28,"platName":"PlayStation 4 · PC","year":2016,"genres":["Sparatutto"]},{"t":"Mario Kart 8","cov":"co213q","score":91,"scoreN":15,"platName":"Wii U","year":2014,"genres":["Corse","Arcade"]},{"t":"Shovel Knight","cov":"cobaa7","score":89,"scoreN":19,"platName":"PlayStation 3 · PlayStation 4","year":2014,"genres":["Platform","Avventura","Indie"]},{"t":"Ratchet & Clank: Rift Apart","cov":"co2str","score":91,"scoreN":15,"platName":"PC · PlayStation 5","year":2021,"genres":["Sparatutto","Platform","Avventura"]},{"t":"Baldur's Gate III","cov":"co670h","score":95,"scoreN":10,"platName":"Google Stadia · Xbox Series X|S","year":2023,"genres":["GDR","Strategia","Strategia a turni","Avventura"]},{"t":"Devil May Cry 5","cov":"co1rb4","score":90,"scoreN":15,"platName":"PlayStation 4 · Nintendo Switch 2","year":2019,"genres":["Azione","Avventura"]},{"t":"The Last of Us","cov":"co1r7f","score":92,"scoreN":13,"platName":"PlayStation 3","year":2013,"genres":["Sparatutto","Avventura"]},{"t":"It Takes Two","cov":"cob22v","score":90,"scoreN":15,"platName":"Xbox Series X|S · PlayStation 4","year":2021,"genres":["Platform","Puzzle","Avventura"]},{"t":"Mass Effect 3","cov":"co1x7q","score":91,"scoreN":14,"platName":"PlayStation 3 · PC","year":2012,"genres":["Sparatutto","GDR","Strategia","Avventura"]},{"t":"Forza Horizon 4","cov":"co2e1a","score":91,"scoreN":14,"platName":"Xbox Series X|S · PC","year":2018,"genres":["Corse","Sport","Avventura"]},{"t":"Rise of the Tomb Raider","cov":"co1rqa","score":87,"scoreN":25,"platName":"Google Stadia · PlayStation 4","year":2015,"genres":["Sparatutto","Avventura"]},{"t":"Marvel's Spider-Man","cov":"co1r77","score":90,"scoreN":16,"platName":"PlayStation 4","year":2018,"genres":["Azione","Avventura"]},{"t":"Nioh","cov":"co20xg","score":88,"scoreN":22,"platName":"PlayStation 3 · PlayStation 4","year":2017,"genres":["GDR","Azione","Avventura"]},{"t":"Divinity: Original Sin II","cov":"co1y5v","score":91,"scoreN":13,"platName":"PC · iOS","year":2017,"genres":["GDR","Strategia","Avventura"]},{"t":"Ghost of Tsushima","cov":"co2crj","score":92,"scoreN":12,"platName":"PlayStation 4 · PlayStation 5","year":2020,"genres":["GDR","Azione","Avventura"]},{"t":"Rocket League","cov":"cocyri","score":89,"scoreN":17,"platName":"Xbox Series X|S · PlayStation 4","year":2015,"genres":["Corse","Sport","Indie"]}]};
 
- ["Gimbap Heaven","2026-11-01","C",20],
- ["Gravhounds","2026-11-02","C",45],
- ["Loftia","2026-11-03","C",42],["Wilderdark","2026-11-03","C",28],["Godzilla: Destroy All Monsters Melee Remastered","2026-11-03","CNP",54],["Kick","2026-11-03","C",19],["Zero Parades: Director's Cut","2026-11-03","NP",52],["Death at Fleming Manor","2026-11-03","C",25],
- ["Lost Host","2026-11-04","CP",27],["Cat Secretary","2026-11-04","C",18],["Cozy Game Restoration","2026-11-04","C",24],["Theos: Cities of Myth","2026-11-04","C",31],["Hull Rupture","2026-11-04","C",26],["Void/Breaker","2026-11-04","CP",38],["Worship","2026-11-04","CP",36],["Crymelight","2026-11-04","CNP",48],["World of Warcraft: Forever","2026-11-04","C",80],
- ["The Legend of Zelda: Ocarina of Time","2026-11-05","N",96],["Airframe Ultra","2026-11-05","C",33],["Escape Academy 2: Back 2 School","2026-11-05","CP",47],["Wielders of the Essence","2026-11-05","C",35],["Chivalware","2026-11-05","CN",29],["Underkeep","2026-11-05","C",23],["Where the Seeds Fall","2026-11-05","CP",25],["Emery Hearts","2026-11-05","C",22],["In Full Bloom","2026-11-05","C",21],["Marvel's Guardians of the Galaxy","2026-11-05","N",58],["Stellar Blade","2026-11-05","N",78],["Yomawari: Night Alone","2026-11-05","P",30],["Yomawari: Midnight Shadows","2026-11-05","P",29],["The Slormancer","2026-11-05","P",37],["Kingdom of Night","2026-11-05","P",26],
- ["Hasbro Games Junior Collection","2026-11-06","CP",20],
- ["Company Tycoon","2026-11-08","C",19],
- ["Casualties: Unknown","2026-11-09","C",24],["Neo Junk City","2026-11-09","C",27],["Cinema Theater Tycoon","2026-11-09","C",22],
- ["Tanuki: Pon's Summer","2026-11-10","CNP",46],["Warhammer Survivors","2026-11-10","CNP",44],["Nocturnal II","2026-11-10","C",34],["Shrek 2 Remastered","2026-11-10","CP",60],["Ashes of the Singularity II","2026-11-10","C",41],["Hillthorn","2026-11-10","C",33],["The Devil's Due","2026-11-10","C",23],["Football Manager 27","2026-11-10","CP",72],["Football Manager 27 Console","2026-11-10","CP",50],
- ["Prinny Party: Going Overboard!","2026-11-11","CNP",43],["Thronefall","2026-11-11","P",45],["Monomoon","2026-11-11","C",20],["Bottled by Bears","2026-11-11","C",21],
- ["Pikmin 4: Nintendo Switch 2 Edition","2026-11-12","N",66],["Sonic Pico Park","2026-11-12","CNP",55],["Moomin: Midsummer Madness","2026-11-12","CN",38],["Metaphor: ReFantazio","2026-11-12","N",74],["Ball x Pit: Risen Ballbylon","2026-11-12","CNP",40],["Hazard Levels","2026-11-12","CP",25],["Portabellows","2026-11-12","C",18],
- ["Derelikt","2026-11-13","CP",24],["Bombanana!","2026-11-13","P",19],
- ["Trees Hate You","2026-11-16","C",30],["Spirit Crossing","2026-11-16","CN",42],
- ["Milki Delivery","2026-11-17","C",20],["Ranger's Path: National Park Simulator","2026-11-17","CP",32],["Unicorn Academy: Island of Magic","2026-11-17","CP",23],["Night Train Simulator: Blackout","2026-11-17","C",21],
- ["Disney Dreamlight Valley: The Keepsake Sea","2026-11-18","CP",44],["Vice: Magic City Mayhem","2026-11-18","CP",39],["Dark Rail","2026-11-18","CP",28],
- ["Grand Theft Auto VI","2026-11-19","P",100,"2026-05-26"],["The House of Tesla: Definitive Edition","2026-11-19","P",26],
- ["Zombie Police: Midsummer Unhappy New Year","2026-11-22","C",17],
- ["Stellaris: Willpower","2026-11-23","C",51],
- ["Gothic 3 Classic","2026-11-24","P",35],
- ["Marupoyo: The Round Chick's Adventure","2026-11-26","CP",19],["Appulse","2026-11-26","C",20],["Reshine","2026-11-26","CP",23],
- ["Am I Nima","2026-11-27","C",25],["Our Life: Now & Forever","2026-11-27","C",31],
-
- ["Hela: Of Mice & Magic","2026-12-01","CNP",50],
- ["Night Machine","2026-12-02","C",24],["The Ascent Ultimate Edition","2026-12-02","N",40],["Blind Descent","2026-12-02","C",32],
- ["Rayman Legends Retold","2026-12-03","CNP",64],["Warhammer 40,000: Dawn of War IV","2026-12-03","C",76],["Edge of Memories","2026-12-03","CP",63],["The Road of Dust and Sorrow","2026-12-03","CNP",41],["Rayman Origins: Enhanced Edition","2026-12-03","CNP",52],["Dragon Quest Monsters: The Withered World","2026-12-03","CNP",70],["Aeterna Lucis","2026-12-03","CP",45],["Waltz and Jam","2026-12-03","CNP",26],["Xenoblade Chronicles 3: Nintendo Switch 2 Edition","2026-12-03","N",68],["Sombras: Negative Frames","2026-12-03","CNP",28],["Dumpster Gang","2026-12-03","C",25],["Eriksholm: The Stolen Dream","2026-12-03","N",44],["Remothered: Red Nun's Legacy — Switch 2","2026-12-03","N",33],["Fall Up","2026-12-03","CNP",22],["Apple Crumble","2026-12-03","C",22],
- ["Acts of Blood","2026-12-04","C",36],["Monster Hunter Wilds","2026-12-04","N",72],
- ["Stronghold 4","2026-12-07","C",52],["Muri: Wildwoods","2026-12-07","C",20],["Mik","2026-12-07","C",18],
- ["Guns of Eschaton","2026-12-08","CP",38],["Drunken Goddess Reflux","2026-12-08","C",19],["Ancestors: The Humankind Odyssey","2026-12-08","NP",37],
- ["Professor Layton and the New World of Steam","2026-12-10","CNP",61],["Stage Tour","2026-12-10","CNP",34],["Attack on Titan 3","2026-12-10","CNP",69],["4:AM","2026-12-10","C",26],
- ["Path of Exile 2","2026-12-11","CP",85],
- ["Rest Stop","2026-12-28","C",17],
- ["Foxy Dumplings","2026-12-31","CNP",16],
-
- ["Armatus","2027-01-07","CNP",40],["Emberville","2027-01-07","C",28],
- ["Danganronpa 2x2","2027-01-14","CNP",67],
- ["Stranger than Heaven","2027-01-15","CP",73],["TankRat","2027-01-15","CP",28],["Ananta","2027-01-15","CP",71],
- ["Usual June","2027-01-20","C",43],
- ["Arizona Sunshine","2027-01-21","CNP",30],
- ["Forza Horizon 6","2027-01-26","P",82],["Everything is Crab","2027-01-26","N",35],
- ["Prison of Husks","2027-01-27","CP",33],
- ["Witchbrook","2027-01-28","CNP",70],["Metroid Ravenous","2027-01-28","N",84],["Until Dawn 2","2027-01-28","P",66],["Tropico 7","2027-01-28","CNP",58],
- ["Elta: Defy The Gods","2027-02-02","CP",31],
- ["Metro 2039","2027-02-04","CP",79],["Muramasa: Revenant Blades","2027-02-04","CNP",57],["He-Man: Dragon Pearl of Destruction","2027-02-04","CNP",34],
- ["Outward 2","2027-02-08","C",47],
- ["Tomb Raider: Legacy of Atlantis","2027-02-12","CNP",75],
- ["God of War Laufey","2027-02-16","P",93],["Yu-Gi-Oh! Tag Force GX","2027-02-16","N",39],["Romancing SaGa 3: Destinies United","2027-02-16","N",42],
- ["Among Us Story: On Guard","2027-02-17","C",47],
- ["Persona 4 Revival","2027-02-18","CP",88],["Fable","2027-02-18","CP",86],
- ["Hyrule Warriors: Age of Calamity Definitive Edition","2027-02-25","N",54],
- ["Eternal Anima","2027-03-04","CNP",36],["Wo Long 2: Wings of Ember","2027-03-04","CNP",68],["Trine 6: Together in Time","2027-03-04","CNP",55],
- ["Gundam Rogue Orbit","2027-03-05","CP",49],
- ["Petal Runner","2027-03-08","CN",37],
- ["Grave Seasons","2027-03-09","CNP",45],
- ["Shadow of the Road","2027-03-10","C",48],
- ["Road Kings","2027-03-11","CP",32],["Phase Zero","2027-03-11","C",29],["My Arms are Longer Now","2027-03-11","CNP",29],
- ["007 First Light","2027-03-18","N",63],["The Apothecary Diaries: The False Imperial Brother","2027-03-18","CNP",44],
- ["Super Battle Golf","2027-03-25","N",27],["ReVamp","2027-03-25","C",26],
- ["Exodus","2027-04-07","CP",81],
- ["Final Fantasy VII: Revelation","2027-04-08","CNP",95],
- ["Mariachi Legends","2027-04-27","CNP",40],["Pony Island 2: Panda Circus","2027-04-27","C",56],
- ["Persona 4 Revival — Switch 2","2027-05-20","N",70]
-];
-var VAGUE=[
- ["Pokémon Winds","2027","N",94],["Pokémon Waves","2027","N",94],
- ["The Elder Scrolls VI","TBA","C",92],
- ["The Witcher 4","2028","CP",90],
- ["Kingdom Hearts IV","Q4 2027","CNP",90],
- ["Persona 6","TBA","CP",89],
- ["Intergalactic: The Heretic Prophet","2027","P",87],
- ["Resident Evil Veronica","2027","CNP",85],
- ["Black Myth: Zhong Kui","TBA","CP",83],
- ["The Duskbloods","2026","N",83],
- ["Squadron 42","Q2 2027","C",82],
- ["Xenoblade Genesis","2027","N",80],
- ["Alien: Isolation 2","TBA","CNP",79],
- ["Haunted Chocolatier","TBA","C",78],
- ["Kirby and the World Beyond","Q2 2027","N",77],
- ["Light No Fire","TBA","C",76],
- ["Marvel 1943: Rise of Hydra","2027","CP",74],["Max Payne remake","TBA","CP",74],
- ["Monster Hunter Wilds: Ascendance","2027","CP",73],
- ["The Wolf Among Us 2","2027","CNP",72],["Total War: Warhammer 40,000","TBA","CP",72],
- ["ILL","2027","CP",71],
- ["Fallout 5","TBA","C",70],
- ["Lords of the Fallen II","Q1 2027","CNP",69],
- ["Judas","TBA","C",68],
- ["Star Wars: Fate of the Old Republic","TBA","CP",67],
- ["Turok: Origins","Q2 2027","CNP",66],
- ["Dragon Ball Xenoverse 3","2027","CP",65],
- ["Clockwork Revolution","2027","C",64],["Jurassic Park: Survival","TBA","CP",64],
- ["Crazy Taxi: World Tour","2027","CNP",63],["Mega Man: Dual Override","Q2 2027","CNP",63],
- ["Guild Wars 3","Q4 2027","CP",62],["Spyro: A Realm Beyond","Q2 2027","CNP",62],
- ["Chrono Odyssey","TBA","CP",61],
- ["State of Decay 3","2027","CP",60],["Light of Motiram","Q4 2027","C",60],
- ["The Talos Principle III","2027","CP",59],
- ["The Expanse: Osiris Reborn","Q2 2027","CP",58],["Warhammer 40,000: Space Marine 2","2026","N",58],
- ["Kemuri","2027","CP",57],
- ["Game of Thrones: War for Westeros","Q1 2027","C",56],
- ["Tomb Raider: Catalyst","2027","CP",55],["Senua","2027","CP",55],
- ["Blackfrost: The Long Dark 2","2027","C",53],
- ["The Eternal Life of Goldman","2026","CP",52],["Nirvana Noir","TBA","C",52],["Spine","Q3 2027","CP",52],
- ["Out of Words","Q1 2027","CNP",51],
- ["Threads of Time","2027","CN",50],["My Time at Evershine","2027","C",50],
- ["Holstin","2027","CNP",49],["Bloodstained: The Scarlet Engagement","2027","CP",49],
- ["Slime Rancher 2","2027","N",48],["LEGO Skylines","31/12/2027","N",48],
- ["Terminator: Survivors","TBA","CP",47],["Crescent County","Q3 2027","CP",47],
- ["Cassette Beasts 2002","2027","CN",46],["Virtua Fighter Crossroads","2027","CP",46],
- ["Mudang: Two Hearts","2026","CP",45],["The Lost Wild","2027","P",45],
- ["Kena: Scars of Kosmora","2027","CP",44],["Ballad of Antara","2026","P",44],["Becrowned","Q1 2027","CNP",44],
- ["Clutch","Q1 2027","CP",43],["Alien Deathstorm","Q2 2027","CP",43],
- ["Hunter: The Reckoning — Deathwish","Q3 2027","CP",42],
- ["SlashZero","Q1 2027","CP",41],["Chronoscript: The Endless End","Q3 2027","CP",41],
- ["Perceptum","Q1 2027","CP",40],["The God Slayer","Q4 2027","P",40],
- ["Glaciered","2026","CN",38],["Canyons","11/2027","CP",38],
- ["Petit Planet","2026","C",35]
-];
-var _unused=[
- {t:"Ashen Covenant II",d:"2026-11-06",p:["pc","ps5"],hype:97,pub:"Meridian Interactive",pr:{pc:69.99,ps5:79.99},st:1,off:1,store:1},
- {t:"Meadowkeep",d:"2026-11-12",p:["pc","switch2"],hype:73,pub:"Mellowcat",pr:{pc:24.99,switch2:26.99},st:1,off:1,store:1},
- {t:"Static Chapel",d:"2026-11-12",p:["pc","ps5"],hype:68,pub:"Grey Lantern",pr:{pc:19.99,ps5:21.99},st:1,off:1,store:1},
- {t:"Copper Verge",d:"2026-11-12",p:["pc"],hype:66,pub:"Pillar Games",pr:{pc:14.99},st:1,off:1,was:"2026-10-08"},
- {t:"Amber Relay",d:"2026-11-12",p:["switch2"],hype:64,pub:"K\u014den Soft",pr:{switch2:29.99},off:1,store:1},
- {t:"Silkbound",d:"2026-11-13",p:["pc","switch2","ps5"],hype:88,pub:"Okaze",pr:{pc:49.99,switch2:59.99,ps5:59.99},st:1,off:1,store:1},
- {t:"Verdance",d:"2026-11-19",p:["pc","switch2"],hype:91,pub:"Kestrel Studios",pr:{pc:39.99,switch2:44.99},st:1,off:1,store:1,was:"2026-09-24"},
- {t:"Harrowgate: Deep Shift",d:"2026-11-19",p:["pc","ps5"],hype:84,pub:"Vanta Works",pr:{pc:59.99,ps5:69.99},st:1,off:1,store:1},
- {t:"Orbital Mechanic",d:"2026-11-19",p:["pc"],hype:76,pub:"Driftline",pr:{pc:24.99},st:1,off:1},
- {t:"Kingdom of Salt",d:"2026-11-20",p:["pc","switch2","ps5"],hype:93,pub:"Brightfall",pr:{pc:59.99,switch2:59.99,ps5:69.99},st:1,off:1,store:1},
- {t:"Night Carriage",d:"2026-11-26",p:["pc","ps5"],hype:81,pub:"Hallowmark",pr:{pc:34.99,ps5:39.99},st:1,off:1,store:1,was:"2026-10-15"},
- {t:"Pocket Dynasty",d:"2026-11-27",p:["switch2"],hype:79,pub:"Okaze",pr:{switch2:49.99},off:1,store:1},
- {t:"Rust & Rapture",d:"2026-12-03",p:["pc","ps5"],hype:86,pub:"Sunder Games",pr:{pc:44.99,ps5:49.99},st:1,off:1,store:1},
- {t:"Lanternfall",d:"2026-12-04",p:["pc","switch2"],hype:74,pub:"Mellowcat",pr:{pc:19.99,switch2:21.99},st:1,off:1,store:1},
- {t:"Grand Meridian 7",d:"2026-12-10",p:["pc","ps5"],hype:95,pub:"Meridian Interactive",pr:{pc:69.99,ps5:79.99},st:1,off:1,store:1},
- {t:"Tidewright",d:"2026-12-11",p:["pc","switch2","ps5"],hype:72,pub:"Pelagic",pr:{pc:29.99,switch2:29.99,ps5:34.99},st:1,off:1,store:1},
- {t:"Hollow Parade",d:"2026-12-17",p:["pc"],hype:77,pub:"Grey Lantern",pr:{pc:17.99},st:1,off:1},
- {t:"Starbound Ledger",d:"2027-01-15",p:["pc","ps5"],hype:83,pub:"Vanta Works",pr:{pc:49.99,ps5:59.99},st:1,off:1,store:1,was:"2026-11-12"},
- {t:"Umbra Engine",d:"2027-01-22",p:["pc","switch2","ps5"],hype:90,pub:"Kestrel Studios",pr:{pc:59.99,switch2:59.99,ps5:69.99},st:1,off:1,store:1},
- {t:"Frostmarch Chronicle",d:"2027-01-29",p:["pc","ps5"],hype:75,pub:"Northbit",pr:{pc:34.99,ps5:39.99},st:1,off:1,store:1},
- {t:"Bramblewick",d:"2027-02-05",p:["switch2","pc"],hype:80,pub:"Mellowcat",pr:{pc:24.99,switch2:27.99},st:1,off:1,store:1},
- {t:"Iron Orchard",d:"2027-02-12",p:["pc","ps5"],hype:87,pub:"Ardent",pr:{pc:54.99,ps5:64.99},st:1,off:1,store:1},
- {t:"Solaria Drift",d:"2027-02-19",p:["pc","switch2","ps5"],hype:92,pub:"Brightfall",pr:{pc:59.99,switch2:59.99,ps5:69.99},st:1,off:1,store:1},
- {t:"Quietwater",d:"2027-03-05",p:["pc"],hype:73,pub:"Autopubblicato",pr:{pc:14.99},st:1,off:1},
- {t:"Hex Foundry",d:"2027-03-12",p:["pc","switch2"],hype:78,pub:"Tinybit",pr:{pc:19.99,switch2:22.99},st:1,off:1,store:1},
- {t:"Cradle of Static",d:"2026-10-22",p:["pc","ps5"],hype:85,pub:"Hallowmark",pr:{pc:39.99,ps5:44.99},st:1,off:1,store:1},
- {t:"Paleblood Harbor",d:"2026-10-29",p:["pc","switch2","ps5"],hype:89,pub:"Sunder Games",pr:{pc:49.99,switch2:49.99,ps5:59.99},st:1,off:1,store:1},
- {t:"Clover Protocol",d:"2026-10-30",p:["pc"],hype:71,pub:"Pillar Games",pr:{pc:12.99},st:1,off:1},
- {t:"Vault of Bells",d:"2026-11-05",p:["switch2","ps5"],hype:82,pub:"Kōen Soft",pr:{switch2:39.99,ps5:44.99},off:1,store:1,was:"2026-08-27"},
- {t:"Driftmoor",d:"2026-12-18",p:["pc","ps5"],hype:70,pub:"Pelagic",pr:{pc:27.99,ps5:29.99},st:1,off:1,store:1}
-];
-var _unused2=[
- {t:"Monument of Ash",v:"Q2 2027",p:["pc","ps5"],hype:94,pub:"Meridian Interactive",st:1,off:1},
- {t:"The Long Thaw",v:"2027",p:["pc","switch2","ps5"],hype:88,pub:"Okaze",st:1,off:1,store:1},
- {t:"Beacon Nine",v:"TBA",p:["pc"],hype:81,pub:"Grey Lantern",st:1,off:1},
- {t:"Saltwind Atlas",v:"Q4 2027",p:["pc","ps5"],hype:76,pub:"Pelagic",st:1,off:1,was:"2026-12-03"},
- {t:"Thicket",v:"TBA",p:["pc","switch2"],hype:68,pub:"Autopubblicato",st:1},
- {t:"Grimward: Reprise",v:"2028",p:["pc","ps5"],hype:72,pub:"Ardent",st:1,off:1},
- {t:"Lumen Burrow",v:"Q3 2027",p:["switch2","pc"],hype:64,pub:"Tinybit",st:1,store:1}
-];
-var WA=["Hollow","Neon","Ashen","Iron","Pale","Lunar","Drift","Rust","Static","Quiet","Crimson","Hidden","Broken","Solar","Umbra","Tiny","Deep","Glass","Echo","Dusk","Salt","Frost","Clover","Hex","Vault","Grim","Amber","Velvet","Wither","Copper","Slate","Nimbus"];
-var WB=["Tide","Covenant","Circuit","Garden","Harbor","Engine","Spire","Protocol","Bloom","Drifter","Signal","Foundry","Requiem","Orchard","Ledger","Machine","Cradle","Verge","Lantern","Current","Thicket","Beacon","Parade","Atlas","Burrow","Relay","Quarry","Chapel","Vector","Hollow"];
-var WS=["","","","","",": Reprise"," II"," DX",": Director's Cut"," Remastered",": Prologue"," Redux"];
-var PUBS=["Autopubblicato","Tinybit","Pillar Games","Kōen Soft","Ardent","Mellowcat","Grey Lantern","Northbit","Driftline","Lowtide Coop"];
-var PRICES=[0,2.99,4.99,6.99,8.99,9.99,12.99,14.99,16.99,19.99,24.99];
 
 /* piattaforme: C=PC, N=Switch 2, P=PS5 */
 var PMAP={C:"pc",N:"switch2",P:"ps5",X:"xbox"};
@@ -968,10 +878,7 @@ function linksFor(t,plat){
 var GAMES=[],DATA_SRC="";
 /* snapshot di riserva: usato solo se data.json non è raggiungibile */
 function fallbackRows(){
-  var r=[];
-  DATED.forEach(function(a){r.push({t:a[0],date:a[1],plat:platsOf(a[2]),hype:a[3],was:a[4]||null});});
-  VAGUE.forEach(function(a){r.push({t:a[0],vague:a[1],plat:platsOf(a[2]),hype:a[3],was:null});});
-  return r;
+  return FALLBACK.games.slice();
 }
 function buildGames(rows,hist){
   GAMES=rows.map(function(o,i){
@@ -984,68 +891,6 @@ function buildGames(rows,hist){
       aaa:(o.hype||0)>=80,hist:h&&h.length?h:null};
   });
 }
-
-/* filler mock disabilitato: ora i dati sono reali */
-if(0)(function(){
-  var r=mul(991117),n=0;
-  var start=pdate("2026-10-01"),end=pdate("2027-03-31");
-  var used={};
-  function title(){
-    for(var k=0;k<40;k++){
-      var t=WA[Math.floor(r()*WA.length)]+" "+WB[Math.floor(r()*WB.length)]+WS[Math.floor(r()*WS.length)];
-      if(!used[t]){used[t]=1;return t;}
-    }
-    return "Untitled "+(n++);
-  }
-  function mk(ds,forceLow){
-    var pl=[],pick=r();
-    if(pick<.56)pl=["pc"];
-    else if(pick<.7)pl=["pc","switch2"];
-    else if(pick<.82)pl=["pc","ps5"];
-    else if(pick<.9)pl=["pc","switch2","ps5"];
-    else if(pick<.95)pl=["switch2"];
-    else pl=["ps5"];
-    var hy=forceLow?Math.floor(r()*40)+3:Math.floor(r()*58)+3;
-    if(!forceLow&&r()<.17)hy=62+Math.floor(r()*22);
-    var p=PRICES[Math.floor(r()*PRICES.length)],pr={};
-    pl.forEach(function(x){pr[x]=p===0?0:+(p+(x==="pc"?0:1)).toFixed(2);});
-    var g={id:"f"+(n++),t:title(),date:ds,plat:pl,hype:hy,pub:PUBS[Math.floor(r()*PUBS.length)],
-      pr:pr,st:pl.indexOf("pc")>=0,off:r()>.55,store:pl.length>1||pl.indexOf("pc")<0,was:null,aaa:false};
-    if(r()>.93)g.was=addD(ds,-(14+Math.floor(r()*120)));
-    GAMES.push(g);
-  }
-  for(var d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
-    var ds=iso(d),dw=d.getDay(),c;
-    if(ds==="2026-11-19"){for(var i=0;i<38;i++)mk(ds,true);continue;}
-    if(dw===4)c=3+Math.floor(r()*4);
-    else if(dw===2||dw===3)c=2+Math.floor(r()*3);
-    else if(dw===5)c=1+Math.floor(r()*3);
-    else c=Math.floor(r()*2);
-    for(var i=0;i<c;i++)mk(ds,false);
-  }
-})();
-
-/* storico simulato disabilitato: la raccolta vera parte col primo cron */
-if(0)(function(){
-  var r=mul(20261029);
-  GAMES.forEach(function(g){
-    var future=!g.date||g.date>TODAY;
-    if(!future){g.hist=null;return;}
-    var roll=r();
-    var len=roll<.1?2+Math.floor(r()*4):(roll<.2?6+Math.floor(r()*5):22+Math.floor(r()*14));
-    var f=Math.round((g.aaa?9000:300)+r()*(g.aaa?48000:5200));
-    var base=0.004+r()*0.012;
-    var spike=r()<.3?(1.6+r()*5.5):0;
-    var spikeAt=len-1-Math.floor(r()*7);
-    var h=[];
-    for(var i=0;i<len;i++){
-      var rate=base+(spike&&i>=spikeAt?base*spike:0)+(r()-.5)*0.006;
-      f=Math.max(40,Math.round(f*(1+rate)));
-      h.push(f);
-    }
-    g.hist=h;
-  });
-})();
 
 var byDay={};
 function indexDays(){
@@ -1363,12 +1208,49 @@ function perc(arr,v){
   while(lo<hi){var mid=(lo+hi)>>1;if(arr[mid]<v)lo=mid+1;else hi=mid;}
   return Math.round(lo/arr.length*100);
 }
-/* Pavimento sotto cui la percentuale e' rumore e non segnale. Le quote piu' basse
-   sono quantizzate: passare dal minimo al gradino successivo e' +100% senza che
-   sia accaduto niente. Un quarto piu' basso della distribuzione resta fuori —
-   soglia espressa in percentile e non in valore assoluto, perche' le quattro
-   metriche vivono su scale diverse e un numero fisso ne taglierebbe tre male. */
-var PERC_MIN=25;
+/* Rumore e segnale.
+
+   La classifica ordinava per crescita percentuale, con un pavimento al 25o
+   percentile. Sui dati veri del 10 novembre i nove titoli in cima erano tutti
+   misurati con "Visits" e quasi tutti partivano dallo stesso valore minimo:
+   +330%, +264%, +231% ripetuti identici, cioe' il passaggio da una a quattro
+   visite. Il pavimento non li fermava perche' su queste metriche il valore
+   minimo sta gia' al 57o percentile: meta' del catalogo vive a una o due unita'.
+
+   I valori di popularity_primitives sono quote quantizzate: il piu' piccolo
+   osservato per ogni metrica e' una unita' (per "Playing" l'86% dei valori ne e'
+   un multiplo intero). Contando in unita', un movimento si giudica come un
+   conteggio: da a a b e' credibile se la differenza supera di parecchio le
+   oscillazioni casuali attese, che per conteggi crescono come la radice
+   (scarto di Poisson). Servono quindi una base minima e una crescita ben sopra
+   il rumore, e la classifica si ordina per quanto il movimento e' netto, non per
+   la percentuale, che premia sempre chi parte da quasi zero. */
+var BASE_MIN=10;   /* unita' minime di partenza */
+var Z_MIN=2.5;     /* quante volte il rumore deve superare la crescita */
+var QUANTO={};
+function calcolaQuanti(){
+  var v={};
+  GAMES.forEach(function(g){
+    (g.hist||[]).forEach(function(e){if(e.f>0)(v[e.m]=v[e.m]||[]).push(e.f);});
+  });
+  QUANTO={};
+  /* Il primo percentile invece del minimo assoluto: un solo valore anomalo
+     verso il basso gonfierebbe tutti i conteggi di quella metrica. */
+  Object.keys(v).forEach(function(m){
+    var a=v[m].sort(function(x,y){return x-y;});
+    QUANTO[m]=a[Math.floor(a.length*0.01)]||a[0];
+  });
+}
+function segnaleOf(r){
+  /* "hypes" e' l'attesa raccolta prima dell'uscita: dopo non si muove, e non
+     dice niente su chi sta giocando adesso. */
+  if(!r||r.m===0)return null;
+  var q=QUANTO[r.m];if(!q)return null;
+  var a=r.prev/q,b=r.last/q;
+  if(a<BASE_MIN||b<=a)return null;
+  var z=(b-a)/Math.sqrt(a+b);
+  return z>=Z_MIN?z:null;
+}
 function renderGrowth(){
   var W=state.win,body=document.getElementById("growthbody");
   /* Solo titoli gia' usciti: la sezione segnala chi si sta facendo notare dopo
@@ -1376,23 +1258,34 @@ function renderGrowth(){
   var cands=GAMES.filter(function(g){
     return g.date&&g.date<TODAY&&g.hist&&g.hist.length>=2&&visible(g);
   });
-  var ready=cands.map(function(g){var r=growthOf(g,W);return r?{g:g,r:r}:null;}).filter(Boolean);
+  var misurabili=cands.map(function(g){var r=growthOf(g,W);return r?{g:g,r:r}:null;}).filter(Boolean);
   var partial=cands.filter(function(g){return histSpan(g.hist)<W;});
-  var dist=distrib(ready);
-  ready.forEach(function(o){
+  /* Il percentile mostrato nella card si calcola su tutti i titoli misurabili,
+     non solo su quelli che passano il filtro: dice dove stava e dove sta il
+     gioco rispetto al resto del catalogo. */
+  var dist=distrib(misurabili);
+  var ready=[];
+  misurabili.forEach(function(o){
+    var z=segnaleOf(o.r);if(z==null)return;
+    o.z=z;
     o.pPrev=perc(dist[o.r.m],o.r.prev);
     o.pLast=perc(dist[o.r.m],o.r.last);
+    ready.push(o);
   });
-  ready=ready.filter(function(o){return o.pPrev>=PERC_MIN;});
-  ready.sort(function(a,b){return b.r.pct-a.r.pct;});
+  ready.sort(function(a,b){return b.z-a.z;});
   var top=ready.slice(0,9);
   var h="";
-  if(!top.length){
+  var piuLungo=0;
+  cands.forEach(function(g){var s=histSpan(g.hist);if(s>piuLungo)piuLungo=s;});
+  if(!top.length&&piuLungo>=W){
+    /* Lo storico c'e', semplicemente nessuno si sta muovendo davvero: e' un
+       risultato, non un'attesa, e va detto cosi'. */
+    h+='<div class="collect notch"><p class="giorni" style="font-size:clamp(20px,4vw,28px)">Nessun movimento netto'+
+      '<small>NEGLI ULTIMI '+W+' GIORNI NESSUN TITOLO SI DISTINGUE DAL RUMORE</small></p></div>';
+  }else if(!top.length){
     /* Il primo dato arriva quando una serie copre la finestra scelta: quel che
        manca e' la finestra meno lo storico piu' lungo gia' raccolto. Un giro di
        cron al giorno, quindi i giri mancanti sono giorni. */
-    var piuLungo=0;
-    cands.forEach(function(g){var s=histSpan(g.hist);if(s>piuLungo)piuLungo=s;});
     var restano=Math.max(0,W-piuLungo);
     h+='<div class="collect notch">'+
       '<p class="giorni">'+restano+(restano===1?' GIORNO':' GIORNI')+
@@ -1401,13 +1294,14 @@ function renderGrowth(){
     h+='<div class="gcards">'+top.map(function(o,i){
       var g=o.g,r=o.r;
       var when=g.date?(pdate(g.date).getDate()+" "+MESI[pdate(g.date).getMonth()].slice(0,3)):g.vague;
-      return'<article class="gcard notch">'+covImg(g,54,72,"t_cover_small")+''+
+      return'<a class="gcard notch" href="'+esc(g.links[0].u)+'" target="_blank" rel="noopener noreferrer"'+
+        ' title="'+esc(g.links[0].n+" — "+g.t)+'">'+covImg(g,54,72,"t_cover_small")+''+
         '<div style="min-width:0"><div style="display:flex;gap:6px;align-items:flex-start"><h4 class="gt" style="font-size:14px;flex:1;min-width:0">'+esc(g.t)+'</h4><span class="rank px">#'+(i+1)+'</span></div>'+
         '<div class="gr"><span class="pc-up">+'+r.pct.toFixed(r.pct<10?1:0).replace(".",",")+'%</span><span class="pc-lab">'+W+' gg</span></div>'+
         sparkHTML(g.hist,W)+
         '<div class="folw"><span>'+o.pPrev+'° → '+o.pLast+'° PERCENTILE · '+(METRICA[r.m]||"POPOLARITÀ")+'</span><span>'+when.toUpperCase()+'</span></div>'+
         '<div class="rowx" style="margin-top:7px">'+g.plat.map(function(p){return'<span class="pchip '+p+' notch-s">'+svg(p)+PLAT[p]+'</span>';}).join("")+'</div>'+
-        '</div></article>';
+        '</div></a>';
     }).join("")+'</div>';
   }
   /* A sezione vuota non si aggiunge niente sotto: il riquadro dice quanto manca,
@@ -1777,6 +1671,58 @@ document.getElementById("tbabtn").addEventListener("click",function(){
   renderTba();
 });
 
+/* ---------------- palette del giorno ---------------- */
+/* dayPalette arriva in data.json: per ogni "MM-GG" il gioco col voto stampa piu'
+   alto uscito in quella data e i colori dominanti della sua copertina. Qui i
+   colori vengono portati su un fondo scuro — luminosita' a meta', saturazione
+   piena ma non accecante — e diventano le quattro macchie dello sfondo. */
+var DAYPAL={};
+var PAL_SITO=["#ff2d00","#ffa417","#6fd2ff","#ff8574"];
+function hexRgb(h){var n=parseInt(String(h).replace("#",""),16);return[(n>>16)&255,(n>>8)&255,n&255];}
+function rgbHsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  var mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,d=mx-mn,h=0,s=0;
+  if(d){
+    s=d/(1-Math.abs(2*l-1));
+    h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;
+    h*=60;if(h<0)h+=360;
+  }
+  return{h:h,s:s,l:l};
+}
+function hslRgb(h,s,l){
+  var c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2,r=0,g=0,b=0;
+  if(h<60){r=c;g=x;}else if(h<120){r=x;g=c;}else if(h<180){g=c;b=x;}
+  else if(h<240){g=x;b=c;}else if(h<300){r=x;b=c;}else{r=c;b=x;}
+  return[Math.round((r+m)*255),Math.round((g+m)*255),Math.round((b+m)*255)];
+}
+function applicaPalette(){
+  var k=TODAY.slice(5),p=DAYPAL[k],vivi=[];
+  if(p&&p.c)p.c.forEach(function(hx){
+    var c=hexRgb(hx),x=rgbHsl(c[0],c[1],c[2]);
+    /* Nero, bianco e grigi non portano colore: su un fondo gia' scuro
+       sarebbero solo macchie sporche. */
+    if(x.l<0.1||x.l>0.94||x.s<0.14)return;
+    vivi.push(hslRgb(x.h,Math.min(0.9,Math.max(0.45,x.s*1.15)),Math.min(0.62,Math.max(0.42,x.l))));
+  });
+  /* Con meno di due colori vivi — copertine in bianco e nero, o quasi — la
+     sfumatura sarebbe una macchia sola: meglio i colori del marchio. */
+  var dalGioco=vivi.length>=2;
+  var usati=dalGioco?vivi.slice(0,4):PAL_SITO.map(hexRgb);
+  while(usati.length<4)usati.push(usati[usati.length%vivi.length]);
+  var alfa=[.34,.26,.22,.16],st=document.documentElement.style;
+  ["a","b","c","d"].forEach(function(n,i){
+    var c=usati[i];st.setProperty("--sky-"+n,"rgba("+c[0]+","+c[1]+","+c[2]+","+alfa[i]+")");
+  });
+  var el=document.getElementById("palsrc");
+  if(!el)return;
+  if(dalGioco){
+    var sw=usati.map(function(c){return'<b style="background:rgb('+c.join(",")+')"></b>';}).join("");
+    el.innerHTML='<span class="sw">'+sw+'</span>Colori di oggi da <i>'+esc(p.t)+'</i>, uscito il '+
+      esc(dataLunga(p.y+"-"+k))+': il gioco col voto pi&ugrave; alto mai uscito in questa data.';
+    el.hidden=false;
+  }else{el.hidden=true;el.innerHTML="";}
+}
+
 /* ---------------- init ---------------- */
 var lastMC=null,rt=null;
 function onResize(){
@@ -1794,6 +1740,8 @@ window.addEventListener("resize",onResize);
    anteprima, rete assente — si ripiega sullo snapshot incorporato. */
 function paint(){
   indexDays();
+  calcolaQuanti();
+  applicaPalette();
   renderFilters();
   popolaGeneri();
   lastMC=maxChips();
@@ -1813,10 +1761,13 @@ Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
   if(d&&d.games&&d.games.length){
     buildGames(d.games,hist);
     ALLTIME=d.allTime||[];
+    DAYPAL=d.dayPalette||{};
     DATA_SRC=d.generated?"Aggiornato il "+dataLunga(d.generated):"";
   }else{
     buildGames(fallbackRows(),hist);
-    DATA_SRC="Dati non aggiornati: la pagina sta usando lo snapshot incorporato.";
+    ALLTIME=FALLBACK.allTime||[];
+    DAYPAL={};
+    DATA_SRC="Dati non aggiornati: la pagina sta usando lo snapshot incorporato del "+dataLunga(FALLBACK.generated)+".";
   }
   apriOggi();
   paint();

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Drop Date — sincronizzazione notturna da IGDB.
+ * Playrain — sincronizzazione notturna da IGDB.
  *
  * Scrive due file nella radice del progetto:
- *   data.json     uscite correnti (riscritto ogni volta)
+ *   data.json     uscite correnti, classifica di sempre e palette del giorno (riscritto ogni volta)
  *   history.json  serie storica della popolarità (solo accodata, mai riscritta da zero)
  *
  * history.json è l'unica cosa che non si recupera: se un giorno il cron salta,
@@ -17,6 +17,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { paletteDelGiorno } from "./palette.mjs";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const DATA = path.join(ROOT, "data.json");
@@ -45,6 +46,15 @@ const PIATTAFORME = {
 };
 /* Ordine di presentazione, usato per non mostrare le piattaforme a caso. */
 const ORDINE_PIATT = ["pc", "switch2", "ps5", "xbox"];
+
+/* I titoli con tema "Erotic" su IGDB restano fuori dal sito. Non e' una scelta
+   morale ma di vetrina: raccolgono visite per curiosita', e "Segnalati" — che
+   misura proprio i movimenti di attenzione — li metteva in cima. Il 10 novembre
+   due dei primi tre posti erano titoli di questo tipo. Per riammetterli basta
+   mettere false: la pagina non ha bisogno di modifiche. */
+const ESCLUDI_EROTICI = true;
+/* Per quanti giorni resta visibile uno slittamento dopo essere stato scoperto. */
+const SLITTAMENTO_GIORNI = 60;
 
 const oggi = new Date();
 const iso = (d) => d.toISOString().slice(0, 10);
@@ -113,6 +123,16 @@ async function idPiattaforme(tok) {
   }
   return map;
 }
+
+/* Come piattaforme e tipi di sito, anche il tema si risolve per nome. */
+async function idTemiEsclusi(tok) {
+  if (!ESCLUDI_EROTICI) return new Set();
+  const righe = await igdb(tok, "themes", `fields id,name; where name = ("Erotic"); limit 10;`);
+  if (!righe.length) console.warn("ATTENZIONE: tema \"Erotic\" non trovato su IGDB, nessun titolo escluso.");
+  return new Set(righe.map((r) => r.id));
+}
+const escluso = (gioco, temi) =>
+  temi.size > 0 && (gioco?.themes || []).some((t) => temi.has(typeof t === "object" ? t.id : t));
 
 /* ------------------------------------------------------- trasformazione */
 
@@ -343,6 +363,7 @@ function assegnaAttesa(giochi) {
 async function main() {
   const tok = await token();
   const tipoSito = await idSiti(tok);
+  const temiEsclusi = await idTemiEsclusi(tok);
   const plat = await idPiattaforme(tok);
   const idToKey = Object.fromEntries(Object.entries(plat).map(([k, v]) => [v, k]));
   const ids = Object.values(plat).join(",");
@@ -355,7 +376,7 @@ async function main() {
     "date", "date_format", "platform",
     "game.id", "game.name", "game.hypes", "game.cover.image_id",
     "game.websites.url", "game.websites.type",
-    "game.genres.name",
+    "game.genres.name", "game.themes",
     /* aggregated_rating = media della stampa raccolta da IGDB, su 100.
        rating = voto degli utenti IGDB: usato solo come ripiego, e dichiarato come tale. */
     "game.aggregated_rating", "game.aggregated_rating_count",
@@ -369,15 +390,17 @@ async function main() {
   /* Titoli senza alcuna data annunciata: non compaiono fra le release_dates,
      ma sono proprio quelli della sezione "date da definire". */
   const senzaData = await paginato(tok, "games",
-    "id,name,hypes,cover.image_id,websites.url,websites.type,platforms",
+    "id,name,hypes,cover.image_id,websites.url,websites.type,platforms,themes",
     `platforms = (${ids}) & first_release_date = null & hypes > 10`, 3000);
   console.log(`titoli senza data: ${senzaData.length}`);
 
   /* Un gioco ha una riga per piattaforma e a volte per regione: si accorpa,
      tenendo la data più precisa e, a parità, la più vicina. */
   const perGioco = new Map();
+  let esclusi = 0;
   for (const r of righe) {
     if (!r.game || !r.game.name) continue;
+    if (escluso(r.game, temiEsclusi)) { esclusi++; continue; }
     const key = r.game.id;
     const piatt = idToKey[r.platform];
     if (!piatt) continue;
@@ -397,6 +420,7 @@ async function main() {
   }
   for (const s of senzaData) {
     if (perGioco.has(s.id)) continue;
+    if (escluso(s, temiEsclusi)) { esclusi++; continue; }
     const piatt = (s.platforms || []).map((p) => idToKey[p]).filter(Boolean);
     if (!piatt.length) continue;
     perGioco.set(s.id, { igdb: s.id, t: s.name, hypes: s.hypes || 0, plat: piatt,
@@ -405,6 +429,7 @@ async function main() {
   }
 
   const giochi = [...perGioco.values()];
+  if (temiEsclusi.size) console.log(`righe escluse per tema: ${esclusi}`);
   const pop = await popolarita(tok, giochi.map((g) => g.igdb));
   for (const g of giochi) {
     g.plat.sort((a, b) => ORDINE_PIATT.indexOf(a) - ORDINE_PIATT.indexOf(b));
@@ -446,10 +471,10 @@ async function main() {
   const candidati = [];
   for (let offset = 0; offset < 2000; offset += 500) {
     const page = await igdb(tok, "games",
-      `fields name,aggregated_rating,aggregated_rating_count,first_release_date,genres.name,platforms.name,cover.image_id;
+      `fields name,aggregated_rating,aggregated_rating_count,first_release_date,genres.name,platforms.name,cover.image_id,themes;
        where aggregated_rating_count >= ${CAND_MIN} & aggregated_rating != null & game_type = 0 & version_parent = null;
        sort aggregated_rating desc; limit 500; offset ${offset};`);
-    candidati.push(...page);
+    candidati.push(...page.filter((g) => !escluso(g, temiEsclusi)));
     if (page.length < 500) break;
   }
   const mediaGen = candidati.reduce((a, g) => a + g.aggregated_rating, 0) / (candidati.length || 1);
@@ -473,6 +498,45 @@ async function main() {
   }));
   console.log(`di sempre: ${allTime.length} titoli su ${candidati.length} candidati, ` +
               `da ${allTime[0]?.score} a ${allTime.at(-1)?.score}, media generale ${mediaGen.toFixed(1)}`);
+
+  /* Il data.json del giro precedente serve due volte: per riusare le palette gia'
+     calcolate e per riconoscere gli slittamenti. Si legge una volta sola. */
+  let prec = null;
+  if (existsSync(DATA)) {
+    try { prec = JSON.parse(await readFile(DATA, "utf8")); } catch { prec = null; }
+  }
+
+  /* ---------- palette del giorno ----------
+     Per ogni giorno dell'anno, il gioco col voto stampa piu' alto uscito in quella
+     data in qualsiasi anno: lo sfondo della pagina ne prende i colori. Bacino piu'
+     largo della classifica di sempre (5 recensioni invece di 10), perche' deve
+     coprire tutti i 366 giorni e non solo i cinquanta migliori; l'ordine usa la
+     stessa media bayesiana, cosi' due recensioni fortunate non vincono un giorno.
+     Tutto il blocco e' protetto: una palette mancata non deve mai impedire di
+     scrivere lo storico, che e' l'unica cosa che non si recupera. */
+  let dayPalette = prec?.dayPalette || {};
+  try {
+    const PAL_MIN = 5;
+    const perGiorno = [];
+    for (let offset = 0; offset < 10000; offset += 500) {
+      const page = await igdb(tok, "games",
+        `fields name,aggregated_rating,aggregated_rating_count,first_release_date,cover.image_id,themes;
+         where aggregated_rating_count >= ${PAL_MIN} & aggregated_rating != null & first_release_date != null
+           & cover != null & game_type = 0 & version_parent = null;
+         sort aggregated_rating desc; limit 500; offset ${offset};`);
+      perGiorno.push(...page.filter((g) => !escluso(g, temiEsclusi)));
+      if (page.length < 500) break;
+    }
+    const mediaPal = perGiorno.reduce((s, g) => s + g.aggregated_rating, 0) / (perGiorno.length || 1);
+    const bayesPal = (g) => {
+      const n = g.aggregated_rating_count;
+      return (n * g.aggregated_rating + PRIOR * mediaPal) / (n + PRIOR);
+    };
+    console.log(`palette del giorno: ${perGiorno.length} candidati`);
+    dayPalette = await paletteDelGiorno(perGiorno, bayesPal, prec?.dayPalette || {});
+  } catch (e) {
+    console.warn(`palette del giorno non aggiornata, resta quella di prima: ${e.message}`);
+  }
 
   /* ------- storico: si legge, si accoda, non si riscrive mai da capo ------- */
   let storico = {};
@@ -509,6 +573,7 @@ async function main() {
     source: "IGDB",
     allTime,
     allTimeSource: "IGDB, media stampa, minimo 10 recensioni, ordine a media bayesiana",
+    dayPalette,
     games: giochi.map((g) => {
       const o = { igdb: g.igdb, t: g.t, plat: g.plat, hype: g.hype, links: g.links };
       if (g.cov) o.cov = g.cov;
@@ -520,18 +585,29 @@ async function main() {
   };
 
   /* Lo slittamento si ricava confrontando con la data del giro precedente:
-     l'unico punto in cui questo dato esiste. */
-  if (existsSync(DATA)) {
-    try {
-      const prec = JSON.parse(await readFile(DATA, "utf8"));
-      const vecchie = new Map((prec.games || []).filter((g) => g.date).map((g) => [g.igdb, g.date]));
-      let slittati = 0;
-      for (const g of uscita.games) {
-        const v = vecchie.get(g.igdb);
-        if (v && g.date && v !== g.date) { g.was = v; slittati++; }
+     l'unico punto in cui questo dato esiste.
+
+     Prima veniva scritto solo il giorno della scoperta: il giro dopo la data
+     vecchia e quella nuova coincidevano, il confronto non trovava niente e il
+     segno spariva. Ogni giorno restavano visibili soltanto gli slittamenti delle
+     ultime 24 ore — il 10 novembre erano 14, mentre in tredici giorni ne erano
+     stati scoperti molti di piu'. Ora lo slittamento si eredita da un giro
+     all'altro, con la data della scoperta, e resta per SLITTAMENTO_GIORNI. */
+  if (prec) {
+    const vecchi = new Map((prec.games || []).map((g) => [g.igdb, g]));
+    const scade = iso(addDays(oggi, -SLITTAMENTO_GIORNI));
+    let scoperti = 0, ereditati = 0;
+    for (const g of uscita.games) {
+      const v = vecchi.get(g.igdb);
+      if (!v || !g.date) continue;
+      if (v.date && v.date !== g.date) {
+        g.was = v.date; g.wasOn = OGGI; scoperti++;
+      } else if (v.was && v.was !== g.date) {
+        const quando = v.wasOn || prec.generated || OGGI;
+        if (quando >= scade) { g.was = v.was; g.wasOn = quando; ereditati++; }
       }
-      console.log(`date cambiate dal giro precedente: ${slittati}`);
-    } catch { /* primo giro o file corrotto: nessuno slittamento da calcolare */ }
+    }
+    console.log(`slittamenti: ${scoperti} nuovi, ${ereditati} ancora visibili dai giri precedenti`);
   }
 
   await writeFile(DATA, JSON.stringify(uscita));
