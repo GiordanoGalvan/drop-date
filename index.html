@@ -1,4 +1,4 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Playrain</title><meta name="description" content="Playrain: il calendario delle uscite dei videogiochi per PC, Switch 2, PS5 e Xbox, con slittamenti, classifiche e titoli che si fanno notare."><meta name="theme-color" content="#131217"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="icons/icon-180.png"><link rel="manifest" href="manifest.webmanifest"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#131217;color:#f1ede5}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Playrain</title><meta name="description" content="Playrain: il calendario delle uscite dei videogiochi per PC, Switch 2, PS5 e Xbox, con slittamenti, classifiche e titoli che si fanno notare."><meta name="theme-color" content="#1f2930"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="icons/icon-180.png"><link rel="manifest" href="manifest.webmanifest"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#1f2930;color:#f1ede5}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <style>
 /* Font ospitati dal sito stesso. Prima arrivavano da fonts.googleapis.com: ogni
    visitatore mandava il proprio indirizzo IP a Google senza averlo scelto, ed e'
@@ -30,9 +30,13 @@
      scuro e caldo, e una variante chiara sarebbe un altro disegno, non lo stesso
      con i colori girati. Chi arriva con il sistema in chiaro vede comunque
      questa, dichiarata con color-scheme. */
-  --bg:#131217; --bg2:#131217; --surf:#17161b; --surf2:#1d1c22; --surf3:#232128;
-  --ink:#f1ede5; --ink2:#b6afa3; --ink3:#8b8478;
-  --line:#3a3640; --line2:#4b4753; --line3:#5d5869;
+  /* Fondi e filetti sono la base neutra di prima (#1b1920...) tinta col petrolio della
+     palette fissa, 13-15% sulle superfici e 18-22% sui filetti: i colori
+     vengono dalla copertina di Hard West 2 e non si ricalcolano piu'. Gli
+     inchiostri restano sopra 4.5:1 anche sulla superficie piu' chiara. */
+  --bg:#1f2930; --bg2:#1f2930; --surf:#242d35; --surf2:#2a343c; --surf3:#313b44;
+  --ink:#f3efe8; --ink2:#d2cbbf; --ink3:#bdb6a9;
+  --line:#424e59; --line2:#515e6c; --line3:#606e7d;
   /* L'ambra marca oggi e il tripla A, il celeste i rilevanti, il corallo gli
      slittamenti. Tre segnali, tre tinte, e in piu' ognuno porta un segno proprio:
      il colore e' rinforzo, non unico canale. */
@@ -48,7 +52,7 @@
      verso il nero invece di abbassare la sola opacita'. Era la fascia nera in
      cima alla pagina, e i fine settimana piu' scuri del fondo anziche' piu'
      chiari. */
-  --bg-rgb:19,18,23; --surf2-rgb:29,28,34;
+  --bg-rgb:31,41,48; --surf2-rgb:42,52,60;
   --f-px:"JetBrains Mono",ui-monospace,"Courier New",monospace;
   --f-body:"Archivo",system-ui,-apple-system,sans-serif;
   --f-nar:"Archivo",system-ui,sans-serif;
@@ -82,7 +86,7 @@ a.lk{color:var(--ink2)}
 .frame{background:none;border:0}
 
 /* ---- toolbar ---- */
-/* Barra velata invece che piena: lascia passare il colore del giorno in cima alla
+/* Barra velata invece che piena: lascia passare il colore dello sfondo in cima alla
    pagina e, scorrendo, sfoca quello che le passa sotto. Dove backdrop-filter non
    esiste resta comunque un fondo scuro all'82%, leggibile. */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(var(--bg-rgb),.82);
@@ -109,6 +113,11 @@ a.lk{color:var(--ink2)}
 /* Il marchio a pixel apparteneva alla veste precedente: qui la parola in serif
    basta da sola, e un'icona a pixel accanto a un serif stona. */
 .brand-mark{display:none}
+/* La i di Playrain e' la goccia del logo, col suo gradiente e il triangolo play,
+   alta quanto le minuscole e con il suo puntino sopra, come una i vera; il nome
+   per i lettori di schermo resta intero nell'aria-label. */
+.brand-drop{display:inline-block;height:.76em;width:auto;vertical-align:-.04em;margin:0 .03em 0 .05em}
+@media (forced-colors:active){.brand-drop path:first-of-type,.brand-drop circle{fill:CanvasText}}
 .bar-sp{flex:1 1 auto}
 .pf{display:flex;gap:6px;flex-wrap:wrap}
 .pf-b{display:inline-flex;align-items:center;gap:6px;padding:4px 0;font-family:var(--f-body);font-weight:600;
@@ -180,8 +189,13 @@ a.lk{color:var(--ink2)}
 .cell.out{opacity:.38}
 .cell.wknd{background:rgba(var(--surf2-rgb),.55)}
 .cell.sel{background:var(--surf3);box-shadow:inset 0 0 0 1px var(--line2)}
-.cell.today{box-shadow:inset 0 3px 0 var(--amber-sol)}
-.cell.today.sel{box-shadow:inset 0 3px 0 var(--amber-sol),inset 0 0 0 1px var(--line2)}
+/* Oggi: riquadro ambra su tutti e quattro i lati, piu' spesso in alto, cosi' la
+   cella si trova al primo sguardo anche in un mese pieno. Sta in un livello
+   sopra il contenuto: come ombra interna finiva sotto la fascia piena del
+   numero, e il riquadro restava aperto proprio attorno a "10 oggi". */
+.cell.today::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  border:2px solid var(--amber-sol);border-top-width:4px}
+.cell.today.sel{box-shadow:inset 0 0 0 3px var(--line2)}
 /* Il titolo porta il suo marcatore: stella per il tripla A, freccia per i
    rilevanti, punto per il resto. Monospaziato, cosi' i segni restano incolonnati
    e l'occhio scorre la colonna invece di cercare le fasce colorate. */
@@ -418,6 +432,10 @@ a.lk{color:var(--ink2)}
    da soli il pulsante finiva sulla riga sotto, staccato da cio' che apre. */
 .sech-meta{display:inline-flex;align-items:center;gap:10px}
 .sech .open-b[aria-expanded="true"]{color:var(--amber-sol);border-color:var(--amber-sol)}
+/* Titolo scritto come frase, non in maiuscolo con le iniziali: "Date da definire". */
+.sech h2.h2-frase{text-transform:none}
+/* Il conteggio in fondo a destra della riga, il pulsante accanto al titolo. */
+.sech .sech-end{margin-left:auto}
 .secp{font-family:var(--f-body);font-size:14px;color:var(--ink2);margin:0 0 18px;max-width:68ch}
 .gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:12px}
 .gcard{background:var(--surf);border:2px solid var(--line2);box-shadow:none;padding:10px;
@@ -531,32 +549,32 @@ a.gcard:hover{background:var(--surf2);border-color:var(--line3)}
 .foot{position:relative;isolation:isolate;margin-top:40px;border-top:3px dotted var(--line2);padding-top:14px;
   display:flex;gap:16px 28px;flex-wrap:wrap;align-items:flex-start}
 .foot p{font-family:var(--f-body);font-size:12.5px;color:var(--ink3);margin:0;line-height:1.7}
-.foot .credits{display:flex;flex-direction:column;gap:6px;max-width:72ch;flex:1 1 420px}
+/* I crediti prendono tutta la riga, una frase breve per paragrafo, e la legenda
+   va sotto: in colonna stretta accanto alla legenda le frasi lunghe andavano a
+   capo a caso. text-wrap:pretty evita la parola sola sull'ultima riga. */
+.foot .credits{display:flex;flex-direction:column;gap:4px;flex:1 1 100%}
+.foot .credits p{text-wrap:pretty}
 .foot .credits a{color:var(--ink2);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:2px}
 .foot .credits a:hover{color:var(--ink)}
 .foot .igdb{color:var(--ink2)}
-.foot #palsrc i{font-style:normal;color:var(--ink2)}
-.foot #palsrc .sw{display:inline-flex;gap:3px;vertical-align:-1px;margin-right:6px}
-.foot #palsrc .sw b{width:10px;height:10px;border-radius:50%;display:block}
 
-/* ---- palette del giorno ----
-   Lo sfondo prende i colori del gioco col voto piu' alto uscito in questa data,
-   in qualsiasi anno. Il colore sta solo dove non c'e' testo piccolo da leggere:
-   dietro la barra e il titolo del mese in alto, sotto il pie' di pagina in fondo.
-   Le celle del calendario hanno fondo pieno, quindi la griglia resta piatta e
-   leggibile come prima: e' la lezione della bozza con la copertina sfocata, bella
-   ma ingovernabile proprio perche' passava sotto a tutto. Qui non c'e' nessuna
-   immagine, solo sfumature generate da quattro colori. Se la data non ha una
-   palette si usano i colori del marchio, gli stessi del logo. */
-:root{--sky-a:rgba(255,45,0,.30);--sky-b:rgba(255,164,23,.22);--sky-c:rgba(111,210,255,.18);--sky-d:rgba(255,133,116,.14)}
-.sky{position:absolute;top:0;left:0;right:0;height:640px;z-index:0;pointer-events:none;overflow:hidden;
+/* ---- sfondo ----
+   Quattro toni fissi, petrolio e blu notte, presi una volta dalla copertina di
+   Hard West 2 e portati su fondo scuro: prima cambiavano ogni giorno, ora sono
+   lo sfondo del sito. Le sfumature stanno ferme dietro l'intera finestra, cosi'
+   scorrendo il colore non finisce mai. Fondi e filetti (celle, schede, pannelli,
+   barra) sono tinti col primo tono in :root. Restano pieni, pero': nessuna
+   sfumatura passa sotto il testo a dodici pixel della griglia, ed e' la lezione
+   della bozza con la copertina sfocata, bella ma ingovernabile. */
+:root{--sky-a:rgba(59,146,155,.34);--sky-b:rgba(50,134,164,.26);--sky-c:rgba(52,94,162,.22);--sky-d:rgba(107,197,199,.16)}
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
   background:
-    radial-gradient(58% 72% at 10% 0%,var(--sky-a) 0%,transparent 70%),
-    radial-gradient(42% 60% at 46% 6%,var(--sky-b) 0%,transparent 72%),
-    radial-gradient(52% 78% at 90% 0%,var(--sky-c) 0%,transparent 70%),
-    radial-gradient(36% 46% at 70% 32%,var(--sky-d) 0%,transparent 76%);
-  -webkit-mask-image:linear-gradient(#000 0%,#000 30%,transparent 100%);
-          mask-image:linear-gradient(#000 0%,#000 30%,transparent 100%);
+    radial-gradient(58% 60% at 10% 0%,var(--sky-a) 0%,transparent 70%),
+    radial-gradient(42% 50% at 46% 6%,var(--sky-b) 0%,transparent 72%),
+    radial-gradient(52% 64% at 90% 0%,var(--sky-c) 0%,transparent 70%),
+    radial-gradient(50% 55% at 75% 55%,var(--sky-d) 0%,transparent 76%),
+    radial-gradient(55% 60% at 8% 100%,var(--sky-c) 0%,transparent 72%),
+    radial-gradient(55% 60% at 95% 100%,var(--sky-a) 0%,transparent 72%);
   animation:skyIn .9s ease-out both}
 @keyframes skyIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.sky{animation:none}}
@@ -566,7 +584,13 @@ a.gcard:hover{background:var(--surf2);border-color:var(--line3)}
   background:
     radial-gradient(45% 90% at 15% 100%,var(--sky-a) 0%,transparent 72%),
     radial-gradient(40% 90% at 85% 100%,var(--sky-c) 0%,transparent 72%)}
-.legend{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+/* Tutta su una riga, preceduta dall'etichetta. Va a capo solo dove la riga
+   non ci sta, cioe' su schermo stretto: meglio che scorrere di lato. */
+.legend{display:flex;align-items:center;gap:6px 14px;flex-wrap:nowrap;flex:1 1 100%}
+.lgh{font-family:var(--f-body);font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+.lgi{white-space:nowrap}
+.lgi i.sq{width:9px;height:9px;border-radius:0;border:2px solid var(--amber-sol);background:none}
+@media (max-width:900px){.legend{flex-wrap:wrap}}
 .lgi{display:flex;align-items:center;gap:6px;font-family:var(--f-body);font-weight:500;font-size:11px;
   letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
 .lgi i{width:8px;height:8px;display:block;border-radius:50%}
@@ -588,7 +612,7 @@ a.gcard:hover{background:var(--surf2);border-color:var(--line3)}
         <rect x="4" y="10" width="2" height="2" fill="var(--line2)"/><rect x="7" y="10" width="2" height="2" fill="var(--line2)"/>
         <rect x="10" y="10" width="2" height="2" fill="var(--line2)"/>
       </svg>
-      <span class="brand-txt">Playrain</span>
+      <span class="brand-txt" role="img" aria-label="Playrain"><span aria-hidden="true">Playra</span><svg class="brand-drop" viewBox="10 -27 44 90.5" aria-hidden="true"><defs><linearGradient id="dropg" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#ffc861"/><stop offset=".45" stop-color="#ffa417"/><stop offset=".78" stop-color="#ff6a00"/><stop offset="1" stop-color="#ff2d00"/></linearGradient></defs><path d="M32 2C32 2 11 25 11 41.5a21 21 0 0 0 42 0C53 25 32 2 32 2Z" fill="url(#dropg)"/><path d="M26 32v19.5l16.5-9.75z" style="fill:var(--bg)"/><circle cx="32" cy="-16" r="9" fill="#ffb53d"/></svg><span aria-hidden="true">n</span></span>
     </div>
     <div class="bar-sp"></div>
     <div class="srch">
@@ -688,31 +712,28 @@ a.gcard:hover{background:var(--surf2);border-color:var(--line3)}
 
   <section class="sec" id="tba">
     <div class="sech">
-      <h2>DATE DA DEFINIRE</h2>
-      <span class="sech-meta"><span class="tag" id="tbacount">—</span>
-        <button type="button" class="open-b" id="tbabtn" aria-expanded="false" aria-controls="tbalist">Apri</button></span>
+      <h2 class="h2-frase">Date da definire</h2>
+      <button type="button" class="open-b" id="tbabtn" aria-expanded="true" aria-controls="tbalist">Chiudi</button>
+      <span class="tag sech-end" id="tbacount">—</span>
     </div>
     <p class="secp">Titoli con finestra vaga, dal pi&ugrave; chiacchierato al meno.</p>
-    <div class="tba" id="tbalist" hidden></div>
+    <div class="tba" id="tbalist"></div>
   </section>
 
   <div class="foot">
     <div class="credits">
       <p id="datasrc">—</p>
-      <p id="palsrc" hidden></p>
       <!-- Attribuzione richiesta da IGDB: visibile, fissa, con collegamento. -->
-      <p class="igdb">Dati, copertine e voti forniti da
-        <a href="https://www.igdb.com" target="_blank" rel="noopener">IGDB.com</a> &mdash; grazie a IGDB e alla sua
-        comunit&agrave;, che tengono aggiornato il catalogo da cui nasce questo sito.</p>
-      <p>Playrain non &egrave; affiliato a IGDB, Twitch, agli store collegati n&eacute; agli editori: nomi, marchi e
-        copertine dei giochi appartengono ai rispettivi proprietari. Caratteri Archivo, Fraunces e
-        JetBrains Mono, licenza SIL Open Font License.</p>
+      <p class="igdb">Dati, copertine e voti forniti da <a href="https://www.igdb.com" target="_blank" rel="noopener">IGDB.com</a>. Grazie a IGDB e alla sua comunit&agrave;, che tengono aggiornato il catalogo da cui nasce questo sito.</p>
+      <p>Playrain non &egrave; affiliato a IGDB, Twitch, agli store collegati n&eacute; agli editori. Nomi, marchi e copertine dei giochi appartengono ai rispettivi proprietari.</p>
+      <p>Caratteri Archivo, Fraunces e JetBrains Mono, licenza SIL Open Font License.</p>
     </div>
     <div class="legend">
+      <span class="lgh">Legenda:</span>
       <span class="lgi"><b style="color:var(--amber-sol)">&#9733;</b>uscita tripla A</span>
       <span class="lgi"><b style="color:var(--violet)">&#9656;</b>in evidenza</span>
       <span class="lgi"><b style="color:var(--line2)">&#183;</b>altra uscita</span>
-      <span class="lgi"><b style="color:var(--amber-sol)">&#9612;</b>oggi</span>
+      <span class="lgi"><i class="sq"></i>oggi</span>
       <span class="lgi"><b style="color:var(--coral)">&#8634;</b>data spostata</span>
       <span class="lgi"><i style="background:var(--pc)"></i>pc</span>
       <span class="lgi"><i style="background:var(--sw)"></i>switch 2</span>
@@ -1637,7 +1658,7 @@ gsel.addEventListener("change",function(){
    filtro cambia. Parte chiusa, aperta mostra un primo scaglione, e solo su
    richiesta esplicita il resto. */
 var TBA_PASSO=48;
-var tbaOpen=false,tbaAll=false;
+var tbaOpen=true,tbaAll=false;
 function renderTba(){
   var list=GAMES.filter(function(g){return g.vague&&visible(g);}).sort(function(a,b){return b.hype-a.hype;});
   var el=document.getElementById("tbalist"),btn=document.getElementById("tbabtn");
@@ -1671,58 +1692,6 @@ document.getElementById("tbabtn").addEventListener("click",function(){
   renderTba();
 });
 
-/* ---------------- palette del giorno ---------------- */
-/* dayPalette arriva in data.json: per ogni "MM-GG" il gioco col voto stampa piu'
-   alto uscito in quella data e i colori dominanti della sua copertina. Qui i
-   colori vengono portati su un fondo scuro — luminosita' a meta', saturazione
-   piena ma non accecante — e diventano le quattro macchie dello sfondo. */
-var DAYPAL={};
-var PAL_SITO=["#ff2d00","#ffa417","#6fd2ff","#ff8574"];
-function hexRgb(h){var n=parseInt(String(h).replace("#",""),16);return[(n>>16)&255,(n>>8)&255,n&255];}
-function rgbHsl(r,g,b){
-  r/=255;g/=255;b/=255;
-  var mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,d=mx-mn,h=0,s=0;
-  if(d){
-    s=d/(1-Math.abs(2*l-1));
-    h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;
-    h*=60;if(h<0)h+=360;
-  }
-  return{h:h,s:s,l:l};
-}
-function hslRgb(h,s,l){
-  var c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2,r=0,g=0,b=0;
-  if(h<60){r=c;g=x;}else if(h<120){r=x;g=c;}else if(h<180){g=c;b=x;}
-  else if(h<240){g=x;b=c;}else if(h<300){r=x;b=c;}else{r=c;b=x;}
-  return[Math.round((r+m)*255),Math.round((g+m)*255),Math.round((b+m)*255)];
-}
-function applicaPalette(){
-  var k=TODAY.slice(5),p=DAYPAL[k],vivi=[];
-  if(p&&p.c)p.c.forEach(function(hx){
-    var c=hexRgb(hx),x=rgbHsl(c[0],c[1],c[2]);
-    /* Nero, bianco e grigi non portano colore: su un fondo gia' scuro
-       sarebbero solo macchie sporche. */
-    if(x.l<0.1||x.l>0.94||x.s<0.14)return;
-    vivi.push(hslRgb(x.h,Math.min(0.9,Math.max(0.45,x.s*1.15)),Math.min(0.62,Math.max(0.42,x.l))));
-  });
-  /* Con meno di due colori vivi — copertine in bianco e nero, o quasi — la
-     sfumatura sarebbe una macchia sola: meglio i colori del marchio. */
-  var dalGioco=vivi.length>=2;
-  var usati=dalGioco?vivi.slice(0,4):PAL_SITO.map(hexRgb);
-  while(usati.length<4)usati.push(usati[usati.length%vivi.length]);
-  var alfa=[.34,.26,.22,.16],st=document.documentElement.style;
-  ["a","b","c","d"].forEach(function(n,i){
-    var c=usati[i];st.setProperty("--sky-"+n,"rgba("+c[0]+","+c[1]+","+c[2]+","+alfa[i]+")");
-  });
-  var el=document.getElementById("palsrc");
-  if(!el)return;
-  if(dalGioco){
-    var sw=usati.map(function(c){return'<b style="background:rgb('+c.join(",")+')"></b>';}).join("");
-    el.innerHTML='<span class="sw">'+sw+'</span>Colori di oggi da <i>'+esc(p.t)+'</i>, uscito il '+
-      esc(dataLunga(p.y+"-"+k))+': il gioco col voto pi&ugrave; alto mai uscito in questa data.';
-    el.hidden=false;
-  }else{el.hidden=true;el.innerHTML="";}
-}
-
 /* ---------------- init ---------------- */
 var lastMC=null,rt=null;
 function onResize(){
@@ -1741,7 +1710,6 @@ window.addEventListener("resize",onResize);
 function paint(){
   indexDays();
   calcolaQuanti();
-  applicaPalette();
   renderFilters();
   popolaGeneri();
   lastMC=maxChips();
@@ -1761,12 +1729,10 @@ Promise.all([grab("data.json"),grab("history.json")]).then(function(res){
   if(d&&d.games&&d.games.length){
     buildGames(d.games,hist);
     ALLTIME=d.allTime||[];
-    DAYPAL=d.dayPalette||{};
     DATA_SRC=d.generated?"Aggiornato il "+dataLunga(d.generated):"";
   }else{
     buildGames(fallbackRows(),hist);
     ALLTIME=FALLBACK.allTime||[];
-    DAYPAL={};
     DATA_SRC="Dati non aggiornati: la pagina sta usando lo snapshot incorporato del "+dataLunga(FALLBACK.generated)+".";
   }
   apriOggi();

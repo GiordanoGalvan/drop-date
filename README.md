@@ -26,13 +26,11 @@ stanno in `bozze/`.
 ```
 index.html      la pagina: calendario, pannello giorno, classifiche, top 50 ever,
                 segnalati, date da definire
-data.json       uscite, classifica di sempre, palette del giorno — riscritto a ogni giro
+data.json       uscite e classifica di sempre — riscritto a ogni giro
 history.json    serie storica della popolarità — solo accodato, mai riscritto
 manifest.webmanifest, icons/  icona del sito e installazione sulla schermata home
 fonts/          caratteri ospitati dal sito, con le licenze SIL OFL
 scripts/sync.mjs            scarica da IGDB e aggiorna i due JSON
-scripts/palette.mjs         colori dominanti delle copertine, per lo sfondo del giorno
-scripts/vendor/             decoder JPEG in JavaScript puro (jpeg-js, BSD-3-Clause)
 scripts/snapshot.mjs        rigenera lo snapshot di riserva dentro index.html
 .github/workflows/sync.yml  cron notturno che esegue il sync e committa
 ```
@@ -264,10 +262,10 @@ punti omogenei: senza quello, il giorno dell'uscita il paragone passerebbe da "q
 lo vogliono" a "quanti ci giocano" e inventerebbe un'impennata esattamente lì — l'errore
 più visibile che questa sezione possa fare.
 
-**"Date da definire" parte chiusa.** Sono migliaia di titoli e la sezione li stampava
-tutti: una pagina che non finisce mai, e qualche migliaio di nodi ricostruiti a ogni
-cambio di filtro. Ora l'intestazione porta il conteggio, si apre con un clic e mostra i
-primi 48; il resto solo su richiesta esplicita. L'ordine è dal più chiacchierato al meno,
+**"Date da definire" mostra i primi 48.** Sono migliaia di titoli e la sezione li
+stampava tutti: una pagina che non finisce mai, e qualche migliaio di nodi ricostruiti a
+ogni cambio di filtro. Ora parte aperta con i primi 48 e il resto solo su richiesta
+esplicita; accanto al titolo c'è "Chiudi", a destra il conteggio dei titoli. L'ordine è dal più chiacchierato al meno,
 per attesa decrescente.
 
 **La ricerca tollera gli errori di battitura, e lo dichiara.** Prima la corrispondenza
@@ -389,28 +387,17 @@ sono pochi, e quando nessuno si distingue la sezione lo dice invece di riempirsi
 rumore. Le card ora sono link, come tutte le altre del sito.
 
 **I titoli erotici restano fuori.** IGDB li marca col tema *Erotic*: `sync.mjs` li
-scarta dal calendario, dallo storico, dalla classifica di sempre e dalla palette. Non è
+scarta dal calendario, dallo storico e dalla classifica di sempre. Non è
 una scelta morale ma di vetrina: raccolgono visite per curiosità, e *Segnalati* li
 metteva in cima. Si riammettono mettendo `ESCLUDI_EROTICI = false`; la pagina non
 cambia.
 
-**Palette del giorno.** Lo sfondo prende i colori del gioco col voto stampa più alto
-uscito in questa data, in qualsiasi anno e su qualsiasi console — un "accadde oggi" dei
-videogiochi, con una riga nel piè di pagina che dice quale. Il vincitore di ogni
-giorno si sceglie con la stessa media bayesiana della classifica di sempre (minimo 5
-recensioni). `scripts/palette.mjs` scarica la copertina, ne estrae quattro colori con
-un k-means che pesa i pixel per vivacità (un fondo nero occupa metà delle copertine e
-non dice niente del gioco) e **in `data.json` finiscono solo i colori**: la copertina
-non arriva mai nella pagina. I giochi del passato non cambiano, quindi ogni giro riusa
-i colori del giro prima e ricalcola solo i giorni il cui vincitore è cambiato.
-
-Il colore sta solo dove non c'è testo piccolo: dietro barra e titolo del mese, sotto il
-piè di pagina. Le celle hanno fondo pieno, quindi la griglia resta piatta. È la lezione
-della bozza con la copertina sfocata, bella ma ingovernabile perché passava sotto a
-tutto. Con meno di due colori vivi, o senza palette per la data, si usano i colori del
-marchio. Tutto il blocco è protetto: una palette mancata non impedisce mai di scrivere
-lo storico. Il decoder JPEG sta in `scripts/vendor/` invece che fra le dipendenze, così
-il workflow non deve installare niente.
+**Sfondo.** Quattro toni fissi, petrolio e blu notte, presi una volta dalla copertina
+di *Hard West 2* e scritti nel CSS: prima lo sfondo cambiava ogni giorno con i colori
+di un gioco, calcolati dal giro notturno, ora non si calcola più niente. Le sfumature
+stanno ferme dietro tutta la finestra e i fondi di celle, schede e barra sono tinti
+col primo tono. Le celle restano a fondo pieno: nessuna sfumatura passa sotto il testo
+piccolo della griglia. La cella di oggi ha un riquadro ambra.
 
 **Crediti e questioni legali.** *Questo è un riepilogo, non una consulenza legale.*
 
@@ -424,7 +411,7 @@ il workflow non deve installare niente.
   102-bis): per questo i dati vengono da IGDB tramite la sua API, alle sue condizioni, e lo
   snapshot compilato dalle testate è stato tolto.
 - **Le copertine sono opere degli editori.** Arrivano dal server immagini di IGDB, coperte
-  dalla stessa attribuzione; la palette del giorno ne usa solo i colori.
+  dalla stessa attribuzione.
 - **Font ospitati dal sito.** Prima arrivavano da Google Fonts: ogni visitatore mandava
   il proprio IP a Google senza averlo scelto, ed è ciò per cui nel 2022 il tribunale di
   Monaco ha condannato il gestore di un sito (GDPR). Ora sono in `fonts/`, licenza SIL OFL.

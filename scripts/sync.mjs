@@ -3,7 +3,7 @@
  * Playrain — sincronizzazione notturna da IGDB.
  *
  * Scrive due file nella radice del progetto:
- *   data.json     uscite correnti, classifica di sempre e palette del giorno (riscritto ogni volta)
+ *   data.json     uscite correnti e classifica di sempre (riscritto ogni volta)
  *   history.json  serie storica della popolarità (solo accodata, mai riscritta da zero)
  *
  * history.json è l'unica cosa che non si recupera: se un giorno il cron salta,
@@ -17,7 +17,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { paletteDelGiorno } from "./palette.mjs";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const DATA = path.join(ROOT, "data.json");
@@ -499,43 +498,10 @@ async function main() {
   console.log(`di sempre: ${allTime.length} titoli su ${candidati.length} candidati, ` +
               `da ${allTime[0]?.score} a ${allTime.at(-1)?.score}, media generale ${mediaGen.toFixed(1)}`);
 
-  /* Il data.json del giro precedente serve due volte: per riusare le palette gia'
-     calcolate e per riconoscere gli slittamenti. Si legge una volta sola. */
+  /* Il data.json del giro precedente serve a riconoscere gli slittamenti. */
   let prec = null;
   if (existsSync(DATA)) {
     try { prec = JSON.parse(await readFile(DATA, "utf8")); } catch { prec = null; }
-  }
-
-  /* ---------- palette del giorno ----------
-     Per ogni giorno dell'anno, il gioco col voto stampa piu' alto uscito in quella
-     data in qualsiasi anno: lo sfondo della pagina ne prende i colori. Bacino piu'
-     largo della classifica di sempre (5 recensioni invece di 10), perche' deve
-     coprire tutti i 366 giorni e non solo i cinquanta migliori; l'ordine usa la
-     stessa media bayesiana, cosi' due recensioni fortunate non vincono un giorno.
-     Tutto il blocco e' protetto: una palette mancata non deve mai impedire di
-     scrivere lo storico, che e' l'unica cosa che non si recupera. */
-  let dayPalette = prec?.dayPalette || {};
-  try {
-    const PAL_MIN = 5;
-    const perGiorno = [];
-    for (let offset = 0; offset < 10000; offset += 500) {
-      const page = await igdb(tok, "games",
-        `fields name,aggregated_rating,aggregated_rating_count,first_release_date,cover.image_id,themes;
-         where aggregated_rating_count >= ${PAL_MIN} & aggregated_rating != null & first_release_date != null
-           & cover != null & game_type = 0 & version_parent = null;
-         sort aggregated_rating desc; limit 500; offset ${offset};`);
-      perGiorno.push(...page.filter((g) => !escluso(g, temiEsclusi)));
-      if (page.length < 500) break;
-    }
-    const mediaPal = perGiorno.reduce((s, g) => s + g.aggregated_rating, 0) / (perGiorno.length || 1);
-    const bayesPal = (g) => {
-      const n = g.aggregated_rating_count;
-      return (n * g.aggregated_rating + PRIOR * mediaPal) / (n + PRIOR);
-    };
-    console.log(`palette del giorno: ${perGiorno.length} candidati`);
-    dayPalette = await paletteDelGiorno(perGiorno, bayesPal, prec?.dayPalette || {});
-  } catch (e) {
-    console.warn(`palette del giorno non aggiornata, resta quella di prima: ${e.message}`);
   }
 
   /* ------- storico: si legge, si accoda, non si riscrive mai da capo ------- */
@@ -573,7 +539,6 @@ async function main() {
     source: "IGDB",
     allTime,
     allTimeSource: "IGDB, media stampa, minimo 10 recensioni, ordine a media bayesiana",
-    dayPalette,
     games: giochi.map((g) => {
       const o = { igdb: g.igdb, t: g.t, plat: g.plat, hype: g.hype, links: g.links };
       if (g.cov) o.cov = g.cov;
