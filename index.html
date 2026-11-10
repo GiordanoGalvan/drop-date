@@ -298,6 +298,10 @@ a.lk{color:var(--ink2)}
   .panel{position:fixed;left:0;right:0;bottom:0;top:0;z-index:50;background:var(--bg);
     display:flex;flex-direction:column;transform:translateY(0);animation:sheet .22s ease-out}
   @keyframes sheet{from{transform:translateY(14%);opacity:.4}to{transform:translateY(0);opacity:1}}
+  /* .wrap ha z-index 1 per stare sopra lo sfondo, e cosi' il pannello, che ci sta
+     dentro, finiva sotto la barra (30): la barra copriva titolo e pulsante X e il
+     pannello non si poteva chiudere. Col pannello aperto .wrap sale sopra la barra. */
+  .wrap:has(.main.open){z-index:31}
   .panel-head{padding-top:calc(12px + env(safe-area-inset-top,0px));background:var(--bg)}
   /* I margini del pannello seguono quelli della pagina: su cellulare il pannello
      e' a tutto schermo, e se il suo contenuto rientra di una misura diversa
@@ -1062,11 +1066,23 @@ gridEl.addEventListener("click",function(e){
   if(state.sel===ds){closeDay();return;}
   state.sel=ds;state.moreOpen=false;
   panel.hidden=false;main.classList.add("open");
-  buildGrid();renderPanel();
+  buildGrid();renderPanel();ricordaPannello();
   if(mqM.matches)document.getElementById("pclose").focus();
 });
 document.getElementById("pclose").addEventListener("click",closeDay);
-function closeDay(){state.sel=null;panel.hidden=true;main.classList.remove("open");buildGrid();}
+function closeDay(){
+  state.sel=null;panel.hidden=true;main.classList.remove("open");buildGrid();
+  if(history.state&&history.state.giorno)history.back();
+}
+/* Su schermo stretto il pannello e' a tutto schermo e sembra una pagina nuova:
+   il tasto Indietro del telefono deve chiuderlo, non lasciare il sito. Aprendolo
+   si aggiunge un passo alla cronologia; Indietro lo toglie e chiude il pannello,
+   la X lo chiude e toglie il passo. */
+var mqSheet=window.matchMedia("(max-width:999px)");
+function ricordaPannello(){
+  if(mqSheet.matches&&!(history.state&&history.state.giorno))history.pushState({giorno:true},"");
+}
+window.addEventListener("popstate",function(){if(state.sel)closeDay();});
 
 /* Su schermo largo la colonna del giorno sta accanto al calendario e non copre
    niente, quindi all'apertura conviene averla gia' piena: la pagina risponde
@@ -1605,7 +1621,7 @@ function qGo(g){
     state.y=d.getFullYear();state.m=d.getMonth();
     state.sel=g.date;state.moreOpen=false;
     panel.hidden=false;main.classList.add("open");
-    paint();
+    paint();ricordaPannello();
     document.getElementById("main").scrollIntoView({behavior:"smooth",block:"start"});
   }else{
     paint();
