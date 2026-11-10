@@ -73,7 +73,10 @@ e lo storico si accumula un giorno alla volta. È previsto, non è un guasto.
 ### 4. Pubblicazione
 
 Attiva: **GitHub Pages**, da `main`, directory `.` — nessun comando di build.
-Il sito sta su `https://<utente>.github.io/<repo>/`.
+Il sito sta su `https://<utente>.github.io/<repo>/`: oggi
+[giordanogalvan.github.io/playrain](https://giordanogalvan.github.io/playrain/). Il
+repository si chiamava `drop-date`: GitHub reindirizza i vecchi link al repository, ma
+non il vecchio indirizzo delle Pages, che non funziona più.
 
 Qualsiasi altro hosting statico va uguale: Netlify vuole il repository collegato,
 comando di build vuoto, directory di pubblicazione `.`.
@@ -425,9 +428,6 @@ disegno nell'80% centrale. Il manifest permette di aggiungere il sito alla scher
 ## Da fare
 
 - Soglia dei rilevanti da ritarare quando si vedono i volumi veri di IGDB.
-- Rinominare il repository da `drop-date` a `playrain`: cambia anche l'indirizzo di
-  GitHub Pages, e il vecchio indirizzo smette di funzionare (GitHub reindirizza i link
-  al repository, non quelli delle Pages).
 - Prima di un lancio pubblico: dominio, ricerca su TMview, e se ci saranno guadagni
   l'accordo con IGDB e la privacy policy.
 - Se i voti IGDB risultassero troppo radi, OpenCritic ha un'API vera via RapidAPI:
